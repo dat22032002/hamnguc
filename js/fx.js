@@ -157,9 +157,10 @@ function runAtk(el, F, X, onHit) {
   go.onfinish = () => {
     sprAtk(el, atkAnim);   // phase 2: tới nơi, đổi sang anim đánh
     if (onHit) onHit();   // nổ hiệu ứng trúng
+    const t0 = performance.now(), maxWait = 2500;   // dự phòng: quá 2.5s sprite chưa về idle thì ép chạy về
     const waitAtk = () => {   // chờ sprite đánh xong (tự về idle) rồi mới chạy về
       const cur = cv && cv._s ? cv._s.a : "idle";
-      if (cur === "idle" || !el.isConnected) {
+      if (cur === "idle" || !el.isConnected || performance.now() - t0 > maxWait) {
         sprAtk(el, "walk");   // phase 3: chạy về
         const back = mv.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: 320 * TSv, easing: "ease-in" });
         back.onfinish = back.oncancel = cleanup;
