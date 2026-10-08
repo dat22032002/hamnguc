@@ -182,3 +182,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - File: `js/render.js` (renderOrder, renderMonsters, tooltip), `css/layout-h.css` (xóa luật `.oc small` thừa).
 - Logic tốc độ (thứ tự ra đòn, né tránh) giữ nguyên, chỉ bỏ phần hiển thị.
 - Test: check.js OK, bundle 825KB, chụp màn hình kiểm tra, tap-test 19/19 PASS (2 lần fail giữa chừng ở cửa Chiến đấu do flaky đã biết, chạy lại pass).
+
+## Cập nhật 2026-10-08 — Buff/debuff + skill quái xuống dưới thanh HP/MP
+- Muse: theo yêu cầu của Jame, đưa hiển thị buff/debuff của nhân vật (`#player-status`), buff/debuff quái (`.mst`) và skill quái (`.msk`) xuống dưới thanh HP/MP, thu gọn font/khoảng cách.
+- Trước đây 3 cụm này nổi lơ lửng quanh nhân vật/quái (cạnh bên/trên đầu) ở layout ngang.
+- File: `css/layout-h.css` (3 selector). Không đổi JS/logic.
+- Test: check.js OK, bundle 825KB, đo vị trí thực tế bằng JS (không đè nhau), chụp màn hình, tap-test 19/19 PASS (2 lần fail ở cửa Chiến đấu do flaky đã biết, chạy lại pass).

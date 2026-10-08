@@ -86,7 +86,7 @@ body.hl-on { padding: 0; display: block; }
 #game.hl #hl-pbar.low .hp i { background: #b8453a; animation: hlpulse 1s ease-in-out infinite; }
 @keyframes hlpulse { 50% { filter: brightness(1.5); } }
 /* trạng thái: nằm bên phải chân nhân vật, gọn */
-#game.hl #me > #player-status { position: absolute; left: calc(100% + 6 * var(--hu)); bottom: calc(2 * var(--hu)); margin: 0; padding: 2px 6px; font-size: max(11px, calc(12 * var(--hu))); white-space: nowrap; background: rgba(10,8,13,.7); border: 1px solid rgba(224,160,64,.35); }
+#game.hl #me > #player-status { position: absolute; left: 50%; translate: -50% 0; top: calc(100% + 68 * var(--m)); margin: 0; padding: 1px 5px; font-size: max(9px, calc(10 * var(--m))); white-space: nowrap; background: rgba(10,8,13,.7); border: 1px solid rgba(224,160,64,.35); }
 #game.hl #me > #player-status[hidden] { display: none; }
 
 /* --- Phase 5: quái — tối đa 2 hàng, hàng sau cao hơn + nhỏ hơn (chiều sâu) --- */
@@ -123,8 +123,8 @@ body.hl-on { padding: 0; display: block; }
 #game.hl #mons .mon .mname .lvb::before { content: "·\00a0"; }
 /* tốc độ/kháng: cạnh thanh máu; trạng thái: trên đầu; kỹ năng: cột bên phải sprite (tooltip giữ nguyên) */
 #game.hl #mons .mon small { position: absolute; left: calc(50% + var(--bw) / 2 + 6px); top: calc(100% + 6 * var(--hu)); margin: 0; display: flex; gap: 4px; font-size: max(10px, calc(11 * var(--hu))); white-space: nowrap; }
-#game.hl #mons .mon .mst { position: absolute; left: 0; right: 0; top: calc(-22 * var(--hu)); margin: 0; min-height: 0; justify-content: center; z-index: 4; }
-#game.hl #mons .mon .msk { position: absolute; left: calc(50% + var(--fs) / 2 + 2px); right: auto; top: 0; margin: 0; flex-direction: column; align-items: flex-start; flex-wrap: nowrap; gap: 3px; z-index: 4; }
+#game.hl #mons .mon .mst { position: absolute; left: 0; right: 0; top: calc(100% + 56 * var(--hu)); margin: 0; min-height: 0; justify-content: center; z-index: 4; font-size: max(8px, calc(10 * var(--hu))); gap: 1px 4px; line-height: 1.2; }
+#game.hl #mons .mon .msk { position: absolute; left: 0; right: 0; top: calc(100% + 70 * var(--hu)); margin: 0; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 2px 3px; z-index: 4; font-size: max(8px, calc(10 * var(--hu))); line-height: 1.2; }
 
 /* vị trí theo số quái (tâm theo x/1280): --k 1 = hàng trước · .8 = hàng sau (nhỏ hơn, đứng cao hơn). Quái đầu mảng (to/trùm) luôn ở hàng trước */
 #game.hl #mons:has(.mon:nth-child(1):last-child) .mon:nth-child(1) { --x: 70%; }
