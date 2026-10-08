@@ -22,9 +22,9 @@ function newGame() {
 
 /* ----- QUÁI: 3 cỡ. Nhỏ (s) hay xuất hiện 1~4 con, vừa (m) ít hơn, to (l) hiếm ----- */
 const MT = {
-  s: [{ n: "Slime", a: "🟢", sprite: "slime", hp: 30, lo: 3, hi: 6, xp: 10, spd: 6 }, { n: "Dơi Đêm", a: "🦇", sprite: "bat", hp: 24, lo: 4, hi: 7, xp: 12, ev: .15, spd: 16 }, { n: "Chuột Cống", a: "🐀", hp: 28, lo: 3, hi: 7, xp: 11, spd: 12 }],
+  s: [{ n: "Slime", a: "🟢", sprite: "slime", hp: 30, lo: 3, hi: 6, xp: 10, spd: 6 }, { n: "Dơi Đêm", a: "🦇", sprite: "bat", hp: 24, lo: 4, hi: 7, xp: 12, ev: .15, spd: 16 }],
   m: [{ n: "Orc", a: "👺", sprite: "orc", hp: 85, lo: 9, hi: 13, xp: 40, spd: 11 }, { n: "Sói Xám", a: "🐺", hp: 100, lo: 10, hi: 15, xp: 48, spd: 15 }, { n: "Xương Binh", a: "💀", hp: 90, lo: 10, hi: 14, xp: 44, spd: 8 }],
-  l: [{ n: "Ogre", a: "👹", hp: 230, lo: 17, hi: 24, xp: 100, spd: 5 }, { n: "Troll", a: "🧌", hp: 260, lo: 18, hi: 26, xp: 115, spd: 6 }]
+  l: [{ n: "Troll", a: "🧌", hp: 260, lo: 18, hi: 26, xp: 115, spd: 6 }]
 };
 let MID = 0;
 /* plv = cấp người chơi (co-op: cấp trung bình). Cấp quái bám theo cấp người chơi: thường +0~1, tinh anh +1~2, trùm +2~3 */

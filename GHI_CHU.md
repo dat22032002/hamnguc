@@ -312,3 +312,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Jame báo chỉ gặp "Tinh anh Orc": thật ra orc thường đã spawn được từ tầng 3 (30% trận), nhưng tầng 1-2 trận thường chỉ ra quái nhỏ. Thêm: tầng 1-2 có 25% gặp 1 Orc dạng thường trong trận thường (giữ nguyên chỉ số).
 - AI: Muse. Test: check.js OK, bundle 961KB; logic spawnGroup(0) chạy 500 lần: 148 trận có Orc thường (~30%); Chromium: slime nhỏ gọn trên thanh máu, không lỗi JS.
 - CHƯA test: điện thoại, co-op.
+
+## Cập nhật 2026-10-08 — bỏ quái Ogre và Chuột Cống
+- Theo yêu cầu Jame: xóa Ogre khỏi MT.l và Chuột Cống khỏi MT.s (entities.js), xóa luôn bộ skill của 2 con trong MSK (combat.js).
+- AI: Muse. Test: check.js OK, bundle 961KB; spawn 2000 nhóm quái (tầng 1-5, thường + tinh anh): chỉ còn Dơi Đêm/Orc/Slime/Sói Xám/Xương Binh/Troll, không lỗi JS.
+- CHƯA test: điện thoại, co-op.
