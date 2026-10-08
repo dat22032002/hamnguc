@@ -39,5 +39,12 @@ const SPR_BAT = {
   rows: { idle: [0, 6], atk1: [1, 6], atk2: [2, 7], hurt: [3, 4], death: [4, 4] },
   box: [20, 28, 58, 38], core: [38, 33, 22, 22], sc: 0.7   // box đối xứng quanh tâm thân (x=49) để lật ngang không bị lệch
 };
+/* QUÁI: Slime (sheet 12 cột x 6 hàng, khung 100x100). idle nảy · atk1 vồ · atk2 đánh mạnh · hurt bẹp · death tan */
+const SPR_SLIME = {
+  src: "assets/sprites/slime.webp",
+  icon: "assets/sprites/slime-icon.png",
+  rows: { idle: [0, 6], walk: [1, 6], atk1: [2, 6], atk2: [3, 12], hurt: [4, 4], death: [5, 4] },
+  box: [28, 20, 74, 58], core: [49, 48, 24, 18], sc: 1.2   // box bao hiệu ứng đánh; core canh thân slime
+};
 // Hiệp sĩ = Knight · Kiếm sư = Swordmaster · Nữ tu sĩ = Priest · Pháp sư = Wizard
-const SPRITE_DATA = { knight: SPR_KNIGHT, swordmaster: SPR_SWORDMASTER, mage: SPR_WIZARD, cleric: SPR_PRIEST, bat: SPR_BAT };   // bat = quái (gắn qua trường sprite trong MT)
+const SPRITE_DATA = { knight: SPR_KNIGHT, swordmaster: SPR_SWORDMASTER, mage: SPR_WIZARD, cleric: SPR_PRIEST, bat: SPR_BAT, slime: SPR_SLIME };   // bat/slime = quái (gắn qua trường sprite trong MT)

@@ -281,3 +281,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Sửa: trong handler back.onfinish/oncancel, nếu anim đang là "walk" và nhân vật chưa chết thì sprPlay(cv, "idle"). Không đè hurt/death.
 - File: js/fx.js. AI: Claude (claude.ai). Test: check.js OK; Chromium gọi playVfx 9 đòn cận chiến × nhân vật/quái × 2 tốc độ: anim cuối idle, lệch 0px; chơi thử 3 lượt thật bằng nút Đánh: idle tại vị trí gốc.
 - Ghi chú: quái dùng sprite không có anim walk nên vốn không kẹt walk. CHƯA test: co-op, điện thoại.
+
+## Cập nhật 2026-10-08 — sprite Slime mới
+- Jame gửi 7 ảnh sprite Slime, dùng sheet chính 12x6 (100x100/frame): idle 6, walk 6, atk1 6, atk2 12, hurt 4, death 4.
+- Thêm SPR_SLIME vào sprite-data.js (box/core canh thân), gắn sprite: "slime" cho quái Slime trong entities.js.
+- Nén webp lossless (9.5KB→2.7KB) để bundle dưới 1MB. File: assets/sprites/slime.webp + slime-icon.png.
+- Test: check OK, bundle 955KB.
