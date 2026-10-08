@@ -44,7 +44,7 @@ const SPR_SLIME = {
   src: "assets/sprites/slime.webp",
   icon: "assets/sprites/slime-icon.png",
   rows: { idle: [0, 6], walk: [1, 6], atk1: [2, 6], atk2: [3, 12], hurt: [4, 4], death: [5, 4] },
-  box: [28, 20, 74, 58], core: [49, 48, 24, 18], sc: 1.2   // box bao hiệu ứng đánh; core canh thân slime
+  box: [28, 20, 74, 58], core: [36, 42, 24, 18], sc: 1.2   // core canh giữa thân slime (tâm thân ở 48,51 trong frame)
 };
 // Hiệp sĩ = Knight · Kiếm sư = Swordmaster · Nữ tu sĩ = Priest · Pháp sư = Wizard
 const SPRITE_DATA = { knight: SPR_KNIGHT, swordmaster: SPR_SWORDMASTER, mage: SPR_WIZARD, cleric: SPR_PRIEST, bat: SPR_BAT, slime: SPR_SLIME };   // bat/slime = quái (gắn qua trường sprite trong MT)
