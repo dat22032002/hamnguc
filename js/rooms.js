@@ -160,7 +160,7 @@ function enterRoom(d, door) {
   const p = state.player, floor = state.monsterIndex + 1;
   log("🚪 Bạn mở " + door.toLowerCase() + ": " + d.icon + " " + d.name + "!");
   if (d.type === "fight") return startFight(d.elite);
-  if (d.type === "merchant") { log("🧙 Một thương nhân lang thang chào mời bạn.", "good"); return openShop(advance); }
+  if (d.type === "merchant") { log("🧙 Một thương nhân lang thang chào mời bạn.", "good"); return showShopScene(); }
   if (d.type === "treasure") { addGold(p, chestGold("treasure", floor, luckOf(p)), "Trong rương"); return offerItem(rollItem(floor, "treasure", undefined, luckOf(p)), advance); }
   if (d.type === "blessing") { log("⛩️ Bạn thấy một bàn thờ cổ, được ban phúc."); render(); return showRewards(true); }
   if (d.type === "rest") return showRest();   // bảng Nghỉ ngắn / Nghỉ dài; restGo() sẽ gọi advance()

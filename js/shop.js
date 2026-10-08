@@ -180,3 +180,14 @@ function renderShop() {
 $("shop-buy").onclick = () => { if (state.shop) { state.shop.tab = "buy"; renderShop(); } };
 $("shop-sell").onclick = () => { if (state.shop) { state.shop.tab = "sell"; renderShop(); } };
 $("shop-close").onclick = closeShop;
+
+/* ----- Scene cửa hàng: nền + thương nhân bấm được ----- */
+function showShopScene() {   // vào cửa thương nhân: hiện scene, bấm thương nhân mới mở shop
+  $("shop-scene").classList.add("show");
+  render();
+}
+function hideShopScene() {
+  $("shop-scene").classList.remove("show");
+}
+$("shop-merchant").onclick = () => openShop(showShopScene);   // đóng shop thì quay lại scene
+$("shop-scene-leave").onclick = () => { hideShopScene(); advance(); };

@@ -203,3 +203,10 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Muse: theo phản hồi của Jame (nhân vật trông lệch phải so với tên/thanh bar), sprite hiệp sĩ có kiếm chĩa sang phải làm trọng tâm thị giác lệch. Đẩy avatar sang trái 10*m bằng `translate` để thân người căn giữa với thanh bar (không ảnh hưởng layout).
 - File: `css/layout-h.css` (1 dòng).
 - Test: check.js OK, bundle 825KB, chụp cận cảnh kiểm tra.
+
+## Cập nhật 2026-10-08 — Scene cửa hàng thương nhân
+- Muse: theo yêu cầu của Jame, cửa Thương nhân giờ hiện scene riêng thay vì mở shop ngay: background shop (bg-shop.webp) + nhân vật thương nhân (merchant.webp, bấm được) + nút Rời đi.
+- Luồng mới: vào cửa → scene → bấm thương nhân → mở shop → đóng shop quay lại scene → Rời đi để đi tiếp.
+- Asset mới: assets/img/bg-shop.webp (102KB), assets/sprites/merchant.webp (35KB, nền trong suốt). Bundle 960KB (< 1MB).
+- File: index.html (#shop-scene), css/style.css, js/shop.js (showShopScene/hideShopScene), js/rooms.js.
+- Test: check.js OK, chụp màn hình scene, verify handler, tap-test 19/19 PASS.
