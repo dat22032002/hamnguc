@@ -25,7 +25,7 @@ const STATUS = {
   immune:  { i: "🔰", n: "Miễn nhiễm", d: "Không dính hiệu ứng xấu" }
 };
 const MSK = {
-  "Slime Xanh": [{ n: "Dịch nhầy", i: "🟢", c: 8, cdn: 3, t: "hit", m: .8, v: "venom", st: [["slow", 3, .7]], d: "Làm chậm mục tiêu" },
+  "Slime": [{ n: "Dịch nhầy", i: "🟢", c: 8, cdn: 3, t: "hit", m: .8, v: "venom", st: [["slow", 3, .7]], d: "Làm chậm mục tiêu" },
     { n: "Nuốt chửng", i: "🌀", c: 16, cdn: 4, t: "hit", m: 2.0, v: "smash", heavy: true, d: "Đòn mạnh ẩn" }],
   "Dơi Đêm": [{ n: "Hút máu", i: "🦷", c: 8, cdn: 3, t: "hit", m: 1.1, ls: .8, v: "claw", d: "Cắn và hút máu" },
     { n: "Xé toạc", i: "🩸", c: 16, cdn: 4, t: "hit", m: 2.0, v: "claw", heavy: true, d: "Đòn mạnh ẩn" }],
@@ -263,7 +263,7 @@ async function monsterAct(m, mi, P, mons) {
       const qmod = qr === "miss" ? 1 : isMelee ? 0.3 : 0;   // đỡ giảm 70%, né tránh hẳn
       if (qr !== "miss") {
         LG((isMelee ? "🛡️ " : "💨 ") + P[tgt[0]].name + (isMelee ? " đỡ được đòn mạnh!" : " né được đòn mạnh!"), "good");
-        if (isMelee) { sprA = "block"; VF("wall", tgt[0], [tgt[0]]); sprA = null; }   // Hiệp sĩ giơ khiên đỡ
+        if (isMelee) { sprA = "block"; VF("wall", tgt[0], [tgt[0]]); }   // Hiệp sĩ giơ khiên đỡ
       }
       sprA = "atk2"; VF(k.v || "smash", mk, tgt.map(t => t));
       if (qmod === 0) { FXX(tgt[0], "Né!", "miss"); }   // né hoàn toàn: không mất máu, không dính hiệu ứng
