@@ -193,3 +193,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Muse: theo phản hồi của Jame (trên mobile thật, debuff bị UI dưới che), tăng `bottom` của `#party` và `--feet` của `.mon` từ 68*m lên 88*m (lên cao thêm 20px).
 - File: `css/layout-h.css` (2 dòng).
 - Test: check.js OK, bundle 825KB, chụp màn hình kiểm tra, tap-test 19/19 PASS.
+
+## Cập nhật 2026-10-08 — Icon buff/debuff sát thanh bar, bỏ viền khung
+- Muse: theo yêu cầu của Jame, icon buff/debuff (`#player-status`, `.mst`) kéo sát vào thanh bar phía trên; bỏ background + viền khung chữ nhật, chỉ giữ icon.
+- File: `css/layout-h.css` (3 selector: player-status, mst, msk).
+- Test: check.js OK, bundle 825KB, chụp màn hình kiểm tra, tap-test 19/19 PASS.
