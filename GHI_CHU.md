@@ -165,3 +165,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Claude: thêm `AGENTS.md` (luật chung cho mọi AI), `CLAUDE.md` (trỏ về AGENTS), `.gitignore` (bỏ `dist/`, `*.zip`), `tools/battle-shot.py` (chụp trận đấu thật, có chế độ điện thoại).
 - Sửa chỗ cũ mâu thuẫn: README/ARCHITECTURE (bỏ `LAYOUT_PLAN.md` không tồn tại; layout `hl` giờ dùng cả điện thoại + co-op; thêm `evo.js` vào bản đồ; giao kết quả trỏ về AGENTS.md); đầu GHI_CHU đổi thành chú thích trỏ về AGENTS.md.
 - Chưa làm: tạo kho GitHub, nối Cloudflare Pages, GitHub Actions (bước 2–5).
+
+## Cập nhật 2026-10-08 (4) — Thanh thứ tự lượt hiện hình nhân vật/quái
+- Claude: trong bố cục ngang `hl`, chip trên thanh "Lượt" trước chỉ có số tốc độ; giờ hiện thêm ảnh biểu tượng nhân vật/quái (icon sprite, hoặc emoji nếu chưa có sprite), số tốc độ nhỏ đè ở góc dưới phải. Chỉ sửa `css/layout-h.css` (bỏ `.oc > :not(small){display:none}`, thêm 3 luật cuối nhóm `.oc`); JS không đổi (`renderOrder` vốn đã sinh sẵn icon).
+- Hạ tầng: kho GitHub `dat22032002/hamnguc` nối Cloudflare (Workers, tên `hamnguc-git`); thêm `wrangler.jsonc` + `.assetsignore` vào gốc dự án. Mỗi lần commit vào `main` Cloudflare tự đăng lại.
+- Test: check.js OK; chụp 1280×720 và 844×390 (điện thoại) thấy icon + số rõ; chưa thử co-op và phòng trùm.
