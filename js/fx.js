@@ -166,7 +166,10 @@ function runAtk(el, F, X, onHit) {
         sprAtk(el, "walk");   // phase 3: chạy về
         const back = mv.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: RUN_BACK * TSv, easing: "ease-in", fill: "forwards" });
         // Về tới chỗ cũ: hủy cả 2 animation (nếu không, fill của "chạy tới" kéo nhân vật lại chỗ quái)
-        back.onfinish = back.oncancel = () => { go.cancel(); back.cancel(); cleanup(); };
+        back.onfinish = back.oncancel = () => {
+          go.cancel(); back.cancel(); cleanup();
+          if (cv && cv._s && cv._s.a === "walk" && !el.classList.contains("dead")) sprPlay(cv, "idle");   // walk tự lặp mãi → phải đổi lại idle (không đè hurt/death)
+        };
       } else requestAnimationFrame(waitAtk);
     };
     waitAtk();

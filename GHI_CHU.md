@@ -275,3 +275,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Tăng tốc: hằng RUN_GO 380→220, RUN_BACK 320→170 (ms, nhân TS()). DUR cận chiến giảm ~300ms (1500→1200, execute 1600→1300) để lượt kế không phải chờ thừa.
 - File: js/fx.js. AI: Claude (claude.ai). Test: check.js OK; Chromium (playwright) gọi VFX.clang cho nhân vật và quái ở tốc độ chậm + nhanh: vị trí cuối lệch 0px (bản cũ kẹt ở chỗ đối thủ).
 - CHƯA test: co-op 2 người (người vào xem qua snapshot), kỹ năng cận chiến khác ngoài clang, giao diện điện thoại. Cần chơi thử.
+
+## Cập nhật 2026-10-08 — nhân vật chạy về xong phải đổi sang idle
+- Lỗi: runAtk() bật anim "walk" khi chạy về nhưng walk nằm trong SPR_LOOP (lặp mãi) nên về chỗ cũ vẫn chạy walk. Chỉ anim không lặp (đánh, bị thương) mới tự về idle.
+- Sửa: trong handler back.onfinish/oncancel, nếu anim đang là "walk" và nhân vật chưa chết thì sprPlay(cv, "idle"). Không đè hurt/death.
+- File: js/fx.js. AI: Claude (claude.ai). Test: check.js OK; Chromium gọi playVfx 9 đòn cận chiến × nhân vật/quái × 2 tốc độ: anim cuối idle, lệch 0px; chơi thử 3 lượt thật bằng nút Đánh: idle tại vị trí gốc.
+- Ghi chú: quái dùng sprite không có anim walk nên vốn không kẹt walk. CHƯA test: co-op, điện thoại.
