@@ -1,0 +1,282 @@
+/* css/layout-h.css — Bố cục chiến đấu NGANG (HUD theo mẫu 844×390). Xem LAYOUT_PLAN.md.
+   QUY TẮC: chỉ viết dưới "#game.hl" (hoặc "body.hl-on"). Không có class hl thì game y như cũ.
+   Class hl do js/layout.js bật khi solo + rộng >= 1000px. Đường dẫn ảnh/font viết "../assets/..." như style.css. */
+
+/* các khung do layout.js tạo: ẩn khi không ở chế độ hl */
+#hl-top, #hl-bottom, #hl-mid, #hl-pbar, #hl-statbtn, #hl-gold { display: none; }
+/* nhãn ngắn / chấm số của 4 nút hành động: chỉ dùng ở bố cục mới */
+#actions .as, #actions .ab { display: none; }
+
+/* --m = hệ số phóng của HUD theo cửa sổ (≈ 1px ở cỡ mẫu 844×390). Thanh trên + bảng dưới viết calc(N * var(--m)) với N theo mẫu.
+   Mobile cầm dọc bị ép xoay (body.fland): khung rộng = chiều cao thật, cao = chiều rộng thật nên đổi chỗ 100vw/100vh. */
+#game.hl { --m: min(calc(100vw / 844), calc(100vh / 390)); --m: min(calc(100vw / 844), calc(100dvh / 390)); }
+body.fland #game.hl { --m: min(calc(100dvh / 844), calc(100vw / 390)); }
+
+/* ===== PHASE 1: 3 dải dọc — thanh trên · sân khấu · bảng dưới ===== */
+body.hl-on { padding: 0; display: block; }
+#game.hl { display: flex; flex-direction: column; gap: 0; width: 100%; max-width: none; height: 100vh; height: 100dvh; min-height: 0; align-items: stretch; margin: 0; }
+#game.hl > #topbar { display: none; }                 /* các nút của nó đã chuyển lên #hl-top */
+#game.hl > #main { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+#game.hl #arena { flex: 1; min-height: 0; border-radius: 0; padding: calc(6 * var(--m)) calc(8 * var(--m)); }
+#game.hl #party { border: 0 !important; border-image: none !important; padding: 0 !important; background: none !important; }   /* bỏ khung thẻ cũ */
+#game.hl #party::before, #game.hl #party::after { display: none !important; }
+#game.hl #me-stats { display: none; }                  /* bảng chỉ số: xem qua nút 📊 */
+
+/* ===== THANH TRÊN (cao 32·m): [Tầng · Khu] [Lượt + chip tốc độ] ......... [vàng] [nhật ký] [tốc độ] [menu] ===== */
+#game.hl #hl-top { display: flex; flex: none; align-items: center; gap: calc(6 * var(--m)); height: calc(32 * var(--m)); padding: 0 calc(8 * var(--m)); box-sizing: border-box; background: #15101a; border-bottom: max(1px, calc(2 * var(--m))) solid #5a3d1c; }
+#game.hl #hl-top > * { flex: none; margin: 0; }
+#game.hl #hl-top h1 { display: none; }
+#game.hl #hl-top #floor-badge { order: 1; display: flex; align-items: center; height: calc(24 * var(--m)); padding: 0 calc(8 * var(--m)); box-sizing: border-box; font-size: calc(12 * var(--m)); letter-spacing: .03em; white-space: nowrap; color: #ffe3a0; background: #2a1d12; border: max(1px, calc(2 * var(--m))) solid #9a6a2a; border-radius: 0; box-shadow: none; text-shadow: none; }
+/* "Lượt của bạn": mẫu không có (đã có chip vàng báo ai đang đánh) → ẩn ở solo; co-op giữ vì có thông báo chờ đồng đội */
+#game.hl #hl-top #turn-info { order: 2; }
+#game.hl:not(.coop) #hl-top #turn-info { display: none; }
+#game.hl.coop #hl-top #turn-info { display: flex; align-items: center; height: calc(24 * var(--m)); padding: 0 calc(6 * var(--m)); box-sizing: border-box; font-size: calc(11 * var(--m)); white-space: nowrap; color: #ffe3a0; background: #2b1f12; border: max(1px, calc(2 * var(--m))) solid #5a3d1c; border-radius: 0; text-shadow: none; }
+#game.hl #hl-top #turn-info:empty { display: none !important; }
+
+/* thứ tự ra đòn: nhãn "Lượt" + chip chỉ có số tốc độ; người chơi xanh, quái đỏ, đồng đội lục, người đang đánh viền vàng */
+#game.hl #hl-top #order { order: 3; display: flex; align-items: center; flex: 0 1 auto; min-width: 0; flex-wrap: nowrap; overflow: hidden; gap: calc(4 * var(--m)); margin: 0; padding: 0; border: 0; border-radius: 0; background: none; align-self: center; }
+#game.hl #hl-top #order b { margin: 0 calc(2 * var(--m)) 0 calc(4 * var(--m)); font-size: 0; font-weight: 400; text-shadow: none; white-space: nowrap; }
+#game.hl #hl-top #order b::before { content: "Lượt"; font-size: max(9px, calc(11 * var(--m))); letter-spacing: .04em; color: #d9c79b; }
+#game.hl #hl-top .oc { flex: none; display: flex; align-items: center; justify-content: center; min-width: calc(30 * var(--m)); height: calc(26 * var(--m)); padding: 0 calc(4 * var(--m)); box-sizing: border-box; border-radius: 0; border: max(1px, calc(2 * var(--m))) solid #7a2a2a; background: #2a1313; transform: none; line-height: 1; font-size: 0; }
+#game.hl #hl-top .oc > :not(small) { display: none; }
+#game.hl #hl-top .oc small { font-size: max(9px, calc(12 * var(--m))); color: #fff; }
+#game.hl #hl-top .oc.me { border-color: #4a8be0; background: #14243d; }
+#game.hl #hl-top .oc.mate { border-color: #2f9a5d; background: #12301f; }
+#game.hl #hl-top .oc.foe { border-color: #7a2a2a; background: #2a1313; }
+#game.hl #hl-top .oc.now { transform: none; border-color: #ffd23f; box-shadow: 0 0 0 1px rgba(255,210,63,.55), 0 0 calc(8 * var(--m)) rgba(255,210,63,.3); }
+#game.hl #hl-top .oc.now small { color: #ffe3a0; }
+
+/* chip vàng (đọc lại #me-gold) + 3 nút icon vuông: nhật ký · tốc độ · menu */
+#game.hl #hl-top #hl-gold { order: 4; margin-left: auto; display: flex; align-items: center; height: calc(24 * var(--m)); padding: 0 calc(6 * var(--m)); box-sizing: border-box; font-size: max(9px, calc(11 * var(--m))); font-weight: 700; white-space: nowrap; color: #ffd77a; background: #2a1d0e; border: max(1px, calc(2 * var(--m))) solid #6a4a1c; }
+#game.hl #hl-top #hl-gold[hidden] { display: none; }
+#game.hl #hl-top #hl-gold[hidden] ~ #logbtn { margin-left: auto; }
+#game.hl #hl-top #logbtn, #game.hl #hl-top #speedbtn, #game.hl #hl-top #pausebtn { display: flex; align-items: center; justify-content: center; width: calc(30 * var(--m)); height: calc(26 * var(--m)); min-width: 0; padding: 0; box-sizing: border-box; font-size: 0; line-height: 0; color: #f6dca4; background: #241a14; border: max(1px, calc(2 * var(--m))) solid #5a4632; border-image: none; border-radius: 0; box-shadow: none; text-shadow: none; }
+#game.hl #hl-top #logbtn { order: 5; --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M4 6h16M4 12h10M4 18h13'/%3E%3C/svg%3E"); }
+#game.hl #hl-top #speedbtn { order: 6; --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M5 5l7 7-7 7M12 5l7 7-7 7'/%3E%3C/svg%3E"); }
+#game.hl #hl-top #pausebtn { order: 7; --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M4 6h16M4 12h16M4 18h16'/%3E%3C/svg%3E"); }
+#game.hl #hl-top #logbtn::before, #game.hl #hl-top #speedbtn::before, #game.hl #hl-top #pausebtn::before { content: ""; display: block; width: calc(16 * var(--m)); height: calc(16 * var(--m)); background: currentColor; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat; }
+#game.hl #hl-top #logbtn:hover, #game.hl #hl-top #speedbtn:hover, #game.hl #hl-top #pausebtn:hover { border-color: #8a6a45; filter: none; }
+#game.hl #hl-top #speedbtn.on { border-color: #ffd23f; color: #ffd23f; }   /* đang chạy x2 */
+
+/* ===== PHASE 4–5: nhân vật (trái) + quái (phải) đứng TRONG #arena =====
+   --hu = 1/720 chiều cao cửa sổ: mọi số đo viết calc(N * var(--hu)) với N theo mẫu 1280×720.
+   Vị trí ngang dùng % (x/1280). "Đường chân" (feet): hàng trước 70hu, hàng sau 200hu tính từ đáy sân khấu. */
+#game.hl { --hu: calc(100vh / 720); --hu: calc(100dvh / 720); }
+#game.hl #arena > #party, #game.hl #arena > #mons { position: absolute; z-index: 3; margin: 0; padding: 0; }
+
+/* --- Phase 4: nhân vật --- */
+#game.hl #arena > #party { left: 18%; bottom: calc(68 * var(--m)); translate: -50% 0; width: auto; display: block; }
+#game.hl #me { position: relative; display: flex !important; justify-content: center; padding: 0; margin: 0; gap: 0; }
+#game.hl #me > .avatar { font-size: calc(78 * var(--hu)); margin: 0; }          /* hình hiệp sĩ ~150px rộng như mẫu (sprite tính theo em) */
+#game.hl #me::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-7 * var(--hu)); width: calc(110 * var(--hu)); height: calc(14 * var(--hu)); margin-left: calc(-55 * var(--hu)); border-radius: 50%; background: rgba(0,0,0,.55); }
+#game.hl #me > .avatar.dead { opacity: .85; }
+/* dấu ▼ vàng khi đến lượt mình */
+#game.hl .avatar.acting::after { top: calc(-34 * var(--hu)); font-size: calc(24 * var(--hu)); line-height: 1; color: #ffd23f; text-shadow: 0 0 0 #1a0f0a, 0 2px 0 #1a0f0a, 2px 0 0 #1a0f0a, -2px 0 0 #1a0f0a; animation: hlbob .8s ease-in-out infinite; }
+@keyframes hlbob { 50% { transform: translateX(-50%) translateY(calc(5 * var(--hu))); } }
+/* thanh dưới chân (theo mẫu): "Tên · Lv" + HP + MP + XP mảnh; js/layout.js đọc lại từ #me-* */
+#game.hl #hl-pbar { display: block; position: absolute; left: 50%; top: calc(100% + 9 * var(--hu)); width: calc(106 * var(--m)); translate: -50% 0; text-align: center; pointer-events: none; }
+#game.hl #hl-pbar .pn { display: block; margin-bottom: calc(2 * var(--m)); font-size: max(9px, calc(11 * var(--m))); line-height: 1.2; color: #f1e6cc; white-space: nowrap; text-shadow: 0 1px 2px #000; }
+#game.hl #hl-pbar .pb { position: relative; height: calc(12 * var(--m)); margin-top: calc(1 * var(--m)); box-sizing: border-box; border: max(1px, calc(1.5 * var(--m))) solid #0f0b12; background: #0f0b12; box-shadow: 0 0 0 1px #3a2a1a; }
+#game.hl #hl-pbar .pb i { display: block; height: 100%; transition: width .3s; }
+#game.hl #hl-pbar .pb span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: max(7px, calc(9 * var(--m))); line-height: 1; color: #fff; text-shadow: 0 1px 0 #000, 0 0 2px #000; }
+#game.hl #hl-pbar .hp i { background: #2a7a47; }
+#game.hl #hl-pbar .mp i { background: #2f5fb0; }
+#game.hl #hl-pbar .xp { height: calc(5 * var(--m)); }
+#game.hl #hl-pbar .xp i { background: #c9a03a; }
+#game.hl #hl-pbar.low .hp i { background: #b8453a; animation: hlpulse 1s ease-in-out infinite; }
+@keyframes hlpulse { 50% { filter: brightness(1.5); } }
+/* trạng thái: nằm bên phải chân nhân vật, gọn */
+#game.hl #me > #player-status { position: absolute; left: calc(100% + 6 * var(--hu)); bottom: calc(2 * var(--hu)); margin: 0; padding: 2px 6px; font-size: max(11px, calc(12 * var(--hu))); white-space: nowrap; background: rgba(10,8,13,.7); border: 1px solid rgba(224,160,64,.35); }
+#game.hl #me > #player-status[hidden] { display: none; }
+
+/* --- Phase 5: quái — tối đa 2 hàng, hàng sau cao hơn + nhỏ hơn (chiều sâu) --- */
+#game.hl #arena > #mons { inset: 0; display: block; height: auto; min-height: 0; pointer-events: none; }
+#game.hl #mons .mon { --fsb: 96; --k: 1; --x: 70%; --feet: calc(68 * var(--m));
+  --fs: calc(var(--fsb) * var(--k) * var(--hu)); --bw: calc((var(--fsb) * .6 + 60) * var(--k) * var(--hu));
+  position: absolute; pointer-events: auto; display: flex; justify-content: center; align-items: flex-end; box-sizing: border-box;
+  left: var(--x); translate: -50% 0; bottom: var(--feet); width: calc(var(--bw) + 24 * var(--hu)); height: var(--fs); max-width: none; flex: none;
+  padding: 0; border: 0; border-radius: 0; background: none !important; box-shadow: none !important; transform: none; z-index: 2; }
+#game.hl #mons .mon.m { --fsb: 112; } #game.hl #mons .mon.l { --fsb: 140; }
+#game.hl #mons .mon:hover { transform: none; background: none; }
+#game.hl #mons .mon .avatar { font-size: var(--fs); }
+/* bóng dưới chân; quái bị nhắm: bóng viền vàng */
+#game.hl #mons .mon::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-6 * var(--hu)); width: calc(var(--fs) * 1.4); height: calc(12 * var(--hu)); margin-left: calc(var(--fs) * -.7); border-radius: 50%; background: rgba(0,0,0,.55); }
+#game.hl #mons .mon.sel::before { box-shadow: 0 0 0 2px #ffd23f, 0 0 12px rgba(255,210,63,.45); }
+/* dấu ▼ đỏ trên quái bị nhắm (thay 🎯 cũ) */
+#game.hl #mons .mon.sel::after { content: "▼"; position: absolute; z-index: 6; top: calc(-44 * var(--hu)); left: 0; right: 0; width: auto; text-align: center; font-size: calc(24 * var(--hu)); line-height: 1; color: #ff5a3c; filter: none; text-shadow: 0 2px 0 #1a0f0a, 2px 0 0 #1a0f0a, -2px 0 0 #1a0f0a; animation: hlbob2 .8s ease-in-out infinite; }
+@keyframes hlbob2 { 50% { translate: 0 calc(5 * var(--hu)); } }
+#game.hl #mons .mon.sel:has(.avatar.acting)::after { top: calc(-70 * var(--hu)); }
+#game.hl #mons .mon .avatar.acting::after { top: calc(-26 * var(--hu)); }
+#game.hl #mons .mon:has(.avatar.boss) { border: 0; }
+/* thanh máu 12px, mana mảnh, nhãn "Tên · Lv" dưới chân */
+#game.hl #mons .mon .bar { position: absolute; left: 50%; top: calc(100% + 8 * var(--hu)); width: var(--bw); margin: 0 0 0 calc(var(--bw) / -2); height: calc(12 * var(--hu)); box-sizing: border-box; border: 2px solid #1a0f0a; border-radius: 0; background: #2a1313; box-shadow: none; }
+#game.hl #mons .mon .bar > div { background: #a8332f; }
+#game.hl #mons .mon .bar > div::after { display: none; }
+#game.hl #mons .mon .bar .bt { display: none; font-size: max(9px, calc(10 * var(--hu))); }   /* thanh nhỏ: ẩn số máu (theo mẫu); màn cao ≥ 680px thì hiện */
+@media (min-height: 680px) { #game.hl #mons .mon .bar:not(.mp) .bt { display: block; } }
+#game.hl #mons .mon .bar.mp { top: calc(100% + 8 * var(--hu) + 14 * var(--hu)); height: calc(5 * var(--hu)); border-width: 1px; background: #101a2a; }
+#game.hl #mons .mon .bar.mp > div { background: #2f5fb0; }
+#game.hl #mons .mon .bar.mp .bt { display: none; }
+#game.hl #mons .mon .mname { position: absolute; left: 50%; right: auto; translate: -50% 0; width: max-content; max-width: calc(var(--bw) + 40 * var(--hu)); top: calc(100% + 8 * var(--hu) + 22 * var(--hu)); min-height: 0; display: flex; justify-content: center; align-items: baseline; gap: 4px; font-size: max(11px, calc(12 * var(--hu))); line-height: 1.2; color: #d9c79b; white-space: nowrap; }
+#game.hl #mons .mon.sel .mname { color: #ffe3a0; }
+#game.hl #mons .mon .mname .lvb { position: static; order: 2; padding: 0; border: 0; border-image: none; background: none; font-size: inherit; color: inherit; opacity: .85; }
+#game.hl #mons .mon .mname .lvb::before { content: "·\00a0"; }
+/* tốc độ/kháng: cạnh thanh máu; trạng thái: trên đầu; kỹ năng: cột bên phải sprite (tooltip giữ nguyên) */
+#game.hl #mons .mon small { position: absolute; left: calc(50% + var(--bw) / 2 + 6px); top: calc(100% + 6 * var(--hu)); margin: 0; display: flex; gap: 4px; font-size: max(10px, calc(11 * var(--hu))); white-space: nowrap; }
+#game.hl #mons .mon .mst { position: absolute; left: 0; right: 0; top: calc(-22 * var(--hu)); margin: 0; min-height: 0; justify-content: center; z-index: 4; }
+#game.hl #mons .mon .msk { position: absolute; left: calc(50% + var(--fs) / 2 + 2px); right: auto; top: 0; margin: 0; flex-direction: column; align-items: flex-start; flex-wrap: nowrap; gap: 3px; z-index: 4; }
+
+/* vị trí theo số quái (tâm theo x/1280): --k 1 = hàng trước · .8 = hàng sau (nhỏ hơn, đứng cao hơn). Quái đầu mảng (to/trùm) luôn ở hàng trước */
+#game.hl #mons:has(.mon:nth-child(1):last-child) .mon:nth-child(1) { --x: 70%; }
+#game.hl #mons:has(.mon:nth-child(2):last-child) .mon:nth-child(1) { --x: 61%; }
+#game.hl #mons:has(.mon:nth-child(2):last-child) .mon:nth-child(2) { --x: 78%; }
+#game.hl #mons:has(.mon:nth-child(3):last-child) .mon:nth-child(1) { --x: 54%; }
+#game.hl #mons:has(.mon:nth-child(3):last-child) .mon:nth-child(2) { --x: 84%; }
+#game.hl #mons:has(.mon:nth-child(3):last-child) .mon:nth-child(3), #game.hl #mons:has(.mon:nth-child(4):last-child) .mon:nth-child(3) { --x: 70%; --k: .8; --feet: calc(146 * var(--m)); z-index: 3; }
+#game.hl #mons:has(.mon:nth-child(4):last-child) .mon:nth-child(1) { --x: 54%; }
+#game.hl #mons:has(.mon:nth-child(4):last-child) .mon:nth-child(2) { --x: 83%; }
+#game.hl #mons:has(.mon:nth-child(4):last-child) .mon:nth-child(3) { --x: 68.5%; }
+#game.hl #mons:has(.mon:nth-child(4):last-child) .mon:nth-child(4) { --x: 90%; --k: .8; --feet: calc(146 * var(--m)); z-index: 3; }
+/* 5–6 con (chưa có nhóm nào sinh ra, đề phòng): 3 trước + còn lại sau */
+#game.hl #mons:has(.mon:nth-child(5)) .mon:nth-child(1) { --x: 52%; } #game.hl #mons:has(.mon:nth-child(5)) .mon:nth-child(2) { --x: 68%; } #game.hl #mons:has(.mon:nth-child(5)) .mon:nth-child(3) { --x: 84%; }
+#game.hl #mons:has(.mon:nth-child(5)) .mon:nth-child(n+4) { --k: .8; --feet: calc(146 * var(--m)); z-index: 3; }
+#game.hl #mons:has(.mon:nth-child(5)) .mon:nth-child(4) { --x: 60%; } #game.hl #mons:has(.mon:nth-child(5)) .mon:nth-child(5) { --x: 76%; } #game.hl #mons:has(.mon:nth-child(6)) .mon:nth-child(6) { --x: 90%; }
+
+/* ===== BẢNG DƯỚI (cao 96·m): [thẻ trang bị 148] [khung kỹ năng — co giãn] [4 nút 296] ===== */
+#game.hl #hl-bottom { display: flex; flex: none; box-sizing: border-box; gap: calc(8 * var(--m)); height: calc(96 * var(--m)); padding: calc(8 * var(--m)); background: #15101a; border-top: max(1px, calc(2 * var(--m))) solid #5a3d1c; }
+
+/* --- trái: 3 ô trang bị + nút Chỉ số (tên/HP/MP/XP đã chuyển xuống chân nhân vật, vàng lên thanh trên) --- */
+#game.hl #hl-card { flex: none; width: calc(148 * var(--m)); box-sizing: border-box; display: flex; flex-direction: column; gap: calc(4 * var(--m)); padding: calc(5 * var(--m)); overflow: hidden; border: calc(2 * var(--m)) solid #8a5a24; background: #1b1420; }
+#game.hl #hl-card > .info { display: none; }
+#game.hl #hl-card > .eqs { order: 1; display: flex; flex: 1; min-height: 0; flex-direction: row; gap: calc(4 * var(--m)); width: auto; }
+#game.hl #hl-card .eq { flex: 1; min-width: 0; height: auto; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(1 * var(--m)); padding: calc(2 * var(--m)); overflow: hidden; text-align: center; border: max(1px, calc(2 * var(--m))) dashed #5a3d1c; border-radius: 0; background: #16101a; color: #8d7e66; font-size: max(7px, calc(9 * var(--m))); opacity: 1; cursor: pointer; transition: background .15s, border-color .15s; }
+#game.hl #hl-card .eq:hover { background: #231a28; border-color: #8a5a24; }
+#game.hl #hl-card .eq:not(.empty) { border-style: solid; border-color: var(--rc, #5a3d1c); color: #f1e6cc; background: linear-gradient(180deg, #1d1522, #16101a); }
+#game.hl #hl-card .eq .eic { font-size: calc(15 * var(--m)); line-height: 1; }
+#game.hl #hl-card .eq.empty .eic { opacity: .45; filter: grayscale(1); }
+#game.hl #hl-card .eq > div { display: flex; flex-direction: column; align-items: center; width: 100%; min-width: 0; gap: 0; }
+#game.hl #hl-card .eq b { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 100%; overflow: hidden; white-space: normal; text-overflow: clip; word-break: break-word; font-size: max(7px, calc(8 * var(--m))); line-height: 1.2; font-weight: 700; }
+#game.hl #hl-card .eq small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 100%; overflow: hidden; white-space: normal; text-overflow: clip; word-break: break-word; line-height: 1.1; font-size: max(7px, calc(9 * var(--m))); color: #a8977a; }
+#game.hl #hl-card .eq em { display: none; }
+#game.hl #hl-card .eq.empty b { display: none; }               /* ô trống: chỉ icon mờ + nhãn (Kiếm / Giáp / Khiên) */
+#game.hl #hl-card .eq:not(.empty) small { display: none; }     /* đã mặc: icon + tên; chỉ số xem ở tooltip / Túi đồ */
+#game.hl #hl-card #player-status { display: none; }
+#game.hl #hl-statbtn { order: 2; display: block; flex: none; width: 100%; height: calc(21 * var(--m)); margin: 0; padding: 0; box-sizing: border-box; font-size: max(8px, calc(11 * var(--m))); line-height: 1; letter-spacing: .04em; color: #e8d9b8; background: #241a14; border: max(1px, calc(2 * var(--m))) solid #5a4632; border-image: none; border-radius: 0; box-shadow: none; cursor: pointer; }
+#game.hl #hl-statbtn:hover { border-color: #8a6a45; filter: none; }
+
+/* --- giữa: khung nét đứt tím + gợi ý; bấm "Kỹ năng" thì viền đặc và hiện hàng 5 thẻ (4 kỹ năng + Tối thượng) --- */
+#game.hl #hl-mid { display: flex; flex: 1; min-width: 0; box-sizing: border-box; align-items: stretch; border: calc(2 * var(--m)) dashed #3f3160; background: #161020; }
+#game.hl #hl-hint { margin: auto; padding: 0 calc(8 * var(--m)); text-align: center; font-size: max(8px, calc(11 * var(--m))); line-height: 1.3; color: #6f6588; }
+#game.hl #hl-mid:has(#skills.show) { border-style: solid; border-width: calc(3 * var(--m)); border-color: #9a6bd0; background: #1a1228; }
+#game.hl #hl-mid:has(#skills.show) #hl-hint { display: none; }
+#game.hl #hl-mid #skills { display: none; }
+#game.hl #hl-mid #skills.show { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(5 * var(--m)); width: 100%; padding: calc(4 * var(--m)); box-sizing: border-box; }
+#game.hl #skills .sk { --u: 1px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(1 * var(--m)); min-width: 0; min-height: 0; height: 100%; padding: calc(8 * var(--m)) calc(2 * var(--m)) calc(2 * var(--m)); text-align: center; font-size: max(8px, calc(10 * var(--m))); line-height: 1.15; color: #fff; border-radius: 0; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+#game.hl #skills .sk .tg, #game.hl #skills .sk small, #game.hl #skills .sk .kc, #game.hl #skills .sk br { display: none; }
+#game.hl #skills .sk .ki { display: block; font-size: calc(13 * var(--m)); line-height: 1; }
+#game.hl #skills .sk b { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; max-width: 100%; font-weight: 700; word-break: break-word; }
+#game.hl #skills .sk .mpc, #game.hl #skills #btn-ult .mpc { display: block; font-size: max(7px, calc(9 * var(--m))); letter-spacing: .03em; color: #9fc3ff; }
+#game.hl #skills .sk:hover:not(:disabled) { filter: brightness(1.15); }
+#game.hl #skills .sk:disabled { opacity: .4; }
+#game.hl #skills .sk.oncd:disabled { opacity: .75; }
+#game.hl #skills .sk .cdov { border-radius: 0; font-size: max(9px, calc(13 * var(--m))); }
+/* số phím 1–5 ở góc trái trên mỗi thẻ */
+#game.hl #skills .sk::after, #game.hl #skills #btn-ult::after { position: absolute; top: calc(2 * var(--m)); left: calc(4 * var(--m)); right: auto; padding: 0; background: none; font-size: max(7px, calc(8 * var(--m))); font-weight: 700; line-height: 1; color: #d8c2f5; z-index: 2; }
+#game.hl #skills .sk:nth-child(1)::after { content: "1"; } #game.hl #skills .sk:nth-child(2)::after { content: "2"; }
+#game.hl #skills .sk:nth-child(3)::after { content: "3"; } #game.hl #skills .sk:nth-child(4)::after { content: "4"; }
+#game.hl #skills #btn-ult::after { content: "5"; color: #ffe08a; }
+/* Tối thượng: viền vàng, nền vàng sẫm; thanh mảnh dưới đáy = tiến độ hồi chiêu (đầy = sẵn sàng) */
+#game.hl #skills #btn-ult { grid-column: auto; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; min-height: 0; height: 100%; padding: calc(8 * var(--m)) calc(2 * var(--m)) calc(4 * var(--m)); text-align: center; color: #fff; border: 0; border-image: none; border-radius: 0; }
+#game.hl #skills #btn-ult .ub, #game.hl #skills #btn-ult .uf, #game.hl #skills #btn-ult .sp { border-radius: 0; }
+#game.hl #skills #btn-ult .ut { display: flex; flex-direction: column; align-items: center; gap: calc(1 * var(--m)); max-width: 100%; text-shadow: none; }
+#game.hl #skills #btn-ult .ut .ul, #game.hl #skills #btn-ult .ut small, #game.hl #skills #btn-ult .ut .kc { display: none; }
+#game.hl #skills #btn-ult .ut b { display: block; max-width: 100%; font-size: max(8px, calc(10 * var(--m))); line-height: 1.15; color: #fff3c4; word-break: break-word; }
+#game.hl #skills #btn-ult:hover:not(:disabled) { filter: brightness(1.15); }
+#game.hl #skills #btn-ult:disabled { opacity: .5; }
+
+/* --- phải: 4 nút vuông (icon trên, nhãn dưới); Kỹ năng được viền vàng khi đang mở --- */
+#game.hl #hl-actions { position: relative; flex: none; width: calc(296 * var(--m)); }
+#game.hl #hl-actions #actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 1fr; gap: calc(6 * var(--m)); height: 100%; }
+#game.hl #actions button { --u: var(--m); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(5 * var(--m)); min-width: 0; min-height: 0; height: auto; padding: 0; font-size: max(8px, calc(11 * var(--m))); font-weight: 700; letter-spacing: .02em; color: #fff; border-image-source: var(--fL); border-radius: 0;
+  text-shadow: 0 2px 0 rgba(26,15,10,.8); box-shadow: 0 calc(3 * var(--m)) 0 rgba(0,0,0,.45); background: radial-gradient(ellipse at 50% 140%, rgba(255,255,255,.18), transparent 65%), linear-gradient(180deg, var(--a), var(--b)); }
+#game.hl #actions button::before { content: ""; position: static; text-shadow: none; display: block; width: calc(22 * var(--m)); height: calc(22 * var(--m)); flex: none; background: currentColor; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat; }
+#game.hl #btn-attack { --a: #b73c38; --b: #6e1d24; --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M20 4L9 15M6 12l6 6M8.5 15.5L4 20'/%3E%3C/svg%3E"); } #game.hl #btn-defend { --a: #3d66b0; --b: #23396a; --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z'/%3E%3C/svg%3E"); }
+#game.hl #btn-heal { --a: #8a4aa8; --b: #4a2468; --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M12 2c.8 5.5 4.5 9.2 10 10-5.5.8-9.2 4.5-10 10-.8-5.5-4.5-9.2-10-10 5.5-.8 9.2-4.5 10-10z'/%3E%3C/svg%3E"); } #game.hl #btn-potion { --a: #8a6a1a; --b: #4a3a10; --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E"); }
+#game.hl #actions .al { display: none; }
+#game.hl #actions .as { display: block; }
+#game.hl #actions .ab:not(:empty) { display: flex; align-items: center; justify-content: center; position: absolute; top: calc(3 * var(--m)); left: calc(3 * var(--m)); min-width: calc(12 * var(--m)); height: calc(12 * var(--m)); padding: 0 calc(2 * var(--m)); box-sizing: border-box; font-size: max(7px, calc(8 * var(--m))); line-height: 1; color: #ffd77a; background: #1a0f0a; text-shadow: none; }
+#game.hl #actions button:hover:not(:disabled) { filter: brightness(1.12); }
+#game.hl #actions button:active:not(:disabled) { transform: translateY(2px); box-shadow: none; }
+#game.hl #actions button:disabled { filter: saturate(.4) brightness(.7); box-shadow: none; }
+#game.hl #actions button::after { top: calc(3 * var(--m)); right: calc(4 * var(--m)); font-size: max(8px, calc(10 * var(--m))); color: #ffd9a0; background: rgba(0,0,0,.35); }
+#game.hl #hl-bottom:has(#skills.show) #actions button::after { display: none; }
+#game.hl #btn-heal.ultrdy .as::after { content: "★"; position: absolute; top: calc(3 * var(--m)); left: calc(4 * var(--m)); font-size: max(9px, calc(11 * var(--m))); line-height: 1; color: #ffe08a; text-shadow: 0 0 6px #ff9a2a; }
+#game.hl #hl-bottom:has(#skills.show) #btn-heal { outline: calc(2 * var(--m)) solid #ffd23f; outline-offset: calc(1 * var(--m)); }
+
+/* ===== Nhật ký = ngăn trượt từ trái (góc trái-trên sân khấu), mở/đóng bằng nút ≡ đầu tiên bên phải thanh trên hoặc ✕; luôn cuộn xuống cuối ===== */
+#hl-logx { display: none; }
+#game.hl > #side { position: fixed; left: calc(8 * var(--m)); top: calc(38 * var(--m)); width: calc(270 * var(--m)); z-index: 8; display: block; pointer-events: none; }
+#game.hl > #side > * { pointer-events: auto; }
+#game.hl > #side::before { content: "📜 NHẬT KÝ"; position: absolute; left: calc(8 * var(--m)); top: calc(6 * var(--m)); z-index: 2; font-size: max(8px, calc(9 * var(--m))); letter-spacing: .14em; color: #c9a063; text-shadow: 0 1px 0 #000; pointer-events: none; transition: opacity .2s; }
+#game.hl > #side #log { height: calc(150 * var(--m)); padding-top: calc(22 * var(--m)); font-size: max(10px, calc(11 * var(--m))); background: rgba(14,11,18,.93); border: 2px solid #5a3d1c; border-radius: 0; box-shadow: 0 8px 26px rgba(0,0,0,.6), inset 0 2px 10px rgba(0,0,0,.6);
+  transition: transform .25s ease, opacity .2s ease; }
+#game.hl > #side #hl-logx { display: block; position: absolute; right: calc(6 * var(--m)); top: calc(4 * var(--m)); z-index: 3; width: calc(22 * var(--m)); height: calc(18 * var(--m)); padding: 0; font-size: max(9px, calc(10 * var(--m))); line-height: 1; color: #d9c79b; background: #241a14; border: 1px solid #8a5a24; border-radius: 0; box-shadow: none; transition: opacity .2s; }
+#game.hl > #side #hl-logx:hover { border-color: #e0a040; color: #fff; }
+/* đóng: trượt ra trái (ghi đè luật cũ display:none để có hoạt ảnh) */
+#game.hl.nolog > #side #log { display: block; transform: translateX(calc(-100% - 24px)); opacity: 0; pointer-events: none; }
+#game.hl.nolog > #side::before, #game.hl.nolog > #side #hl-logx { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { #game.hl > #side #log { transition: none; } }
+
+/* ===== Menu / chọn class trên mobile (< 1000px) ===== */
+@media (max-width: 999px) {
+  /* menu trên mobile: thu còn một nửa — trừ trang chọn class (bố cục ngang riêng, không scale) */
+  #menu .box { transform: scale(.5); }
+  #menu .box:has(#pg-class[style*="block"]) { transform: none; max-width: 740px; width: 96%; max-height: 100%; overflow-y: auto; }
+  #menu .box:has(#pg-class[style*="block"]) .logo, #menu .box:has(#pg-class[style*="block"]) #menu-note { display: none; }
+  /* chọn class: bố cục ngang 2 cột vừa màn hình ngang */
+  #pg-class #class-pick { display: grid; grid-template-columns: 1fr 1.1fr; gap: 8px 14px; }
+  #pg-class #cp-tabs { grid-column: 1 / -1; grid-row: 1; }
+  #pg-class #cp-hero { grid-column: 1; grid-row: 2; margin: 0; align-self: start; }
+  #pg-class #cp-stats { grid-column: 2; grid-row: 2; margin: 0; align-self: start; }
+  #pg-class #cp-skills { grid-column: 1; grid-row: 3; margin: 0; align-self: start; }
+  #pg-class #cp-skinfo { grid-column: 2; grid-row: 3; margin: 0; max-height: 118px; overflow-y: auto; align-self: start; }
+  #pg-class #c-ok, #pg-class #c-back { display: inline-block; width: 48%; margin-top: 8px; }
+  #pg-class #c-back { margin-left: 2%; }
+
+  /* chọn class: gọn lại cho vừa khung ngang */
+  #cp-tabs { gap: 6px; margin-bottom: 8px; }
+  #class-pick .ctab { font-size: 20px; padding: 4px 0 3px; }
+  #cp-hero { gap: 10px; padding: 10px; }
+  #cp-av { width: 62px; height: 62px; font-size: 34px; }
+  #cp-av .wp { width: 26px; height: 26px; font-size: 14px; right: -6px; bottom: -3px; }
+  #cp-name { font-size: 19px; }
+  #cp-role { margin: 4px 0; font-size: 11px; }
+  #cp-tag { font-size: 12px; }
+  #cp-vit { font-size: 12px; margin-top: 4px; }
+  #cp-stats { margin: 8px 2px; gap: 5px 12px; }
+  #cp-stats .cps { font-size: 11px; }
+  #cp-stats .cps b { width: 58px; }
+  #cp-skills { gap: 6px; margin-bottom: 8px; }
+  #class-pick .csk { max-width: 42px; font-size: 18px; }
+  #cp-skinfo { min-height: 0; margin-bottom: 8px; padding: 8px 10px; font-size: 12px; }
+  #c-ok { font-size: 15px !important; padding: 10px 14px !important; }
+}
+
+/* ===== Co-op trên mobile (ép ngang): đồng đội đứng cạnh bạn trên sân khấu, thanh máu nhỏ dưới chân (giống #hl-pbar) ===== */
+#hl-mbar { display: none; }
+#game.hl.coop #arena > #party { display: flex !important; flex-direction: row; align-items: flex-end; gap: calc(150 * var(--hu)); left: 21%; grid-template-columns: none; }
+#game.hl.coop #party .side { grid-row: auto !important; }
+#game.hl.coop #party .avatar, #game.hl.coop #party .avatar.spr { width: auto !important; }
+#game.hl.coop #mate { position: relative; display: flex !important; justify-content: center; padding: 0 !important; margin: 0; gap: 0; border: 0 !important; background: none; }
+#game.hl.coop #mate::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-7 * var(--hu)); width: calc(150 * var(--hu)); height: calc(14 * var(--hu)); margin-left: calc(-75 * var(--hu)); border-radius: 50%; background: rgba(0,0,0,.55); border-left: 0 !important; top: auto; right: auto; }
+#game.hl.coop #mate > .avatar { font-size: calc(78 * var(--hu)); margin: 0; }
+#game.hl.coop #mate > .info, #game.hl.coop #mate > .sgrid, #game.hl.coop #mate > .eqs { display: none !important; }
+#game.hl.coop #hl-mbar { display: block; position: absolute; left: 50%; top: calc(100% + 9 * var(--hu)); width: calc(150 * var(--hu)); margin-left: calc(-75 * var(--hu)); text-align: center; pointer-events: none; }
+#game.hl.coop #hl-mbar .pb { height: calc(14 * var(--hu)); box-sizing: border-box; border: 2px solid #1a0f0a; background: #0f0b12; box-shadow: 0 0 0 1px #5a3d1c; }
+#game.hl.coop #hl-mbar .pb i { display: block; height: 100%; background: #3b73c8; transition: width .3s; }
+#game.hl.coop #hl-mbar.low .pb i { background: #b8453a; }
+#game.hl.coop #hl-mbar small { display: block; margin-top: calc(4 * var(--hu)); font-size: max(11px, calc(12 * var(--hu))); line-height: 1.2; color: #d9c79b; white-space: nowrap; text-shadow: 0 1px 2px #000; }
+#game.hl.coop #hl-mbar small.st { color: #9fd9b0; }
+#game.hl.coop #hl-mbar.down small.st { color: #ff9a94; }
+/* nút ✕ nhật ký, thanh trên: co-op có chữ "Phòng XXXX" dài → cho phép thu gọn trên màn hẹp */
+#game.hl.coop #hl-top #floor-badge { flex: 0 30 auto; min-width: 64px; display: block; overflow: hidden; text-overflow: ellipsis; line-height: calc(20 * var(--m)); }

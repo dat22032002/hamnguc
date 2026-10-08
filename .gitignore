@@ -1,0 +1,9 @@
+# bản gộp 1 file: sinh ra bằng `node tools/bundle.js`, không đưa vào kho
+dist/
+*.zip
+node_modules/
+.DS_Store
+Thumbs.db
+# ảnh chụp thử / file tạm
+*.tmp
+/shots/

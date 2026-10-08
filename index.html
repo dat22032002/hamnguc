@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hầm Ngục</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/layout-h.css">
+</head>
+<body>
+<div id="viewport">
+<div id="game">
+  <h1><span class="h1i">⚔️</span><span class="gt">Hầm Ngục</span></h1>
+  <div id="topbar"><span id="floor-badge"></span><span id="turn-info"></span><span><button id="speedbtn" aria-label="Tốc độ hiệu ứng"></button><button id="pausebtn" aria-label="Menu">☰</button></span></div>
+
+  <div id="main">
+  <div id="arena" class="card">
+    <div class="dg" aria-hidden="true"><i class="dg-bones"></i><i class="dg-frame"></i><i class="dg-arch"></i><i class="dg-chain a"></i><i class="dg-chain b"></i><i class="dg-chain c"></i><i class="dg-chain d"></i><i class="dg-torch l"><b></b></i><i class="dg-torch r"><b></b></i><i class="dg-floor"></i><i class="dg-rune"></i><i class="dg-dust"></i><i class="dg-fog"></i><i class="dg-vig"></i></div>
+    <canvas id="fxc"></canvas>
+    <div id="order"></div>
+    <div id="mons"></div>
+    <div id="party">
+    <div class="side" id="me"></div>
+    <div class="side" id="mate" style="display:none"></div>
+    </div>
+  </div>
+
+  </div>
+
+  <div id="side">
+  <div id="actions">
+    <button id="btn-attack"><span class="al">⚔️ Tấn công</span><span class="as">Đánh</span></button>
+    <button id="btn-defend"><span class="al">🛡️ Phòng thủ</span><span class="as">Thủ</span></button>
+    <button id="btn-heal"><span class="al">✨ Kỹ năng</span><span class="as">Kỹ năng</span></button>
+    <button id="btn-potion"><span class="al">🎒 Túi đồ</span><span class="as">Túi đồ</span><span class="ab"></span></button>
+  </div>
+  <div id="skills"><button class="sk"></button><button class="sk"></button><button class="sk"></button><button class="sk"></button><button id="btn-ult"><span class="ub"></span><span class="uf"></span><span class="sp"></span><span class="ut"></span></button></div>
+
+  <button id="logbtn" class="sec" aria-label="Ẩn/hiện nhật ký"></button>
+  <div id="log" aria-live="polite"></div>
+  </div>
+</div>
+
+<div id="overlay" class="overlay">
+  <div class="box">
+    <h2 id="result-title"></h2>
+    <p id="result-text"></p>
+    <button id="btn-restart">Chơi lại</button>
+  </div>
+</div>
+
+<div id="reward" class="overlay">
+  <div class="box">
+    <h2>🎁 Chọn phần thưởng</h2>
+    <p>Chọn 1 nâng cấp cho lượt chạy này</p>
+    <div id="reward-list"></div>
+  </div>
+</div>
+
+<div id="evo" class="overlay">
+  <div class="box">
+    <h2 id="evo-title">🌟 Kỹ năng tiến hóa!</h2>
+    <p id="evo-sub"></p>
+    <div id="evo-list"></div>
+  </div>
+</div>
+
+<div id="loot" class="overlay">
+  <div class="box">
+    <h2>🎁 Nhặt được đồ!</h2>
+    <p id="loot-body"></p>
+    <div id="loot-actions"><button id="loot-equip">Trang bị</button><button id="loot-store" class="sec">🎒 Cất vào túi</button><button id="loot-skip">Bỏ qua</button></div>
+  </div>
+</div>
+
+<div id="rest" class="overlay">
+  <div class="box">
+    <h2>🏕️ Nghỉ giữa đợt</h2>
+    <p id="rest-info"></p>
+    <div id="rest-list"><button id="rest-short" class="sec"></button><button id="rest-long" class="sec"></button></div>
+    <p id="rest-mate"></p>
+    <div id="rest-actions"><button id="rest-bag" class="sec">🎒 Túi đồ</button><button id="rest-go">▶️ Tiếp tục</button></div>
+  </div>
+</div>
+
+<div id="stat-ov" class="overlay">
+  <div class="box">
+    <h2>📊 Chỉ số</h2>
+    <div id="stat-body"></div>
+    <button id="stat-close" class="sec">Đóng</button>
+  </div>
+</div>
+
+<div id="bag" class="overlay">
+  <div class="box">
+    <h2>🎒 Túi đồ</h2>
+    <p id="bag-note"></p>
+    <div id="bag-list"></div>
+    <button id="bag-close" class="sec">Đóng</button>
+  </div>
+</div>
+
+<div id="rooms" class="overlay">
+  <div class="box">
+    <h2 id="rooms-title">🚪 Chọn lối đi</h2>
+    <p id="rooms-note"></p>
+    <div id="room-list"></div>
+  </div>
+</div>
+
+<div id="shop" class="overlay">
+  <div class="box">
+    <h2 id="shop-title"></h2>
+    <p id="shop-gold"></p>
+    <div id="shop-tabs"><button id="shop-buy" class="sec">🛒 Mua</button><button id="shop-sell" class="sec">💰 Bán đồ</button></div>
+    <p id="shop-note"></p>
+    <div id="shop-list"></div>
+    <button id="shop-close">👋 Rời đi</button>
+  </div>
+</div>
+
+<div id="menu" class="overlay show">
+  <div class="m-bg" aria-hidden="true"><i class="m-torch l"></i><i class="m-torch r"></i><div id="m-embers"></div></div>
+  <div class="box">
+    <h2 class="logo"><span class="em">⚔️</span><span class="lt">Hầm Ngục</span><span class="ls">Roguelike · Co-op 2 người</span></h2>
+    <p id="menu-note"></p>
+    <div class="pg" id="pg-main">
+      <button id="m-play">▶ Vào hầm ngục</button>
+      <button id="m-set" class="sec">⚙️ Cài đặt</button>
+      <button id="m-exit" class="sec">🚪 Thoát</button>
+      <div id="menu-info"></div>
+      <div class="hint"><b>1–5</b> hành động · <b>Esc</b> menu · <b>↑ ↓</b> chọn trong menu</div>
+    </div>
+    <div class="pg" id="pg-play" style="display:none">
+      <button id="m-class" class="sec">🎭 Đổi class</button>
+      <button id="m-solo">🗡️ Chơi một mình (roguelike)</button>
+      <div id="duel-box">
+        <input id="nick" maxlength="16" placeholder="Tên của bạn" autocomplete="off">
+      <button id="m-create">🤝 Tạo phòng chơi cùng bạn (co-op)</button>
+        <input id="code" maxlength="8" placeholder="Hoặc nhập mã phòng của bạn bè" autocomplete="off">
+        <button id="m-join">Vào phòng</button>
+      </div>
+      <button id="m-back" class="sec">← Quay lại</button>
+    </div>
+    <div class="pg" id="pg-class" style="display:none">
+      <div id="class-pick">
+        <div id="cp-tabs"></div>
+        <div id="cp-hero"><div id="cp-av"></div><div id="cp-info"><div id="cp-name"></div><span id="cp-role"></span><div id="cp-tag"></div><div id="cp-vit"></div></div></div>
+        <div id="cp-stats"></div>
+        <div id="cp-skills"></div>
+        <div id="cp-skinfo"></div>
+      </div>
+      <button id="c-ok"></button>
+      <button id="c-back" class="sec">← Quay lại</button>
+    </div>
+    <div class="pg" id="pg-lobby" style="display:none">
+      <h3 style="margin:0 0 8px">🏰 Phòng chờ</h3>
+      <div id="lobby-codebox">Mã phòng <b id="lobby-code"></b></div>
+      <button id="l-copy" class="sec">📋 Sao chép mã</button>
+      <div id="lobby-count"></div>
+      <ul id="lobby-list"></ul>
+      <p id="lobby-note"></p>
+      <button id="l-start">▶️ Bắt đầu</button>
+      <button id="l-leave" class="sec">🚪 Rời phòng</button>
+    </div>
+    <div class="pg" id="pg-bye" style="display:none">
+      <p>👋 Cảm ơn bạn đã chơi!<br>Trình duyệt không cho game tự đóng tab, bạn có thể đóng tab này.</p>
+      <button id="b-back" class="sec">Về menu</button>
+    </div>
+  </div>
+</div>
+
+<div id="pause" class="overlay" style="z-index:20">
+  <div class="box col">
+    <h2>⏸️ Menu</h2>
+    <p id="pause-info"></p>
+    <button id="p-resume">▶️ Tiếp tục</button>
+    <button id="p-set" class="sec">⚙️ Setting</button>
+    <button id="p-bag" class="sec">🎒 Túi đồ &amp; trang bị</button>
+    <button id="p-restart" class="sec">🔄 Chơi lại từ đầu</button>
+    <button id="p-menu" class="sec">🏠 Về menu chính</button>
+  </div>
+</div>
+
+<div id="settings" class="overlay" style="z-index:30">
+  <div class="box col">
+    <h2>⚙️ Setting</h2>
+    <p class="lbl">Âm thanh</p>
+    <button id="set-sound" class="sec"></button>
+    <p class="lbl" id="set-best"></p>
+    <button id="set-reset" class="sec">🗑️ Xóa kỷ lục</button>
+    <button id="set-close">Đóng</button>
+  </div>
+</div>
+</div>
+
+<script src="js/sprite-data.js"></script>
+<script src="js/config.js"></script>
+<script src="js/classes.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/combat.js"></script>
+<script src="js/evo.js"></script>
+<script src="js/rewards.js"></script>
+<script src="js/items.js"></script>
+<script src="js/rooms.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/coop.js"></script>
+<script src="js/render.js"></script>
+<script src="js/events.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/overlays.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/boot.js"></script>
+</body>
+</html>
