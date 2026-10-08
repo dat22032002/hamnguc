@@ -220,3 +220,10 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Theo yêu cầu Jame: đổi BG shop sang hẻm chợ đen (bg-shop.webp mới, 83KB) cho hợp với thương nhân bí ẩn; Jame chốt mẫu sau khi sửa ánh sáng đèn lồng (bỏ tia xuyên tường, bỏ vệt bóng chéo, đuốc tím -> lửa cam).
 - Thương nhân: thu nhỏ (cao 250px thay vì 340px), bỏ animation nhấp nhô, đặt ngồi dưới đèn lồng (trái 27%).
 - Bài học: Jame yêu cầu xem mẫu trước khi làm với mọi thứ liên quan hình ảnh — đã tuân thủ từ vòng này.
+
+## Cập nhật 2026-10-08 — Đòn mạnh ẩn + QTE đỡ/né
+- Theo ý tưởng của Jame: mỗi quái có 1 đòn mạnh ẩn (không hiện trong list skill), tính là skill có cooldown riêng.
+- Khi quái dùng đòn mạnh: hiện cảnh báo "⚠️ ĐÒN MẠNH!" + nút 🛡️ ĐỠ (Hiệp sĩ) / 💨 NÉ (class khác) trong 1.2s.
+- Bấm kịp: đỡ giảm 70% sát thương, né tránh hoàn toàn. Không bấm: ăn đủ.
+- File: js/combat.js (MSK thêm heavy, mkSk, heavyQTE, monsterAct async), js/render.js (ẩn skill heavy), js/coop.js (await), index.html + css/style.css (#qte).
+- Test: check.js OK, bundle 939KB, QTE hiện/bấm được, tap-test 19/19 PASS, không lỗi JS.

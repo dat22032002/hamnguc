@@ -185,7 +185,7 @@ async function resolveRound() {
   for (let i = 0; i < s.order.length; i++) {
     if (co !== cur || cur.lost) return;
     s.cur = i;
-    if (actorTurn(s.order[i], s.players, ms)) { const w = stepEnd + GAP; publish(); await sleep(w); }
+    if (await actorTurn(s.order[i], s.players, ms)) { const w = stepEnd + GAP; publish(); await sleep(w); }
     if (!ms.some(m => m.hp > 0) || s.players.every(p => p.hp <= 0)) break;
   }
   if (co !== cur || cur.lost) return;

@@ -899,6 +899,15 @@
 #shop-scene .ss-hint { position: absolute; left: 50%; bottom: 8%; translate: -50% 0; font-size: 14px; color: #fff; background: rgba(0,0,0,.6); padding: 6px 14px; border-radius: 20px; white-space: nowrap; animation: hint-pulse 1.6s infinite; }
 @keyframes hint-pulse { 50% { transform: scale(1.06); } }
 #shop-scene #shop-scene-leave { position: absolute; right: 12px; bottom: 12px; z-index: 2; }
+/* QTE đỡ/né đòn mạnh */
+#qte { z-index: 30; background: rgba(120, 0, 0, .45); flex-direction: column; gap: 12px; }
+#qte .qte-warn { font-size: 28px; font-weight: 900; color: #ffd23f; text-shadow: 3px 3px 0 #600; animation: qte-flash .4s infinite; }
+@keyframes qte-flash { 50% { transform: scale(1.08); } }
+#qte .qte-mon { font-size: 16px; color: #fff; text-shadow: 2px 2px 0 #000; }
+#qte .qte-btn { font-size: 24px; font-weight: 900; padding: 16px 48px; border: 4px solid #ffd23f; background: #a00; color: #fff; border-radius: 12px; cursor: pointer; animation: qte-flash .4s infinite; }
+#qte .qte-btn:active { transform: scale(.94); }
+#qte .qte-timer { width: 280px; height: 10px; background: #400; border-radius: 5px; overflow: hidden; }
+#qte .qte-timer > div { height: 100%; width: 100%; background: #ffd23f; transition: width linear; }
 #shop h2, #shop-gold, #shop-note { text-align: center; }
 #shop-gold { margin: 0 0 10px; color: #f6d27a; font-size: 16px; } #shop-gold b { color: #ffd23f; }
 #shop-note { font-size: 13px; margin: 0 0 10px; }

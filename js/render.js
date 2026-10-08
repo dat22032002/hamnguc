@@ -83,7 +83,7 @@ function renderMons(p, ms) {   // thẻ quái: mỗi con 1 thẻ, bấm để ch
     c.querySelector("small").innerHTML = (m.res > 0 ? "<span>🔰" + pct(m.res) + "%</span>" : "");
     c.querySelector(".bar.mp > div").style.width = (m.maxMp ? m.mp / m.maxMp * 100 : 0) + "%";
     c.querySelector(".mst").innerHTML = stIcons(m);
-    c.querySelector(".msk").innerHTML = (m.sk || []).map((k, j) => { const cd = (m.cds || [])[j] || 0; return '<span class="' + (cd > 0 || m.mp < k.c ? "off" : "") + '" title="' + esc(k.n + " — " + k.c + "💧 · hồi chiêu " + k.cdn + " · " + k.d + (stTxt(k) ? " · Tỉ lệ gốc: " + stTxt(k) + " (trừ kháng hiệu ứng của mục tiêu)" : "")) + '">' + k.i + (cd > 0 ? "<sub>" + cd + "</sub>" : "") + "</span>"; }).join("");
+    c.querySelector(".msk").innerHTML = (m.sk || []).map((k, j) => { if (k.heavy) return ""; const cd = (m.cds || [])[j] || 0; return '<span class="' + (cd > 0 || m.mp < k.c ? "off" : "") + '" title="' + esc(k.n + " — " + k.c + "💧 · hồi chiêu " + k.cdn + " · " + k.d + (stTxt(k) ? " · Tỉ lệ gốc: " + stTxt(k) + " (trừ kháng hiệu ứng của mục tiêu)" : "")) + '">' + k.i + (cd > 0 ? "<sub>" + cd + "</sub>" : "") + "</span>"; }).join("");
   });
 }
 function renderHead(ms) {   // nhãn tầng + thông tin lượt

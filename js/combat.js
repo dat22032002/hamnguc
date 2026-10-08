@@ -25,25 +25,36 @@ const STATUS = {
   immune:  { i: "🔰", n: "Miễn nhiễm", d: "Không dính hiệu ứng xấu" }
 };
 const MSK = {
-  "Slime Xanh": [{ n: "Dịch nhầy", i: "🟢", c: 8, cdn: 3, t: "hit", m: .8, v: "venom", st: [["slow", 3, .7]], d: "Làm chậm mục tiêu" }],
-  "Dơi Đêm": [{ n: "Hút máu", i: "🦷", c: 8, cdn: 3, t: "hit", m: 1.1, ls: .8, v: "claw", d: "Cắn và hút máu" }],
-  "Chuột Cống": [{ n: "Cắn nhiễm độc", i: "🧫", c: 8, cdn: 3, t: "hit", m: .9, v: "claw", st: [["poison", 3, .7]], d: "Gây trúng độc" }],
+  "Slime Xanh": [{ n: "Dịch nhầy", i: "🟢", c: 8, cdn: 3, t: "hit", m: .8, v: "venom", st: [["slow", 3, .7]], d: "Làm chậm mục tiêu" },
+    { n: "Nuốt chửng", i: "🌀", c: 16, cdn: 4, t: "hit", m: 2.0, v: "smash", heavy: true, d: "Đòn mạnh ẩn" }],
+  "Dơi Đêm": [{ n: "Hút máu", i: "🦷", c: 8, cdn: 3, t: "hit", m: 1.1, ls: .8, v: "claw", d: "Cắn và hút máu" },
+    { n: "Xé toạc", i: "🩸", c: 16, cdn: 4, t: "hit", m: 2.0, v: "claw", heavy: true, d: "Đòn mạnh ẩn" }],
+  "Chuột Cống": [{ n: "Cắn nhiễm độc", i: "🧫", c: 8, cdn: 3, t: "hit", m: .9, v: "claw", st: [["poison", 3, .7]], d: "Gây trúng độc" },
+    { n: "Cắn xé điên cuồng", i: "😱", c: 16, cdn: 4, t: "hit", m: 2.0, v: "claw", heavy: true, d: "Đòn mạnh ẩn" }],
   "Goblin": [{ n: "Bột cay", i: "🌶️", c: 10, cdn: 3, t: "hit", m: .8, v: "venom", st: [["blind", 2, .6]], d: "Gây mù" },
-             { n: "Cuồng nộ", i: "😡", c: 12, cdn: 5, t: "self", v: "rage", st: [["rage", 4, 1]], d: "Tự tăng sát thương" }],
+             { n: "Cuồng nộ", i: "😡", c: 12, cdn: 5, t: "self", v: "rage", st: [["rage", 4, 1]], d: "Tự tăng sát thương" },
+             { n: "Bom cay", i: "💥", c: 20, cdn: 4, t: "aoe", m: 1.2, v: "smash", heavy: true, d: "Đòn mạnh ẩn" }],
   "Sói Xám": [{ n: "Xé xác", i: "🩸", c: 12, cdn: 3, t: "hit", m: 1.3, v: "claw", st: [["bleed", 3, .7, .35]], d: "Gây chảy máu" },
-              { n: "Tru gọi bầy", i: "🌕", c: 12, cdn: 5, t: "self", v: "rage", st: [["haste", 4, 1]], d: "Tự tăng tốc" }],
+              { n: "Tru gọi bầy", i: "🌕", c: 12, cdn: 5, t: "self", v: "rage", st: [["haste", 4, 1]], d: "Tự tăng tốc" },
+              { n: "Vồ xé", i: "🐺", c: 20, cdn: 4, t: "hit", m: 2.0, v: "claw", heavy: true, d: "Đòn mạnh ẩn" }],
   "Xương Binh": [{ n: "Chém phá giáp", i: "🗡️", c: 12, cdn: 3, t: "hit", m: 1.1, v: "smash", st: [["vuln", 3, .7]], d: "Phá giáp mục tiêu" },
-                 { n: "Lời nguyền", i: "🤐", c: 14, cdn: 4, t: "hit", m: .8, v: "venom", st: [["silence", 2, .5]], d: "Câm lặng, chặn kỹ năng" }],
+                 { n: "Lời nguyền", i: "🤐", c: 14, cdn: 4, t: "hit", m: .8, v: "venom", st: [["silence", 2, .5]], d: "Câm lặng, chặn kỹ năng" },
+                 { n: "Chém tử thần", i: "💀", c: 22, cdn: 5, t: "hit", m: 2.2, v: "smash", heavy: true, d: "Đòn mạnh ẩn" }],
   "Ogre": [{ n: "Đập đất", i: "💢", c: 14, cdn: 3, t: "hit", m: 1.4, v: "smash", st: [["stun", 1, .4]], d: "40% gây choáng" },
-           { n: "Gầm thét", i: "📢", c: 18, cdn: 4, t: "aoe", m: .6, v: "taunt", st: [["weak", 3, .65]], d: "Đánh cả đội, gây suy yếu" }],
+           { n: "Gầm thét", i: "📢", c: 18, cdn: 4, t: "aoe", m: .6, v: "taunt", st: [["weak", 3, .65]], d: "Đánh cả đội, gây suy yếu" },
+           { n: "Nghiền nát", i: "🔨", c: 24, cdn: 5, t: "hit", m: 2.2, v: "smash", st: [["stun", 1, .5]], d: "Đòn mạnh ẩn" }],
   "Troll": [{ n: "Tái sinh", i: "💚", c: 14, cdn: 4, t: "self", v: "heal", st: [["regen", 4, 1, .07]], d: "Hồi máu mỗi lượt" },
-            { n: "Nện búa", i: "🔨", c: 16, cdn: 3, t: "hit", m: 1.5, v: "smash", st: [["stun", 1, .35]], d: "35% gây choáng" }],
+            { n: "Nện búa", i: "🔨", c: 16, cdn: 3, t: "hit", m: 1.5, v: "smash", st: [["stun", 1, .35]], d: "35% gây choáng" },
+            { n: "Quật tan xác", i: "💢", c: 24, cdn: 5, t: "hit", m: 2.2, v: "smash", heavy: true, d: "Đòn mạnh ẩn" }],
   "Rồng Lửa": [{ n: "Móng vuốt xé", i: "🐾", c: 10, cdn: 2, t: "hit", m: 1.6, v: "claw", st: [["bleed", 3, .7, .3]], d: "Gây chảy máu" },
                { n: "Hơi thở rồng", i: "🔥", c: 24, cdn: 3, t: "aoe", m: 1.0, v: "dragon", st: [["burn", 3, .7, .25]], d: "Phun lửa cả đội, gây bỏng" },
-               { n: "Long uy", i: "🛡️", c: 28, cdn: 5, t: "self", v: "wall", st: [["shield", 4, 1, .12], ["thorns", 4, 1]], d: "Khiên phép + gai nhọn" }]
+               { n: "Long uy", i: "🛡️", c: 28, cdn: 5, t: "self", v: "wall", st: [["shield", 4, 1, .12], ["thorns", 4, 1]], d: "Khiên phép + gai nhọn" },
+               { n: "Hủy diệt", i: "☄️", c: 30, cdn: 5, t: "aoe", m: 1.4, v: "dragon", heavy: true, d: "Đòn mạnh ẩn" }]
 };
 function mkSk(key, boss, el) {
-  const sk = (MSK[key] || []).slice(0, boss ? 3 : el ? 2 : 1), mc = Math.max(10, ...sk.map(k => k.c));
+  const all = MSK[key] || [], heavy = all.filter(k => k.heavy);   // đòn mạnh luôn có, nhưng ẩn
+  const sk = all.filter(k => !k.heavy).slice(0, boss ? 3 : el ? 2 : 1).concat(heavy);
+  const mc = Math.max(10, ...sk.map(k => k.c));
   return { sk, maxMp: mc * 3, mp: mc * 3, mr: Math.ceil(mc * .5), cds: sk.map(() => 0), st: {}, fres: 0 };
 }
 const hasSt = (x, k) => !!(x && x.st && x.st[k] && x.st[k].d > 0);
@@ -202,8 +213,25 @@ function perform(p, pi, act, ti, mons) {
   castSkill(p, pi, mons, al, P, tg, cx.si, k, cx);
 }
 
+/* QTE đỡ/né đòn mạnh: hiện nút 1.2s, bấm kịp thì giảm/tránh sát thương */
+function heavyQTE(m, k, isMelee) {
+  return new Promise(res => {
+    const q = $("qte"), btn = $("qte-btn"), bar = document.querySelector("#qte .qte-timer > div");
+    document.querySelector("#qte .qte-mon").textContent = m.name + " tung " + k.n + "!";
+    btn.textContent = isMelee ? "🛡️ ĐỠ!" : "💨 NÉ!";
+    q.classList.add("show");
+    bar.style.transition = "none"; bar.style.width = "100%";
+    requestAnimationFrame(() => { bar.style.transition = "width 1.2s linear"; bar.style.width = "0%"; });
+    let done = false;
+    const fin = r => { if (done) return; done = true; clearTimeout(to); btn.onclick = null; q.classList.remove("show"); res(r); };
+    btn.onclick = () => fin(isMelee ? "block" : "dodge");
+    const to = setTimeout(() => fin("miss"), 1200 * TS());
+  });
+}
+
 /* Lượt của 1 con quái: đánh 1 người (ưu tiên người đang khiêu khích) */
-function monsterAct(m, mi, P, mons) {
+async function monsterAct(m, mi, P, mons) {
+  const gid = gameId;
   const mk = "m" + mi; let used = -1;
   if (!m.cds) m.cds = [];
   const lost = tickStart(m, mk);   // chảy máu / độc / bỏng / choáng / đóng băng...
@@ -218,6 +246,20 @@ function monsterAct(m, mi, P, mons) {
       VF(k.v || "rage", mk, [mk]);
       k.st.forEach(([x, dur, ch, val]) => applySt(m, m, x, dur + 1, val));   // +1 vì cuối lượt này đã trừ 1
       LG(STATUS[k.st[0][0]].i + " " + m.name + " tự cường hóa!", "bad"); FXX(mk, k.st.map(x => STATUS[x[0]].i).join(""), "st");
+    } else if (k && k.heavy) {
+      // Đòn mạnh ẩn: hiện QTE đỡ/né, bấm kịp thì giảm/tránh sát thương
+      LG("⚠️ " + m.name + " tụ lực tung đòn mạnh: " + k.n + "!", "bad");
+      render();
+      await sleep(600 * TS()); if (gid !== gameId) return;   // telegraph: cho người chơi thấy cảnh báo
+      const tgt = k.t === "aoe" ? live : [ti];
+      const isMelee = P[tgt[0]].cls === "knight";   // Hiệp sĩ đỡ, class khác né
+      const qr = await heavyQTE(m, k, isMelee); if (gid !== gameId) return;
+      const qmod = qr === "miss" ? 1 : isMelee ? 0.3 : 0;   // đỡ giảm 70%, né tránh hẳn
+      if (qr !== "miss") LG((isMelee ? "🛡️ " : "💨 ") + P[tgt[0]].name + (isMelee ? " đỡ được đòn mạnh!" : " né được đòn mạnh!"), "good");
+      sprA = "atk2"; VF(k.v || "smash", mk, tgt.map(t => t));
+      if (qmod === 0) { FXX(tgt[0], "Né!", "miss"); }   // né hoàn toàn: không mất máu, không dính hiệu ứng
+      else tgt.forEach(t => mHit(m, mk, P, t, k.m * qmod, k));
+      sprA = null;
     } else if (k && k.t === "aoe") { VF(k.v || "claw", mk, live); live.forEach(t => mHit(m, mk, P, t, k.m, k)); }
     else { sprA = k ? "atk2" : "atk1"; VF(k ? k.v || "claw" : m.boss ? "dragon" : m.size === "l" ? "smash" : "claw", mk, [ti]); sprA = null; mHit(m, mk, P, ti, k ? k.m : 1, k); }
   }
@@ -234,10 +276,10 @@ function buildOrder(P, ms) {
   return a.sort((x, y) => y[1] - x[1] || x[2] - y[2] || x[3] - y[3]).map(x => x[0]);
 }
 /* Chạy 1 lượt của 1 nhân vật. Trả về true nếu có ra đòn. Hiệu ứng buff đếm theo lượt của chính chủ */
-function actorTurn(tok, P, ms) {
+async function actorTurn(tok, P, ms) {
   vd = 0; stepEnd = 0;
   if (!ms.some(m => m.hp > 0)) return false;
-  if (typeof tok === "string") { const mi = +tok.slice(1); if (ms[mi].hp <= 0) return false; monsterAct(ms[mi], mi, P, ms); }
+  if (typeof tok === "string") { const mi = +tok.slice(1); if (ms[mi].hp <= 0) return false; await monsterAct(ms[mi], mi, P, ms); }
   else {
     const p = P[tok]; if (p.hp <= 0) return false;
     p.defending = false;   // thế thủ kéo dài tới lượt hành động kế của chính mình (kể cả sang vòng sau)
@@ -310,7 +352,7 @@ async function takeTurn(action) {
   state.order = buildOrder([p], ms);
   for (let i = 0; i < state.order.length; i++) {
     state.cur = i;
-    if (actorTurn(state.order[i], [p], ms)) {
+    if (await actorTurn(state.order[i], [p], ms)) {
       const end = stepEnd;
       await sleep(350); if (gid !== gameId) return;   // chờ đòn trúng rồi mới trừ máu trên thanh
       render();
