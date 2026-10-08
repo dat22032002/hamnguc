@@ -170,3 +170,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Claude: trong bố cục ngang `hl`, chip trên thanh "Lượt" trước chỉ có số tốc độ; giờ hiện thêm ảnh biểu tượng nhân vật/quái (icon sprite, hoặc emoji nếu chưa có sprite), số tốc độ nhỏ đè ở góc dưới phải. Chỉ sửa `css/layout-h.css` (bỏ `.oc > :not(small){display:none}`, thêm 3 luật cuối nhóm `.oc`); JS không đổi (`renderOrder` vốn đã sinh sẵn icon).
 - Hạ tầng: kho GitHub `dat22032002/hamnguc` nối Cloudflare (Workers, tên `hamnguc-git`); thêm `wrangler.jsonc` + `.assetsignore` vào gốc dự án. Mỗi lần commit vào `main` Cloudflare tự đăng lại.
 - Test: check.js OK; chụp 1280×720 và 844×390 (điện thoại) thấy icon + số rõ; chưa thử co-op và phòng trùm.
+
+## Ghi chép từ bản dev (Muse) — đã hợp nhất 2026-10-08
+- Tách hàm lớn (clean-code): renderShop, render, perform, coopApply, openBag — không đổi behavior.
+- Co-op autoEvo: hostVictory() tự cho cả 2 người tiến hóa sau thắng trận (đủ điều kiện nhánh B thì B, không thì A).
+- Fix CSS: ẩn cảnh vẽ cũ khi dùng ảnh bg-battle; viền chữ tên quái; bấm "Thứ tự" hiện giải thích.
+- Test: evo solo 38/38, co-op evo 7/7, tap-test 19/19 (flaky đã biết ở cửa Chiến đấu).
