@@ -3,9 +3,9 @@
    PHẦN 2: TRẠNG THÁI GAME (mọi dữ liệu thay đổi nằm đây)
    ===================================================== */
 let state;
-let animSpeed = 1;   // 1 = chậm (mặc định, gấp đôi thời gian cũ) · 2 = nhanh (bằng tốc độ cũ)
+let animSpeed = 1;   // 1 = chậm (mặc định) · 2 = nhanh (bằng tốc độ cũ)
 try { if (localStorage.getItem("rpgAnim") === "2") animSpeed = 2; } catch (e) {}
-const TS = () => 2 / animSpeed, sleep = ms => new Promise(r => setTimeout(r, ms * TS()));
+const TS = () => animSpeed === 2 ? 1 : 2.5, sleep = ms => new Promise(r => setTimeout(r, ms * TS()));
 function setAnimSpeed(v, save) {
   animSpeed = v; document.documentElement.style.setProperty("--ts", TS());
   const b = $("speedbtn"); if (b) { b.textContent = v === 2 ? "⏩ x2" : "▶ x1"; b.classList.toggle("on", v === 2); }

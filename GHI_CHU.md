@@ -251,3 +251,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Sprite sheet 15x7 Jame gửi → assets/sprites/swordmaster.webp (nén WebP 5KB) + icon; effect "slash" mới (âm + vệt chém).
 - Trang bị: Kiếm/Võ phục/Ngọc bội. Save cũ đang là Sát thủ tự về Hiệp sĩ.
 - File: classes.js, sprite-data.js, items.js, fx.js, sprites.js, combat.js. Test: check OK, bundle 949KB (<1MB), tap-test mobile PASS, không lỗi JS.
+
+## Cập nhật 2026-10-08 — Chậm animation + hiệu ứng 2x thành 2.5x
+- Theo yêu cầu Jame: tốc độ chậm (mặc định) từ TS=2 lên TS=2.5 — sprite, hiệu ứng JS (sleep) và CSS (--ts) đều chậm lại 25%.
+- Tốc độ nhanh (nút ⏩) giữ nguyên TS=1.
+- File: js/classes.js (TS), css/style.css (:root --ts). Test: check OK, bundle 949KB.

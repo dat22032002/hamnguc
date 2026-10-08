@@ -1,5 +1,5 @@
   @font-face { font-family: "SVN-Determination Sans"; src: url(../assets/fonts/SVN-Determination-Sans.woff) format("woff"); font-weight: 100 900; font-style: normal; font-display: swap; }
-  :root { --ts:2; box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: dark;
+  :root { --ts:2.5; box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: dark;
     --bg:#0b0a0f;--card:#17141c;--text:#e9dfc9;--muted:#a09580;--line:#3f3427;--arena1:#26222b;--arena2:#120f16;--accent:#e0a040;--onaccent:#1b1206;--log-bg:#0f0d13;--xp:#e8b64a;--r1:#6aa8ff;--r2:#c58bff;
     --gold:#e0a040;--gold-d:#8b5d1c;--ember:#ff8a2a;--stone1:#2c2731;--stone2:#1b1721;
     --serif: "SVN-Determination Sans", system-ui, "Segoe UI", Roboto, sans-serif; }
