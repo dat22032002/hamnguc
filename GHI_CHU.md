@@ -176,3 +176,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Co-op autoEvo: hostVictory() tự cho cả 2 người tiến hóa sau thắng trận (đủ điều kiện nhánh B thì B, không thì A).
 - Fix CSS: ẩn cảnh vẽ cũ khi dùng ảnh bg-battle; viền chữ tên quái; bấm "Thứ tự" hiện giải thích.
 - Test: evo solo 38/38, co-op evo 7/7, tap-test 19/19 (flaky đã biết ở cửa Chiến đấu).
+
+## Cập nhật 2026-10-08 — Bỏ hiển thị stat tốc độ
+- Muse: theo yêu cầu của Jame, bỏ số tốc độ trên chip thanh "Lượt" (chỉ còn icon nhân vật/quái) và bỏ dòng "⚡ tốc độ" trên thẻ quái trong trận.
+- File: `js/render.js` (renderOrder, renderMonsters, tooltip), `css/layout-h.css` (xóa luật `.oc small` thừa).
+- Logic tốc độ (thứ tự ra đòn, né tránh) giữ nguyên, chỉ bỏ phần hiển thị.
+- Test: check.js OK, bundle 825KB, chụp màn hình kiểm tra, tap-test 19/19 PASS (2 lần fail giữa chừng ở cửa Chiến đấu do flaky đã biết, chạy lại pass).

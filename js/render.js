@@ -45,9 +45,9 @@ function renderOrder() {
   $("order").innerHTML = "<b>⚡ Thứ tự</b>" + ord.map((tk, i) => {
     const pl = typeof tk === "number", a = pl ? P[tk] : ms[+tk.slice(1)];
     if (!a) return "";
-    return '<span class="oc ' + (pl ? (tk === me ? "me" : "mate") : "foe") + ((i === cur || (idleMe && tk === me)) ? " now" : "") + (live && i < cur ? " done" : "") + (a.hp <= 0 ? " dead" : "") + '" title="' + esc(a.name) + '">' + (pl ? icoHTML(a.cls) : monIco(a)) + "<small>" + (a.spd || 0) + "</small></span>";
+    return '<span class="oc ' + (pl ? (tk === me ? "me" : "mate") : "foe") + ((i === cur || (idleMe && tk === me)) ? " now" : "") + (live && i < cur ? " done" : "") + (a.hp <= 0 ? " dead" : "") + '" title="' + esc(a.name) + '">' + (pl ? icoHTML(a.cls) : monIco(a)) + "</span>";
   }).join("");
-  const oh = $("order").querySelector("b"); if (oh && !oh.onclick) oh.onclick = () => log("⚡ Thứ tự ra đòn: số là tốc độ — tốc cao đi trước, viền vàng là lượt hiện tại.");
+  const oh = $("order").querySelector("b"); if (oh && !oh.onclick) oh.onclick = () => log("Thứ tự ra đòn: viền vàng là lượt hiện tại.");
   document.querySelectorAll(".avatar.acting").forEach(e => e.classList.remove("acting"));
   if (live && live[cur] != null) { const el = $(idOf(live[cur], me)); el && el.classList.add("acting"); }
 }
@@ -80,7 +80,7 @@ function renderMons(p, ms) {   // thẻ quái: mỗi con 1 thẻ, bấm để ch
     c.querySelector(".bar > div").style.width = (m.hp / m.maxHp * 100) + "%";
     c.querySelector(".bar:not(.mp) .bt").textContent = m.hp + "/" + m.maxHp;
     c.querySelector(".bar.mp .bt").textContent = m.maxMp ? Math.round(m.mp) + "/" + m.maxMp : "";
-    c.querySelector("small").innerHTML = "<span>⚡" + Math.round(effSpd(m)) + "</span>" + (m.res > 0 ? "<span>🔰" + pct(m.res) + "%</span>" : "");
+    c.querySelector("small").innerHTML = (m.res > 0 ? "<span>🔰" + pct(m.res) + "%</span>" : "");
     c.querySelector(".bar.mp > div").style.width = (m.maxMp ? m.mp / m.maxMp * 100 : 0) + "%";
     c.querySelector(".mst").innerHTML = stIcons(m);
     c.querySelector(".msk").innerHTML = (m.sk || []).map((k, j) => { const cd = (m.cds || [])[j] || 0; return '<span class="' + (cd > 0 || m.mp < k.c ? "off" : "") + '" title="' + esc(k.n + " — " + k.c + "💧 · hồi chiêu " + k.cdn + " · " + k.d + (stTxt(k) ? " · Tỉ lệ gốc: " + stTxt(k) + " (trừ kháng hiệu ứng của mục tiêu)" : "")) + '">' + k.i + (cd > 0 ? "<sub>" + cd + "</sub>" : "") + "</span>"; }).join("");

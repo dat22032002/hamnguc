@@ -38,16 +38,13 @@ body.hl-on { padding: 0; display: block; }
 #game.hl #hl-top #order b { margin: 0 calc(2 * var(--m)) 0 calc(4 * var(--m)); font-size: 0; font-weight: 400; text-shadow: none; white-space: nowrap; }
 #game.hl #hl-top #order b::before { content: "Lượt"; font-size: max(9px, calc(11 * var(--m))); letter-spacing: .04em; color: #d9c79b; }
 #game.hl #hl-top .oc { flex: none; display: flex; align-items: center; justify-content: center; min-width: calc(30 * var(--m)); height: calc(26 * var(--m)); padding: 0 calc(4 * var(--m)); box-sizing: border-box; border-radius: 0; border: max(1px, calc(2 * var(--m))) solid #7a2a2a; background: #2a1313; transform: none; line-height: 1; font-size: 0; }
-#game.hl #hl-top .oc small { font-size: max(9px, calc(12 * var(--m))); color: #fff; }
 #game.hl #hl-top .oc.me { border-color: #4a8be0; background: #14243d; }
 #game.hl #hl-top .oc.mate { border-color: #2f9a5d; background: #12301f; }
 #game.hl #hl-top .oc.foe { border-color: #7a2a2a; background: #2a1313; }
 #game.hl #hl-top .oc.now { transform: none; border-color: #ffd23f; box-shadow: 0 0 0 1px rgba(255,210,63,.55), 0 0 calc(8 * var(--m)) rgba(255,210,63,.3); }
-#game.hl #hl-top .oc.now small { color: #ffe3a0; }
-/* chip thứ tự: hiện hình nhân vật/quái, số tốc độ nhỏ đè ở góc dưới phải */
+/* chip thứ tự: hiện hình nhân vật/quái */
 #game.hl #hl-top .oc { position: relative; font-size: calc(18 * var(--m)); line-height: 1; }
 #game.hl #hl-top .oc .ico { display: block; height: calc(20 * var(--m)); width: auto; max-width: calc(28 * var(--m)); image-rendering: pixelated; }
-#game.hl #hl-top .oc small { position: absolute; right: calc(1 * var(--m)); bottom: calc(-1 * var(--m)); font-size: max(8px, calc(9 * var(--m))); font-weight: 700; line-height: 1; color: #fff; text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; }
 
 /* chip vàng (đọc lại #me-gold) + 3 nút icon vuông: nhật ký · tốc độ · menu */
 #game.hl #hl-top #hl-gold { order: 4; margin-left: auto; display: flex; align-items: center; height: calc(24 * var(--m)); padding: 0 calc(6 * var(--m)); box-sizing: border-box; font-size: max(9px, calc(11 * var(--m))); font-weight: 700; white-space: nowrap; color: #ffd77a; background: #2a1d0e; border: max(1px, calc(2 * var(--m))) solid #6a4a1c; }
