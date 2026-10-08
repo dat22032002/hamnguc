@@ -141,6 +141,19 @@ function dash(el, F, X, ms = 340) {
   const done = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
   a.onfinish = done; a.oncancel = done;
 }
+/* Cận chiến: chạy tới gần quái (85% quãng đường), đứng đó đánh, rồi chạy về. hitDelay = lúc tung hiệu ứng trúng */
+function runAtk(el, F, X, hitDelay = 380) {
+  const h = el.closest("#mons, #party");
+  if (h) { h._z = (h._z || 0) + 1; h.style.zIndex = 8; }
+  const mv = el.querySelector(":scope > .sfig > canvas.sp") || el;
+  const dx = (X[0] - F[0]) * .85, dy = (X[1] - F[1]) * .85, go = hitDelay * TS(), back = 320 * TS();
+  mv.animate([{ translate: "0 0" }, { translate: dx + "px " + dy + "px" }], { duration: go, fill: "forwards", easing: "ease-out" });
+  at(hitDelay + 260, () => {
+    const b = mv.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: back, easing: "ease-in" });
+    const done = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
+    b.onfinish = done; b.oncancel = done;
+  });
+}
 const shake = () => { const A = $("arena"); A.classList.add("shake"); at(260, () => A.classList.remove("shake")); };
 const tint = h => PT(650, (c, k) => { c.fillStyle = hsl(h, .3 * Math.sin(Math.PI * k), 55); c.fillRect(0, 0, FXS.W, FXS.H); });
 function dodgeFx(id) {   // né: nhân vật lách sang bên + vệt gió
@@ -151,17 +164,17 @@ function dodgeFx(id) {   // né: nhân vật lách sang bên + vệt gió
 }
 /* Mỗi hiệu ứng nhận (F = tâm người ra đòn, X = danh sách tâm mục tiêu, el = phần tử người ra đòn). Màu theo hue: 0 đỏ, 25 cam, 48 vàng, 130 lục, 200 lam, 280 tím */
 const VFX = {
-  clang:   (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(130, () => { sl(x, y, 40, -.6, 80); bst(x, y, 35, 16, 7); rng(x, y, 40, 55, 350); }); },
-  stab:    (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 240); at(90, () => { sl(x, y, 275, .5, 80, 260); sl(x, y, 300, -.5, 80, 260); bst(x, y, 280, 10, 7); }); },
-  slash:   (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 240); at(90, () => { sl(x, y, 280, .7, 110, 280); sl(x, y, 300, -.7, 110, 280); bst(x, y, 290, 12, 7); }); },   // vệt chém rộng của Kiếm sư
-  backstab:(F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 240); at(90, () => { sl(x, y, 280, .6, 110); sl(x, y, 310, -.6, 110); fl(x, y, 280, 90); bst(x, y, 290, 18, 8); }); },
-  flurry:  (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 200); at(80, () => { sl(x, y, 290, (rnd() - .5) * 2.4, 90, 240); bst(x, y, 280, 8, 6); }); },
-  execute: (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(130, () => { fl(x, y, 0, 110, 500); sl(x, y, 0, .8, 120, 400); sl(x, y, 0, -.8, 120, 400); bst(x, y, 0, 28, 9); rng(x, y, 0, 85, 450, 6); shake(); }); },
+  clang:   (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { sl(x, y, 40, -.6, 80); bst(x, y, 35, 16, 7); rng(x, y, 40, 55, 350); }); },
+  stab:    (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { sl(x, y, 275, .5, 80, 260); sl(x, y, 300, -.5, 80, 260); bst(x, y, 280, 10, 7); }); },
+  slash:   (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { sl(x, y, 280, .7, 110, 280); sl(x, y, 300, -.7, 110, 280); bst(x, y, 290, 12, 7); }); },   // vệt chém rộng của Kiếm sư
+  backstab:(F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { sl(x, y, 280, .6, 110); sl(x, y, 310, -.6, 110); fl(x, y, 280, 90); bst(x, y, 290, 18, 8); }); },
+  flurry:  (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { sl(x, y, 290, (rnd() - .5) * 2.4, 90, 240); bst(x, y, 280, 8, 6); }); },
+  execute: (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { fl(x, y, 0, 110, 500); sl(x, y, 0, .8, 120, 400); sl(x, y, 0, -.8, 120, 400); bst(x, y, 0, 28, 9); rng(x, y, 0, 85, 450, 6); shake(); }); },
   vanish:  F => { fl(F[0], F[1], 270, 90, 600); rng(F[0], F[1], 270, 80, 500, 5); bst(F[0], F[1], 275, 26, 4); },
   holy:    (F, X) => X.forEach(([x, y]) => proj(F, [x, y], 48, 260, 9, () => { fl(x, y, 48, 70); bst(x, y, 48, 14, 5); rng(x, y, 48, 45, 380); })),
   arcane:  (F, X) => X.forEach(([x, y]) => proj(F, [x, y], 290, 260, 9, () => { fl(x, y, 290, 70); bst(x, y, 300, 16, 6); rng(x, y, 290, 50, 380); })),
   taunt:   F => { [0, 150, 300].forEach(d => at(d, () => rng(F[0], F[1], 0, 110, 550, 5))); fl(F[0], F[1], 0, 90); },
-  bash:    (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(130, () => { fl(x, y, 210, 90); rng(x, y, 210, 90, 450, 7); rng(x, y, 40, 60, 350); bst(x, y, 40, 22, 8); shake(); }); },
+  bash:    (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { fl(x, y, 210, 90); rng(x, y, 210, 90, 450, 7); rng(x, y, 40, 60, 350); bst(x, y, 40, 22, 8); shake(); }); },
   wall:    F => { rng(F[0], F[1], 210, 90, 500, 6); at(120, () => rng(F[0], F[1], 190, 65, 500, 4)); fl(F[0], F[1], 210, 80, 600); rise(F[0], F[1], 210, 10); },
   charge:  (F, X) => { tint(8); shake(); X.forEach(([x, y], i) => at(i * 70, () => burstFire(x, y))); },
   heal:    (F, X) => X.forEach(([x, y]) => { bm(x, y, 130); rise(x, y, 130, 14); rng(x, y + 20, 130, 40, 500); }),
@@ -182,15 +195,15 @@ const VFX = {
   meteor:  (F, X) => { tint(8); shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
     proj([cx - 200, cy - 380], [cx, cy], 15, 480, 28, () => { fl(cx, cy, 25, 280, 800); rng(cx, cy, 20, 200, 800, 12); rng(cx, cy, 40, 130, 600, 7); bst(cx, cy, 20, 70, 14); shake(); });
     X.forEach(([x, y]) => at(200, () => { fl(x, y, 25, 80, 400); })); },
-  claw:    (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(120, () => { [-14, 0, 14].forEach(o => sl(x + o, y, 0, .9, 55, 300)); bst(x, y, 0, 10, 6); }); },
-  smash:   (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(130, () => { fl(x, y, 30, 90); rng(x, y, 30, 80, 450, 7); bst(x, y, 30, 18, 8); shake(); }); },
+  claw:    (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { [-14, 0, 14].forEach(o => sl(x + o, y, 0, .9, 55, 300)); bst(x, y, 0, 10, 6); }); },
+  smash:   (F, X, el) => { const [x, y] = X[0]; runAtk(el, F, X[0]); at(380, () => { fl(x, y, 30, 90); rng(x, y, 30, 80, 450, 7); bst(x, y, 30, 18, 8); shake(); }); },
   dragon:  (F, X) => { shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
     proj(F, [cx, cy], 15, 300, 24, () => { fl(cx, cy, 20, 260, 700); bst(cx, cy, 15, 60, 12); rng(cx, cy, 10, 170, 650, 9); shake(); });
     X.forEach(([x, y]) => at(250, () => { fl(x, y, 20, 80, 350); })); },
   potion:  (F, X) => X.forEach(([x, y]) => { rise(x, y, 150, 14); rng(x, y + 20, 150, 40, 500); }),
   iceLock: (F, X) => X.forEach(([x, y]) => { rng(x, y, 195, 55, 500, 5); bst(x, y, 190, 16, 5); fl(x, y, 195, 70, 400); })
 };
-const GAP = 200, DUR = { clang: 550, stab: 450, backstab: 500, flurry: 400, execute: 700, vanish: 600, holy: 650, arcane: 650, taunt: 700, bash: 600, wall: 600, charge: 1050, heal: 700, holyAll: 800, bless: 700, revive: 900, fireball: 750, firestorm: 800, frost: 800, meteor: 1100, claw: 450, smash: 550, dragon: 800, potion: 600, iceLock: 500 };
+const GAP = 200, DUR = { clang: 1000, stab: 1000, slash: 1000, backstab: 1000, flurry: 1000, execute: 1100, vanish: 600, holy: 650, arcane: 650, taunt: 700, bash: 1000, wall: 600, charge: 1050, heal: 700, holyAll: 800, bless: 700, revive: 900, fireball: 750, firestorm: 800, frost: 800, meteor: 1100, claw: 1000, smash: 1000, dragon: 800, potion: 600, iceLock: 500 };
 let vd = 0, stepEnd = 0;   // độ trễ tích lũy (ms) để các đòn trong 1 vòng diễn ra lần lượt
 let sprA = null;           // hoạt ảnh sprite của hành động đang xử lý: atk1 (đánh thường) · atk2 (kỹ năng) · atk3 (tối thượng) · block (phòng thủ)
 function VF(n, f, t) {

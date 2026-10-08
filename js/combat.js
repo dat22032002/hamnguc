@@ -231,8 +231,8 @@ function heavyQTE(m, mi, k, isMelee) {
       btn.classList.add("qte-glow");   // nút Thủ phát sáng
       btn.disabled = false;   // cho bấm dù đang lượt quái
       btn.onclick = () => fin(isMelee ? "block" : "dodge");
-      to2 = setTimeout(() => fin("miss"), 1200 * TS());   // không bấm kịp: ăn đủ
-    }, 700 * TS());
+      to2 = setTimeout(() => fin("miss"), 1200);   // không bấm kịp: ăn đủ (không theo TS để luôn nhanh)
+    }, 700);   // quái phát sáng 0.7s báo trước (không theo TS)
   });
 }
 

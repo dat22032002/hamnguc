@@ -256,3 +256,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Theo yêu cầu Jame: tốc độ chậm (mặc định) từ TS=2 lên TS=2.5 — sprite, hiệu ứng JS (sleep) và CSS (--ts) đều chậm lại 25%.
 - Tốc độ nhanh (nút ⏩) giữ nguyên TS=1.
 - File: js/classes.js (TS), css/style.css (:root --ts). Test: check OK, bundle 949KB.
+
+## Cập nhật 2026-10-08 — QTE nhanh cố định + cận chiến chạy tới quái
+- QTE: bỏ TS() — telegraph 0.7s + cửa sổ 1.2s luôn nhanh như nhau dù x1 hay x2 (trước bị chậm theo 2.5x).
+- Cận chiến: thêm hàm runAtk() — nhân vật chạy tới 85% quãng đường tới quái, tung hiệu ứng đánh, rồi chạy về (thay vì dash lướt 60% nhanh).
+- Áp dụng cho: clang, stab, slash (Kiếm sư), backstab, flurry, execute, bash, claw, smash. DUR tăng lên ~1000ms cho kịp.
+- File: js/combat.js (QTE), js/fx.js (runAtk + VFX + DUR). Test: check OK, bundle 950KB.
