@@ -227,3 +227,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Bấm kịp: đỡ giảm 70% sát thương, né tránh hoàn toàn. Không bấm: ăn đủ.
 - File: js/combat.js (MSK thêm heavy, mkSk, heavyQTE, monsterAct async), js/render.js (ẩn skill heavy), js/coop.js (await), index.html + css/style.css (#qte).
 - Test: check.js OK, bundle 939KB, QTE hiện/bấm được, tap-test 19/19 PASS, không lỗi JS.
+
+## Cập nhật 2026-10-08 — QTE đỡ/né dùng nút Thủ có sẵn (bỏ popup)
+- Theo ý Jame: bỏ popup QTE, dùng luôn nút "Thủ" đang hiện. Quái phát sáng đỏ 0.7s báo trước (class .telegraph), rồi nút Thủ phát sáng vàng để bấm.
+- Bấm kịp: Hiệp sĩ đỡ (-70% st), class khác né (tránh hẳn). Không bấm: ăn đủ.
+- File: index.html (bỏ #qte), css/style.css (bỏ #qte, thêm .telegraph + #btn-defend.qte-glow), js/combat.js (heavyQTE mới).
+- Test: check OK, bundle 938KB, tap-test 19/19 PASS, không lỗi JS.

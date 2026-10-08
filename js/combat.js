@@ -213,19 +213,25 @@ function perform(p, pi, act, ti, mons) {
   castSkill(p, pi, mons, al, P, tg, cx.si, k, cx);
 }
 
-/* QTE đỡ/né đòn mạnh: hiện nút 1.2s, bấm kịp thì giảm/tránh sát thương */
-function heavyQTE(m, k, isMelee) {
+/* QTE đỡ/né đòn mạnh: quái phát sáng 0.7s báo trước, rồi nút Thủ phát sáng để bấm */
+function heavyQTE(m, mi, k, isMelee) {
   return new Promise(res => {
-    const q = $("qte"), btn = $("qte-btn"), bar = document.querySelector("#qte .qte-timer > div");
-    document.querySelector("#qte .qte-mon").textContent = m.name + " tung " + k.n + "!";
-    btn.textContent = isMelee ? "🛡️ ĐỠ!" : "💨 NÉ!";
-    q.classList.add("show");
-    bar.style.transition = "none"; bar.style.width = "100%";
-    requestAnimationFrame(() => { bar.style.transition = "width 1.2s linear"; bar.style.width = "0%"; });
-    let done = false;
-    const fin = r => { if (done) return; done = true; clearTimeout(to); btn.onclick = null; q.classList.remove("show"); res(r); };
-    btn.onclick = () => fin(isMelee ? "block" : "dodge");
-    const to = setTimeout(() => fin("miss"), 1200 * TS());
+    const btn = $("btn-defend"), monEl = document.querySelector('.mon[data-i="' + mi + '"]');
+    const oldClick = btn.onclick;
+    let done = false, to2 = null;
+    const fin = r => {
+      if (done) return; done = true;
+      clearTimeout(to1); if (to2) clearTimeout(to2);
+      btn.onclick = oldClick; btn.classList.remove("qte-glow");
+      if (monEl) monEl.classList.remove("telegraph");
+      res(r);
+    };
+    if (monEl) monEl.classList.add("telegraph");   // quái phát sáng báo trước
+    const to1 = setTimeout(() => {
+      btn.classList.add("qte-glow");   // nút Thủ phát sáng
+      btn.onclick = () => fin(isMelee ? "block" : "dodge");
+      to2 = setTimeout(() => fin("miss"), 1200 * TS());   // không bấm kịp: ăn đủ
+    }, 700 * TS());
   });
 }
 
@@ -247,13 +253,12 @@ async function monsterAct(m, mi, P, mons) {
       k.st.forEach(([x, dur, ch, val]) => applySt(m, m, x, dur + 1, val));   // +1 vì cuối lượt này đã trừ 1
       LG(STATUS[k.st[0][0]].i + " " + m.name + " tự cường hóa!", "bad"); FXX(mk, k.st.map(x => STATUS[x[0]].i).join(""), "st");
     } else if (k && k.heavy) {
-      // Đòn mạnh ẩn: hiện QTE đỡ/né, bấm kịp thì giảm/tránh sát thương
+      // Đòn mạnh ẩn: quái phát sáng 0.7s, rồi nút Thủ phát sáng để bấm đỡ/né
       LG("⚠️ " + m.name + " tụ lực tung đòn mạnh: " + k.n + "!", "bad");
       render();
-      await sleep(600 * TS()); if (gid !== gameId) return;   // telegraph: cho người chơi thấy cảnh báo
       const tgt = k.t === "aoe" ? live : [ti];
       const isMelee = P[tgt[0]].cls === "knight";   // Hiệp sĩ đỡ, class khác né
-      const qr = await heavyQTE(m, k, isMelee); if (gid !== gameId) return;
+      const qr = await heavyQTE(m, mi, k, isMelee); if (gid !== gameId) return;
       const qmod = qr === "miss" ? 1 : isMelee ? 0.3 : 0;   // đỡ giảm 70%, né tránh hẳn
       if (qr !== "miss") LG((isMelee ? "🛡️ " : "💨 ") + P[tgt[0]].name + (isMelee ? " đỡ được đòn mạnh!" : " né được đòn mạnh!"), "good");
       sprA = "atk2"; VF(k.v || "smash", mk, tgt.map(t => t));
