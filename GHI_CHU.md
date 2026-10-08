@@ -300,3 +300,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - entities.js: Goblin → Orc (giữ nguyên hp/atk/xp/spd); combat.js: đổi key skill MSK "Goblin"→"Orc" (giữ Bột cay/Cuồng nộ/Bom cay).
 - AI: Muse. Test: check.js OK, bundle 961KB <1MB; Chromium 1280×720: orc đứng giữa khung core trên thanh máu, vung chùy vệt trắng không bị cắt, không lỗi JS.
 - CHƯA test: điện thoại, co-op.
+
+## Cập nhật 2026-10-08 — chỉnh vị trí Orc + thu nhỏ Slime
+- Jame báo orc đứng hơi lệch về trái-dưới: core cũ [45,36,20,23] ôm cả chùy (bbox) nên tâm core (55) lệch khỏi tâm thân thật (52). Đổi core [42,38,20,22] ôm khít thân (x 47..58, y 41..57) → thân đứng giữa ô, lật ngang quanh tâm thân.
+- Slime sc 1.2 → 1.05 (nhỏ lại một chút theo yêu cầu).
+- AI: Muse. Test: check.js OK, bundle 961KB; Chromium 1280×720: orc giữa khung core trên thanh máu, slime nhỏ gọn, không lỗi JS.
+- CHƯA test: điện thoại, co-op.
