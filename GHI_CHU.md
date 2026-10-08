@@ -268,3 +268,10 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Giải pháp: event-driven — go.onfinish mới đổi anim đánh + nổ hit; poll sprite về idle mới cho chạy về; back.onfinish mới cleanup. Không còn đoán thời gian.
 - VFX cận chiến dùng onHit callback thay vì at(380). DUR tăng lên 1500-1600.
 - File: js/fx.js. Test: check OK, bundle 950KB, test chuỗi event đúng thứ tự walk->atk->hit->walk.
+
+## Cập nhật 2026-10-08 — sửa nhân vật/quái không lui về chỗ cũ + tăng tốc chạy tới/về
+- Lỗi: runAtk() để animation "chạy tới" (fill: forwards) không bao giờ bị hủy. Chạy về xong, fill này bật lại → nhân vật/quái bị kéo lại chỗ đối thủ.
+- Sửa: animation "chạy về" cũng fill forwards; khi nó xong thì go.cancel() + back.cancel(). cleanup() chỉ chạy 1 lần.
+- Tăng tốc: hằng RUN_GO 380→220, RUN_BACK 320→170 (ms, nhân TS()). DUR cận chiến giảm ~300ms (1500→1200, execute 1600→1300) để lượt kế không phải chờ thừa.
+- File: js/fx.js. AI: Claude (claude.ai). Test: check.js OK; Chromium (playwright) gọi VFX.clang cho nhân vật và quái ở tốc độ chậm + nhanh: vị trí cuối lệch 0px (bản cũ kẹt ở chỗ đối thủ).
+- CHƯA test: co-op 2 người (người vào xem qua snapshot), kỹ năng cận chiến khác ngoài clang, giao diện điện thoại. Cần chơi thử.

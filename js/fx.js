@@ -143,6 +143,7 @@ function dash(el, F, X, ms = 340) {
 }
 /* Cận chiến: chạy tới gần quái, đánh xong mới chạy về. EVENT-DRIVEN: animation này onfinish mới chạy tiếp cái kia,
    sprite đánh xong (tự về idle) mới cho chạy về — không dùng setTimeout đoán thời gian nữa */
+const RUN_GO = 220, RUN_BACK = 170;   // ms (chưa nhân TS()) chạy tới / chạy về; số nhỏ = nhanh hơn
 function runAtk(el, F, X, onHit) {
   const h = el.closest("#mons, #party");
   if (h) { h._z = (h._z || 0) + 1; h.style.zIndex = 8; }
@@ -150,9 +151,10 @@ function runAtk(el, F, X, onHit) {
   const cv = el.querySelector(":scope > .sfig > canvas.sp");
   const atkAnim = cv && cv._s && cv._s.a !== "walk" ? cv._s.a : "atk1";
   const dx = (X[0] - F[0]) * .85, dy = (X[1] - F[1]) * .85, TSv = TS();
-  const cleanup = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
+  let cleaned = false;   // chỉ trả z-index đúng 1 lần dù bị gọi từ nhiều sự kiện
+  const cleanup = () => { if (cleaned) return; cleaned = true; if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
   sprAtk(el, "walk");   // phase 1: chạy tới
-  const go = mv.animate([{ translate: "0 0" }, { translate: dx + "px " + dy + "px" }], { duration: 380 * TSv, easing: "ease-out", fill: "forwards" });
+  const go = mv.animate([{ translate: "0 0" }, { translate: dx + "px " + dy + "px" }], { duration: RUN_GO * TSv, easing: "ease-out", fill: "forwards" });
   go.oncancel = cleanup;
   go.onfinish = () => {
     sprAtk(el, atkAnim);   // phase 2: tới nơi, đổi sang anim đánh
@@ -162,8 +164,9 @@ function runAtk(el, F, X, onHit) {
       const cur = cv && cv._s ? cv._s.a : "idle";
       if (cur === "idle" || !el.isConnected || performance.now() - t0 > maxWait) {
         sprAtk(el, "walk");   // phase 3: chạy về
-        const back = mv.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: 320 * TSv, easing: "ease-in" });
-        back.onfinish = back.oncancel = cleanup;
+        const back = mv.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: RUN_BACK * TSv, easing: "ease-in", fill: "forwards" });
+        // Về tới chỗ cũ: hủy cả 2 animation (nếu không, fill của "chạy tới" kéo nhân vật lại chỗ quái)
+        back.onfinish = back.oncancel = () => { go.cancel(); back.cancel(); cleanup(); };
       } else requestAnimationFrame(waitAtk);
     };
     waitAtk();
@@ -218,7 +221,7 @@ const VFX = {
   potion:  (F, X) => X.forEach(([x, y]) => { rise(x, y, 150, 14); rng(x, y + 20, 150, 40, 500); }),
   iceLock: (F, X) => X.forEach(([x, y]) => { rng(x, y, 195, 55, 500, 5); bst(x, y, 190, 16, 5); fl(x, y, 195, 70, 400); })
 };
-const GAP = 200, DUR = { clang: 1500, stab: 1500, slash: 1500, backstab: 1500, flurry: 1500, execute: 1600, vanish: 600, holy: 650, arcane: 650, taunt: 700, bash: 1500, wall: 600, charge: 1050, heal: 700, holyAll: 800, bless: 700, revive: 900, fireball: 750, firestorm: 800, frost: 800, meteor: 1100, claw: 1500, smash: 1500, dragon: 800, potion: 600, iceLock: 500 };
+const GAP = 200, DUR = { clang: 1200, stab: 1200, slash: 1200, backstab: 1200, flurry: 1200, execute: 1300, vanish: 600, holy: 650, arcane: 650, taunt: 700, bash: 1200, wall: 600, charge: 1050, heal: 700, holyAll: 800, bless: 700, revive: 900, fireball: 750, firestorm: 800, frost: 800, meteor: 1100, claw: 1200, smash: 1200, dragon: 800, potion: 600, iceLock: 500 };
 let vd = 0, stepEnd = 0;   // độ trễ tích lũy (ms) để các đòn trong 1 vòng diễn ra lần lượt
 let sprA = null;           // hoạt ảnh sprite của hành động đang xử lý: atk1 (đánh thường) · atk2 (kỹ năng) · atk3 (tối thượng) · block (phòng thủ)
 function VF(n, f, t) {
