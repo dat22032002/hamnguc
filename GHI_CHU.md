@@ -317,3 +317,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Theo yêu cầu Jame: xóa Ogre khỏi MT.l và Chuột Cống khỏi MT.s (entities.js), xóa luôn bộ skill của 2 con trong MSK (combat.js).
 - AI: Muse. Test: check.js OK, bundle 961KB; spawn 2000 nhóm quái (tầng 1-5, thường + tinh anh): chỉ còn Dơi Đêm/Orc/Slime/Sói Xám/Xương Binh/Troll, không lỗi JS.
 - CHƯA test: điện thoại, co-op.
+
+## Cập nhật 2026-10-08 — tăng tỉ lệ gặp Orc gấp 3
+- Theo yêu cầu Jame: tỉ lệ gặp Orc dạng thường ở trận thường tầng 1-2 tăng từ 25% lên 75%.
+- AI: Muse. Test: check.js OK, bundle 961KB; spawnGroup(0) 600 lần: 468 trận có Orc (~78%), không lỗi JS.
+- CHƯA test: điện thoại, co-op.
