@@ -327,3 +327,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Theo yêu cầu Jame: cỡ avatar người chơi trong layout ngang tăng từ 78 lên 86 (khoảng +10%), áp dụng cả solo (#me) lẫn đồng đội co-op (#mate).
 - AI: Muse. Test: check.js OK, bundle 961KB; Chromium 1280×720: nhân vật to hơn, không vỡ layout, không lỗi JS.
 - CHƯA test: điện thoại, co-op.
+
+## Cập nhật 2026-10-08 — sửa icon Kiếm sư bị lệch
+- Jame báo icon Kiếm sư lệch trong tab chọn class: file icon cũ vẽ nhân vật dồn trái-trên (bbox 0,6,14,20 trong ảnh 20x20). Làm lại icon từ sheet: crop thân idle, căn giữa khung 20x22 như 3 icon còn lại (bbox 1,1,19,21).
+- AI: Muse. Test: check.js OK, bundle 961KB; chụp màn hình chọn class: 4 icon đều nhau, không lỗi JS.
+- CHƯA test: điện thoại.
