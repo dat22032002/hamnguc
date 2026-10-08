@@ -691,7 +691,6 @@
     #game:has(#skills.show) .mon .avatar { font-size: 28px; } #game:has(#skills.show) .mon.m .avatar { font-size: 40px; } #game:has(#skills.show) .mon.l .avatar { font-size: 52px; }
     #game:has(#skills.show) #arena { gap: 5px; padding: 6px 8px; }
     #game:has(#skills.show) #party { padding: 6px 10px; }
-    #game:has(#skills.show) #party .avatar, #game:has(#skills.show):not(.coop) #me .avatar { font-size: 32px; }
   }
   /* Thanh trên cùng: tên quái dài không được đẩy nút Tốc độ / Menu */
   #topbar { gap: 6px; flex-wrap: nowrap; }
