@@ -210,3 +210,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Asset mới: assets/img/bg-shop.webp (102KB), assets/sprites/merchant.webp (35KB, nền trong suốt). Bundle 960KB (< 1MB).
 - File: index.html (#shop-scene), css/style.css, js/shop.js (showShopScene/hideShopScene), js/rooms.js.
 - Test: check.js OK, chụp màn hình scene, verify handler, tap-test 19/19 PASS.
+
+## Cập nhật 2026-10-08 — Đổi hình thương nhân theo yêu cầu Jame
+- Jame không thích hình thương nhân cũ (tự vẽ không cho xem mẫu trước — rút kinh nghiệm: từ giờ hình ảnh phải cho Jame chốt mẫu trước khi làm).
+- Hình mới: thương nhân áo choàng bí ẩn, mắt vàng nham hiểm (không cười), ngồi trên thảm trơn, trước thảm bày vũ khí/trang bị, sau lưng 4 bao tải to nhỏ xếp ngay ngắn dưới đất.
+- Asset: assets/sprites/merchant.webp (35KB). Bundle 960KB (< 1MB).
