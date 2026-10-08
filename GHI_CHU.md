@@ -244,3 +244,10 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Theo yêu cầu Jame: skill AoE trước đây chia nhỏ hiệu ứng cho từng mục tiêu, giờ gom thành 1 vụ nổ lớn ở trung tâm nhóm quái + rung màn hình.
 - Sửa: firestorm, frost, meteor, dragon (sát thương), holyAll (hồi máu) — tính tâm nhóm, hiệu ứng chính to gấp 2-3x, vẫn giữ hiệu ứng nhỏ ở từng mục tiêu để báo trúng.
 - File: js/fx.js. Test: check OK, bundle 940KB.
+
+## Cập nhật 2026-10-08 — Thay Sát thủ bằng Kiếm sư (theo yêu cầu Jame)
+- Xóa class assassin, thêm swordmaster "Kiếm sư" ⚔️ (DPS): HP 130, mana 60, atk [13,19], crit 15%, spd 14, eva 10%.
+- 5 skill mới kèm 2 nhánh tiến hóa/skill (theo format pilot Hiệp sĩ): Chém ngang, Kiếm khí, Liên trảm, Ngự kiếm, Vạn kiếm quy tông.
+- Sprite sheet 15x7 Jame gửi → assets/sprites/swordmaster.webp (nén WebP 5KB) + icon; effect "slash" mới (âm + vệt chém).
+- Trang bị: Kiếm/Võ phục/Ngọc bội. Save cũ đang là Sát thủ tự về Hiệp sĩ.
+- File: classes.js, sprite-data.js, items.js, fx.js, sprites.js, combat.js. Test: check OK, bundle 949KB (<1MB), tap-test mobile PASS, không lỗi JS.
