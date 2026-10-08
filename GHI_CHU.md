@@ -239,3 +239,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Tu sĩ và Pháp sư: nút đổi thành "💨 Né tránh"/"Né"; Hiệp sĩ và Sát thủ giữ "🛡️ Phòng thủ"/"Thủ".
 - File: js/render.js (renderActions luôn khóa nút, render đổi nhãn theo class), js/combat.js (bỏ act defend, QTE phân biệt né/đỡ).
 - Test: check OK, bundle 939KB, tap-test 19/19 PASS (lần đầu 2 FAIL do flaky cửa Chiến đấu đã biết, chạy lại PASS).
+
+## Cập nhật 2026-10-08 — AoE hiệu ứng lớn bao cả khu vực
+- Theo yêu cầu Jame: skill AoE trước đây chia nhỏ hiệu ứng cho từng mục tiêu, giờ gom thành 1 vụ nổ lớn ở trung tâm nhóm quái + rung màn hình.
+- Sửa: firestorm, frost, meteor, dragon (sát thương), holyAll (hồi máu) — tính tâm nhóm, hiệu ứng chính to gấp 2-3x, vẫn giữ hiệu ứng nhỏ ở từng mục tiêu để báo trúng.
+- File: js/fx.js. Test: check OK, bundle 940KB.

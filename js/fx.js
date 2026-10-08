@@ -163,16 +163,28 @@ const VFX = {
   wall:    F => { rng(F[0], F[1], 210, 90, 500, 6); at(120, () => rng(F[0], F[1], 190, 65, 500, 4)); fl(F[0], F[1], 210, 80, 600); rise(F[0], F[1], 210, 10); },
   charge:  (F, X) => { tint(8); shake(); X.forEach(([x, y], i) => at(i * 70, () => burstFire(x, y))); },
   heal:    (F, X) => X.forEach(([x, y]) => { bm(x, y, 130); rise(x, y, 130, 14); rng(x, y + 20, 130, 40, 500); }),
-  holyAll: (F, X) => { tint(50); X.forEach(([x, y]) => { bm(x, y, 50); rise(x, y, 50, 12); rng(x, y + 20, 50, 60, 600); }); },
+  holyAll: (F, X) => { tint(50); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
+    bm(cx, cy, 50); rise(cx, cy, 50, 20); rng(cx, cy + 20, 50, 140, 800, 6);
+    X.forEach(([x, y]) => { bm(x, y, 50); rise(x, y, 50, 10); }); },
   bless:   (F, X) => X.forEach(([x, y]) => { rise(x, y, 45, 14); rng(x, y, 45, 55, 600, 3); fl(x, y, 55, 70, 500); }),
   revive:  (F, X) => X.forEach(([x, y]) => { bm(x, y, 55); fl(x, y, 55, 110, 700); rise(x, y, 55, 24); rng(x, y + 20, 55, 70, 700, 5); }),
   fireball:(F, X) => X.forEach(([x, y]) => proj(F, [x, y], 18, 300, 12, () => { fl(x, y, 30, 100, 400); bst(x, y, 20, 28, 8); rng(x, y, 15, 70, 420, 6); })),
-  firestorm:(F, X) => { tint(15); X.forEach(([x, y]) => { fall(x, y, 22, 14); at(330, () => { fl(x, y, 30, 100, 400); bst(x, y, 20, 24, 8); rng(x, y, 15, 65, 400, 5); }); }); },
-  frost:   (F, X) => { tint(200); X.forEach(([x, y]) => { fall(x, y, 195, 14); at(330, () => { fl(x, y, 195, 90, 450); bst(x, y, 190, 22, 6); rng(x, y, 200, 70, 550, 4); }); }); },
-  meteor:  (F, X) => { tint(8); X.forEach(([x, y]) => proj([x - 200, y - 380], [x, y], 15, 480, 20, () => { fl(x, y, 25, 170, 600); rng(x, y, 20, 110, 600, 9); rng(x, y, 40, 70, 500, 5); bst(x, y, 20, 44, 11); shake(); })); },
+  firestorm:(F, X) => { tint(15); shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
+    X.forEach(([x, y]) => fall(x, y, 22, 14));
+    at(330, () => { fl(cx, cy, 30, 260, 700); bst(cx, cy, 20, 60, 14); rng(cx, cy, 15, 170, 700, 10); rng(cx, cy, 30, 120, 600, 6); });
+    X.forEach(([x, y]) => at(380, () => { fl(x, y, 30, 70, 350); })); },
+  frost:   (F, X) => { tint(200); shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
+    X.forEach(([x, y]) => fall(x, y, 195, 14));
+    at(330, () => { fl(cx, cy, 195, 240, 700); bst(cx, cy, 190, 50, 12); rng(cx, cy, 200, 160, 700, 9); });
+    X.forEach(([x, y]) => at(380, () => { fl(x, y, 195, 70, 350); })); },
+  meteor:  (F, X) => { tint(8); shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
+    proj([cx - 200, cy - 380], [cx, cy], 15, 480, 28, () => { fl(cx, cy, 25, 280, 800); rng(cx, cy, 20, 200, 800, 12); rng(cx, cy, 40, 130, 600, 7); bst(cx, cy, 20, 70, 14); shake(); });
+    X.forEach(([x, y]) => at(200, () => { fl(x, y, 25, 80, 400); })); },
   claw:    (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(120, () => { [-14, 0, 14].forEach(o => sl(x + o, y, 0, .9, 55, 300)); bst(x, y, 0, 10, 6); }); },
   smash:   (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(130, () => { fl(x, y, 30, 90); rng(x, y, 30, 80, 450, 7); bst(x, y, 30, 18, 8); shake(); }); },
-  dragon:  (F, X) => { const [x, y] = X[0]; proj(F, [x, y], 15, 300, 16, () => { fl(x, y, 20, 120, 500); bst(x, y, 15, 30, 9); rng(x, y, 10, 80, 450, 6); shake(); }); },
+  dragon:  (F, X) => { shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
+    proj(F, [cx, cy], 15, 300, 24, () => { fl(cx, cy, 20, 260, 700); bst(cx, cy, 15, 60, 12); rng(cx, cy, 10, 170, 650, 9); shake(); });
+    X.forEach(([x, y]) => at(250, () => { fl(x, y, 20, 80, 350); })); },
   potion:  (F, X) => X.forEach(([x, y]) => { rise(x, y, 150, 14); rng(x, y + 20, 150, 40, 500); }),
   iceLock: (F, X) => X.forEach(([x, y]) => { rng(x, y, 195, 55, 500, 5); bst(x, y, 190, 16, 5); fl(x, y, 195, 70, 400); })
 };
