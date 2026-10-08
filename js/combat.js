@@ -261,7 +261,10 @@ async function monsterAct(m, mi, P, mons) {
       const isMelee = P[tgt[0]].cls === "knight";   // Hiệp sĩ đỡ, class khác né
       const qr = await heavyQTE(m, mi, k, isMelee); if (gid !== gameId) return;
       const qmod = qr === "miss" ? 1 : isMelee ? 0.3 : 0;   // đỡ giảm 70%, né tránh hẳn
-      if (qr !== "miss") LG((isMelee ? "🛡️ " : "💨 ") + P[tgt[0]].name + (isMelee ? " đỡ được đòn mạnh!" : " né được đòn mạnh!"), "good");
+      if (qr !== "miss") {
+        LG((isMelee ? "🛡️ " : "💨 ") + P[tgt[0]].name + (isMelee ? " đỡ được đòn mạnh!" : " né được đòn mạnh!"), "good");
+        if (isMelee) { sprA = "block"; VF("wall", tgt[0], [tgt[0]]); sprA = null; }   // Hiệp sĩ giơ khiên đỡ
+      }
       sprA = "atk2"; VF(k.v || "smash", mk, tgt.map(t => t));
       if (qmod === 0) { FXX(tgt[0], "Né!", "miss"); }   // né hoàn toàn: không mất máu, không dính hiệu ứng
       else tgt.forEach(t => mHit(m, mk, P, t, k.m * qmod, k));
