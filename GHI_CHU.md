@@ -198,3 +198,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Muse: theo yêu cầu của Jame, icon buff/debuff (`#player-status`, `.mst`) kéo sát vào thanh bar phía trên; bỏ background + viền khung chữ nhật, chỉ giữ icon.
 - File: `css/layout-h.css` (3 selector: player-status, mst, msk).
 - Test: check.js OK, bundle 825KB, chụp màn hình kiểm tra, tap-test 19/19 PASS.
+
+## Cập nhật 2026-10-08 — Căn giữa nhân vật với thanh bar
+- Muse: theo phản hồi của Jame (nhân vật trông lệch phải so với tên/thanh bar), sprite hiệp sĩ có kiếm chĩa sang phải làm trọng tâm thị giác lệch. Đẩy avatar sang trái 10*m bằng `translate` để thân người căn giữa với thanh bar (không ảnh hưởng layout).
+- File: `css/layout-h.css` (1 dòng).
+- Test: check.js OK, bundle 825KB, chụp cận cảnh kiểm tra.

@@ -67,7 +67,7 @@ body.hl-on { padding: 0; display: block; }
 /* --- Phase 4: nhân vật --- */
 #game.hl #arena > #party { left: 18%; bottom: calc(88 * var(--m)); translate: -50% 0; width: auto; display: block; }
 #game.hl #me { position: relative; display: flex !important; justify-content: center; padding: 0; margin: 0; gap: 0; }
-#game.hl #me > .avatar { font-size: calc(78 * var(--hu)); margin: 0; }          /* hình hiệp sĩ ~150px rộng như mẫu (sprite tính theo em) */
+#game.hl #me > .avatar { font-size: calc(78 * var(--hu)); margin: 0; translate: calc(-10 * var(--m)) 0; }          /* sprite kiếm chĩa phải: đẩy sang trái cho thân người căn giữa thanh bar */
 #game.hl #me::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-7 * var(--hu)); width: calc(110 * var(--hu)); height: calc(14 * var(--hu)); margin-left: calc(-55 * var(--hu)); border-radius: 50%; background: rgba(0,0,0,.55); }
 #game.hl #me > .avatar.dead { opacity: .85; }
 /* dấu ▼ vàng khi đến lượt mình */
