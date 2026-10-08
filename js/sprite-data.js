@@ -46,5 +46,12 @@ const SPR_SLIME = {
   rows: { idle: [0, 6], walk: [1, 6], atk1: [2, 6], atk2: [3, 12], hurt: [4, 4], death: [5, 4] },
   box: [28, 20, 72, 58], core: [36, 42, 24, 18], sc: 1.2   // core canh giữa thân slime (tâm thân ở 48,51 trong frame); box phải nằm trong khung 100px (28+72=100); đòn vồ xa nhất tới x=98
 };
+/* QUÁI: Orc (sheet 8 cột x 6 hàng, khung 100x100). idle 6 · walk 8 · atk1/atk2 vung chùy (vệt chém trắng) · hurt 4 · death 4 */
+const SPR_ORC = {
+  src: "assets/sprites/orc.webp",
+  icon: "assets/sprites/orc-icon.png",
+  rows: { idle: [0, 6], walk: [1, 8], atk1: [2, 6], atk2: [3, 6], hurt: [4, 4], death: [5, 4] },
+  box: [34, 32, 42, 36], core: [45, 36, 20, 23]   // thân orc x 44..66 (tâm 55), chân y=57; box ôm vệt chém xa nhất (36..74, 33..66)
+};
 // Hiệp sĩ = Knight · Kiếm sư = Swordmaster · Nữ tu sĩ = Priest · Pháp sư = Wizard
-const SPRITE_DATA = { knight: SPR_KNIGHT, swordmaster: SPR_SWORDMASTER, mage: SPR_WIZARD, cleric: SPR_PRIEST, bat: SPR_BAT, slime: SPR_SLIME };   // bat/slime = quái (gắn qua trường sprite trong MT)
+const SPRITE_DATA = { knight: SPR_KNIGHT, swordmaster: SPR_SWORDMASTER, mage: SPR_WIZARD, cleric: SPR_PRIEST, bat: SPR_BAT, slime: SPR_SLIME, orc: SPR_ORC };   // bat/slime/orc = quái (gắn qua trường sprite trong MT)

@@ -293,3 +293,10 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Sửa: js/sprites.js (sprHTML) thêm transform-origin = tâm core cho canvas → mọi quái lật quanh tâm thân. js/sprite-data.js: box slime 74→72 rộng (28+72=100, trước đó đọc lấn 2px sang khung kế).
 - AI: Claude (claude.ai). Test: check.js OK; Chromium 1280×720: slime hàng trước/hàng sau nằm đúng giữa ô, trên thanh máu; Dơi không đổi. 844×390 chỉ gặp Dơi (chưa gặp slime).
 - CHƯA test: anim đòn vồ slime (atk1/atk2) khi chạy thật, co-op. Slime đang to hơn các quái khác (sc 1.2) — chưa đổi, chờ chủ dự án quyết.
+
+## Cập nhật 2026-10-08 — thay Goblin thành Orc (giữ nguyên chỉ số)
+- Jame gửi 7 ảnh sprite Orc, dùng sheet chính 8x6 (100x100/frame): idle 6, walk 8, atk1/atk2 vung chùy 6, hurt 4, death 4.
+- Thêm SPR_ORC vào sprite-data.js (box [34,32,42,36] ôm vệt chém, core [45,36,20,23] tâm thân x=55 → lật ngang không trôi); assets/sprites/orc.webp (2.9KB lossless) + orc-icon.png.
+- entities.js: Goblin → Orc (giữ nguyên hp/atk/xp/spd); combat.js: đổi key skill MSK "Goblin"→"Orc" (giữ Bột cay/Cuồng nộ/Bom cay).
+- AI: Muse. Test: check.js OK, bundle 961KB <1MB; Chromium 1280×720: orc đứng giữa khung core trên thanh máu, vung chùy vệt trắng không bị cắt, không lỗi JS.
+- CHƯA test: điện thoại, co-op.

@@ -31,7 +31,7 @@ const MSK = {
     { n: "Xé toạc", i: "🩸", c: 16, cdn: 4, t: "hit", m: 2.0, v: "claw", heavy: true, d: "Đòn mạnh ẩn" }],
   "Chuột Cống": [{ n: "Cắn nhiễm độc", i: "🧫", c: 8, cdn: 3, t: "hit", m: .9, v: "claw", st: [["poison", 3, .7]], d: "Gây trúng độc" },
     { n: "Cắn xé điên cuồng", i: "😱", c: 16, cdn: 4, t: "hit", m: 2.0, v: "claw", heavy: true, d: "Đòn mạnh ẩn" }],
-  "Goblin": [{ n: "Bột cay", i: "🌶️", c: 10, cdn: 3, t: "hit", m: .8, v: "venom", st: [["blind", 2, .6]], d: "Gây mù" },
+  "Orc": [{ n: "Bột cay", i: "🌶️", c: 10, cdn: 3, t: "hit", m: .8, v: "venom", st: [["blind", 2, .6]], d: "Gây mù" },
              { n: "Cuồng nộ", i: "😡", c: 12, cdn: 5, t: "self", v: "rage", st: [["rage", 4, 1]], d: "Tự tăng sát thương" },
              { n: "Bom cay", i: "💥", c: 20, cdn: 4, t: "aoe", m: 1.2, v: "smash", heavy: true, d: "Đòn mạnh ẩn" }],
   "Sói Xám": [{ n: "Xé xác", i: "🩸", c: 12, cdn: 3, t: "hit", m: 1.3, v: "claw", st: [["bleed", 3, .7, .35]], d: "Gây chảy máu" },
