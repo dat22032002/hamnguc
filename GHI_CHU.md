@@ -215,3 +215,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Jame không thích hình thương nhân cũ (tự vẽ không cho xem mẫu trước — rút kinh nghiệm: từ giờ hình ảnh phải cho Jame chốt mẫu trước khi làm).
 - Hình mới: thương nhân áo choàng bí ẩn, mắt vàng nham hiểm (không cười), ngồi trên thảm trơn, trước thảm bày vũ khí/trang bị, sau lưng 4 bao tải to nhỏ xếp ngay ngắn dưới đất.
 - Asset: assets/sprites/merchant.webp (35KB). Bundle 960KB (< 1MB).
+
+## Cập nhật 2026-10-08 — BG shop mới + chỉnh thương nhân
+- Theo yêu cầu Jame: đổi BG shop sang hẻm chợ đen (bg-shop.webp mới, 83KB) cho hợp với thương nhân bí ẩn; Jame chốt mẫu sau khi sửa ánh sáng đèn lồng (bỏ tia xuyên tường, bỏ vệt bóng chéo, đuốc tím -> lửa cam).
+- Thương nhân: thu nhỏ (cao 250px thay vì 340px), bỏ animation nhấp nhô, đặt ngồi dưới đèn lồng (trái 27%).
+- Bài học: Jame yêu cầu xem mẫu trước khi làm với mọi thứ liên quan hình ảnh — đã tuân thủ từ vòng này.
