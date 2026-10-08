@@ -262,3 +262,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Cận chiến: thêm hàm runAtk() — nhân vật chạy tới 85% quãng đường tới quái, tung hiệu ứng đánh, rồi chạy về (thay vì dash lướt 60% nhanh).
 - Áp dụng cho: clang, stab, slash (Kiếm sư), backstab, flurry, execute, bash, claw, smash. DUR tăng lên ~1000ms cho kịp.
 - File: js/combat.js (QTE), js/fx.js (runAtk + VFX + DUR). Test: check OK, bundle 950KB.
+
+## Cập nhật 2026-10-08 — runAtk event-driven (trị dứt điểm lệch timing)
+- Vấn đề: 3 setTimeout độc lập (di chuyển, sprite, hiệu ứng) lệch nhau khi browser delay.
+- Giải pháp: event-driven — go.onfinish mới đổi anim đánh + nổ hit; poll sprite về idle mới cho chạy về; back.onfinish mới cleanup. Không còn đoán thời gian.
+- VFX cận chiến dùng onHit callback thay vì at(380). DUR tăng lên 1500-1600.
+- File: js/fx.js. Test: check OK, bundle 950KB, test chuỗi event đúng thứ tự walk->atk->hit->walk.
