@@ -56,6 +56,7 @@ function spawnGroup(i, elite = false, coop = false, plv = 1) {
     if (r < .6) for (let j = rand(1, 4); j > 0; j--) g.push(mk("s", pick(MT.s)));
     else if (r < .9) { for (let j = rand(1, 2); j > 0; j--) g.push(mk("m", pick(MT.m))); if (Math.random() < .5) g.push(mk("s", pick(MT.s))); }
     else { g.push(mk("l", pick(MT.l))); if (Math.random() < .5) g.push(mk("s", pick(MT.s))); }
+    if (floor < 3 && Math.random() < .25) g.push(mk("m", MT.m.find(b => b.n === "Orc")));   // Orc dạng thường gặp từ tầng 1 (trước đây tầng 1-2 trận thường chỉ ra quái nhỏ)
   }
   return g;
 }

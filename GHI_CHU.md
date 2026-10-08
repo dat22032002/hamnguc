@@ -306,3 +306,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Slime sc 1.2 → 1.05 (nhỏ lại một chút theo yêu cầu).
 - AI: Muse. Test: check.js OK, bundle 961KB; Chromium 1280×720: orc giữa khung core trên thanh máu, slime nhỏ gọn, không lỗi JS.
 - CHƯA test: điện thoại, co-op.
+
+## Cập nhật 2026-10-08 — Slime nhỏ thêm + Orc thường spawn từ tầng 1
+- Jame thấy slime vẫn to: sc 1.05 → 0.9.
+- Jame báo chỉ gặp "Tinh anh Orc": thật ra orc thường đã spawn được từ tầng 3 (30% trận), nhưng tầng 1-2 trận thường chỉ ra quái nhỏ. Thêm: tầng 1-2 có 25% gặp 1 Orc dạng thường trong trận thường (giữ nguyên chỉ số).
+- AI: Muse. Test: check.js OK, bundle 961KB; logic spawnGroup(0) chạy 500 lần: 148 trận có Orc thường (~30%); Chromium: slime nhỏ gọn trên thanh máu, không lỗi JS.
+- CHƯA test: điện thoại, co-op.
