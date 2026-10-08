@@ -322,3 +322,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Theo yêu cầu Jame: tỉ lệ gặp Orc dạng thường ở trận thường tầng 1-2 tăng từ 25% lên 75%.
 - AI: Muse. Test: check.js OK, bundle 961KB; spawnGroup(0) 600 lần: 468 trận có Orc (~78%), không lỗi JS.
 - CHƯA test: điện thoại, co-op.
+
+## Cập nhật 2026-10-08 — nhân vật người chơi to hơn
+- Theo yêu cầu Jame: cỡ avatar người chơi trong layout ngang tăng từ 78 lên 86 (khoảng +10%), áp dụng cả solo (#me) lẫn đồng đội co-op (#mate).
+- AI: Muse. Test: check.js OK, bundle 961KB; Chromium 1280×720: nhân vật to hơn, không vỡ layout, không lỗi JS.
+- CHƯA test: điện thoại, co-op.

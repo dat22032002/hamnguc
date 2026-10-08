@@ -67,7 +67,7 @@ body.hl-on { padding: 0; display: block; }
 /* --- Phase 4: nhân vật --- */
 #game.hl #arena > #party { left: 18%; bottom: calc(88 * var(--m)); translate: -50% 0; width: auto; display: block; }
 #game.hl #me { position: relative; display: flex !important; justify-content: center; padding: 0; margin: 0; gap: 0; }
-#game.hl #me > .avatar { font-size: calc(78 * var(--hu)); margin: 0; translate: calc(-10 * var(--m)) 0; }          /* sprite kiếm chĩa phải: đẩy sang trái cho thân người căn giữa thanh bar */
+#game.hl #me > .avatar { font-size: calc(86 * var(--hu)); margin: 0; translate: calc(-10 * var(--m)) 0; }          /* sprite kiếm chĩa phải: đẩy sang trái cho thân người căn giữa thanh bar */
 #game.hl #me::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-7 * var(--hu)); width: calc(110 * var(--hu)); height: calc(14 * var(--hu)); margin-left: calc(-55 * var(--hu)); border-radius: 50%; background: rgba(0,0,0,.55); }
 #game.hl #me > .avatar.dead { opacity: .85; }
 /* dấu ▼ vàng khi đến lượt mình */
@@ -269,7 +269,7 @@ body.hl-on { padding: 0; display: block; }
 #game.hl.coop #party .avatar, #game.hl.coop #party .avatar.spr { width: auto !important; }
 #game.hl.coop #mate { position: relative; display: flex !important; justify-content: center; padding: 0 !important; margin: 0; gap: 0; border: 0 !important; background: none; }
 #game.hl.coop #mate::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-7 * var(--hu)); width: calc(150 * var(--hu)); height: calc(14 * var(--hu)); margin-left: calc(-75 * var(--hu)); border-radius: 50%; background: rgba(0,0,0,.55); border-left: 0 !important; top: auto; right: auto; }
-#game.hl.coop #mate > .avatar { font-size: calc(78 * var(--hu)); margin: 0; }
+#game.hl.coop #mate > .avatar { font-size: calc(86 * var(--hu)); margin: 0; }
 #game.hl.coop #mate > .info, #game.hl.coop #mate > .sgrid, #game.hl.coop #mate > .eqs { display: none !important; }
 #game.hl.coop #hl-mbar { display: block; position: absolute; left: 50%; top: calc(100% + 9 * var(--hu)); width: calc(150 * var(--hu)); margin-left: calc(-75 * var(--hu)); text-align: center; pointer-events: none; }
 #game.hl.coop #hl-mbar .pb { height: calc(14 * var(--hu)); box-sizing: border-box; border: 2px solid #1a0f0a; background: #0f0b12; box-shadow: 0 0 0 1px #5a3d1c; }
