@@ -141,7 +141,7 @@ function dash(el, F, X, ms = 340) {
   const done = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
   a.onfinish = done; a.oncancel = done;
 }
-/* Cận chiến: chạy tới gần quái (85% quãng đường), tung đòn, rồi chạy về. 1 animation duy nhất.
+/* Cận chiến: chạy tới gần quái (85% quãng đường), đứng chém cho xong anim, rồi chạy về. 1 animation duy nhất.
    Sprite: anim "walk" khi di chuyển, đổi sang anim đánh khi tới nơi */
 function runAtk(el, F, X, hitDelay = 380) {
   const h = el.closest("#mons, #party");
@@ -150,15 +150,15 @@ function runAtk(el, F, X, hitDelay = 380) {
   const cv = el.querySelector(":scope > .sfig > canvas.sp");
   const atkAnim = cv && cv._s ? cv._s.a : "atk1";   // lưu anim đánh đang chạy để đổi lại khi tới nơi
   const dx = (X[0] - F[0]) * .85, dy = (X[1] - F[1]) * .85;
-  const total = hitDelay + 260 + 320, TSv = TS();
+  const go = hitDelay, hold = 650, back = 320, total = go + hold + back, TSv = TS();   // hold đủ dài để chém xong anim
   sprAtk(el, "walk");   // bắt đầu chạy: anim chạy
   const a = mv.animate([
     { translate: "0 0" },
-    { translate: dx + "px " + dy + "px", offset: .42 },
+    { translate: dx + "px " + dy + "px", offset: go / total },
     { translate: "0 0" }
   ], { duration: total * TSv });
-  setTimeout(() => sprAtk(el, atkAnim), hitDelay * TSv);   // tới nơi: anim đánh
-  setTimeout(() => { if (el.isConnected) sprAtk(el, "walk"); }, (hitDelay + 260) * TSv);   // chạy về: anim chạy
+  setTimeout(() => sprAtk(el, atkAnim), go * TSv);   // tới nơi: anim đánh
+  setTimeout(() => { if (el.isConnected) sprAtk(el, "walk"); }, (go + hold) * TSv);   // chạy về: anim chạy
   const done = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
   a.onfinish = done; a.oncancel = done;
 }
@@ -211,7 +211,7 @@ const VFX = {
   potion:  (F, X) => X.forEach(([x, y]) => { rise(x, y, 150, 14); rng(x, y + 20, 150, 40, 500); }),
   iceLock: (F, X) => X.forEach(([x, y]) => { rng(x, y, 195, 55, 500, 5); bst(x, y, 190, 16, 5); fl(x, y, 195, 70, 400); })
 };
-const GAP = 200, DUR = { clang: 1000, stab: 1000, slash: 1000, backstab: 1000, flurry: 1000, execute: 1100, vanish: 600, holy: 650, arcane: 650, taunt: 700, bash: 1000, wall: 600, charge: 1050, heal: 700, holyAll: 800, bless: 700, revive: 900, fireball: 750, firestorm: 800, frost: 800, meteor: 1100, claw: 1000, smash: 1000, dragon: 800, potion: 600, iceLock: 500 };
+const GAP = 200, DUR = { clang: 1400, stab: 1400, slash: 1400, backstab: 1400, flurry: 1400, execute: 1500, vanish: 600, holy: 650, arcane: 650, taunt: 700, bash: 1400, wall: 600, charge: 1050, heal: 700, holyAll: 800, bless: 700, revive: 900, fireball: 750, firestorm: 800, frost: 800, meteor: 1100, claw: 1400, smash: 1400, dragon: 800, potion: 600, iceLock: 500 };
 let vd = 0, stepEnd = 0;   // độ trễ tích lũy (ms) để các đòn trong 1 vòng diễn ra lần lượt
 let sprA = null;           // hoạt ảnh sprite của hành động đang xử lý: atk1 (đánh thường) · atk2 (kỹ năng) · atk3 (tối thượng) · block (phòng thủ)
 function VF(n, f, t) {
