@@ -287,3 +287,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Thêm SPR_SLIME vào sprite-data.js (box/core canh thân), gắn sprite: "slime" cho quái Slime trong entities.js.
 - Nén webp lossless (9.5KB→2.7KB) để bundle dưới 1MB. File: assets/sprites/slime.webp + slime-icon.png.
 - Test: check OK, bundle 955KB.
+
+## Cập nhật 2026-10-08 — sửa slime bị lệch vị trí (trôi sang phải)
+- Lỗi: CSS lật quái bằng scaleX(-1) quanh TÂM CANVAS (x=65 trong khung) nhưng thân slime ở x≈48 → thân bị hất sang phải ~280px, chỗ đứng chỉ còn chấm 🟢 (icon kỹ năng). Dơi không lỗi vì box đã đối xứng quanh tâm thân.
+- Sửa: js/sprites.js (sprHTML) thêm transform-origin = tâm core cho canvas → mọi quái lật quanh tâm thân. js/sprite-data.js: box slime 74→72 rộng (28+72=100, trước đó đọc lấn 2px sang khung kế).
+- AI: Claude (claude.ai). Test: check.js OK; Chromium 1280×720: slime hàng trước/hàng sau nằm đúng giữa ô, trên thanh máu; Dơi không đổi. 844×390 chỉ gặp Dơi (chưa gặp slime).
+- CHƯA test: anim đòn vồ slime (atk1/atk2) khi chạy thật, co-op. Slime đang to hơn các quái khác (sc 1.2) — chưa đổi, chờ chủ dự án quyết.

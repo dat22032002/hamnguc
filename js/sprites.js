@@ -16,7 +16,7 @@ const hasSpr = cls => !!SPRITE_DATA[cls];
 function sprImg(cls) { const s = SPRITE_DATA[cls].src; return SPR_IMG[s] || (SPR_IMG[s] = Object.assign(new Image(), { src: s })); }
 function sprHTML(cls) {
   const D = SPRITE_DATA[cls], [bx, by, bw, bh] = D.box, [cx, cy, cw, ch] = D.core, e = n => (n * (D.sc || 1) / SPR_U).toFixed(4) + "em";   // D.sc: hệ số thu/phóng riêng cho từng nhân vật
-  return '<span class="sfig" style="width:' + e(cw) + ";height:" + e(ch) + '"><canvas class="sp" data-c="' + cls + '" width="' + bw + '" height="' + bh + '" style="left:' + e(bx - cx) + ";top:" + e(by - cy) + ";width:" + e(bw) + ";height:" + e(bh) + '"></canvas></span>';
+  return '<span class="sfig" style="width:' + e(cw) + ";height:" + e(ch) + '"><canvas class="sp" data-c="' + cls + '" width="' + bw + '" height="' + bh + '" style="left:' + e(bx - cx) + ";top:" + e(by - cy) + ";width:" + e(bw) + ";height:" + e(bh) + ";transform-origin:" + e(cx + cw / 2 - bx) + ' 50%"></canvas></span>';   // tâm lật ngang = tâm thân (core), không phải tâm canvas → quái lật mặt không bị trôi
 }
 const icoHTML = cls => { const k = CLASSES[cls] ? cls : "knight"; return hasSpr(k) ? '<img class="ico" alt="" src="' + SPRITE_DATA[k].icon + '">' : CLASSES[k].icon; };
 function sprPlay(cv, a) {
