@@ -5,7 +5,7 @@
    Kỹ năng: t = hit | aoe | self · m = hệ số sát thương · ls = hút máu · v = hiệu ứng hình · st = [[trạng thái, số lượt, tỉ lệ, hệ số]]
    Thêm trạng thái mới: thêm vào STATUS (+ xử lý trong tickStart / dmgOut / dmgIn nếu cần).
    ===================================================== */
-const RES_BASE = { knight: .15, assassin: .05, cleric: .15, mage: .10 };   // kháng hiệu ứng gốc của từng class
+const RES_BASE = { knight: .15, swordmaster: .05, cleric: .15, mage: .10 };   // kháng hiệu ứng gốc của từng class
 const STATUS = {
   stun:    { i: "💫", n: "Choáng",    bad: 1, d: "Mất lượt kế tiếp" },
   freeze:  { i: "❄️", n: "Đóng băng", bad: 1, d: "Mất lượt kế tiếp" },

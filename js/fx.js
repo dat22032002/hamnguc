@@ -20,6 +20,7 @@ function noise(d, vol = .1, f0 = 1000, f1 = 300, type = "bandpass", delay = 0, q
 const SND = {   // mỗi hiệu ứng một âm riêng, phát cùng lúc với hình
   clang: () => { noise(.1, .12, 4000, 900, "highpass"); tone(1100, .3, "square", .04, .08, -400); tone(1700, .25, "triangle", .05, .08, -600); },
   stab: () => { noise(.16, .1, 2500, 7000, "bandpass", 0, 2); tone(1800, .05, "square", .03, .1, -1200); },
+  slash: () => { noise(.18, .08, 3000, 8000, "bandpass", 0, 2); tone(2200, .06, "square", .03, .08, -1500); },   // tiếng chém kiếm của Kiếm sư
   backstab: () => { noise(.2, .12, 2000, 8000, "bandpass", 0, 2); noise(.15, .1, 8000, 3000, "bandpass", .12); tone(150, .15, "sine", .1, .12, -60); },
   flurry: () => { noise(.12, .1, 3000, 7000, "bandpass", 0, 2); tone(1600, .04, "square", .03, .08, -900); },
   execute: () => { noise(.25, .13, 1500, 9000, "bandpass", 0, 2); tone(90, .5, "sine", .2, .13, -40); noise(.3, .12, 3000, 300, "lowpass", .13); },
@@ -46,9 +47,9 @@ const SND = {   // mỗi hiệu ứng một âm riêng, phát cùng lúc với h
 };
 
 /* ===== HIỆU ỨNG HẠT (canvas, ánh sáng cộng): luồng sáng, tia lửa, vết chém, vòng sóng, đạn có đuôi ===== */
-const ATKFX = { knight: "clang", assassin: "stab", cleric: "holy", mage: "arcane" };
-const SKFX = { "Khiêu khích": "taunt", "Đập khiên": "bash", "Tường thép": "wall", "Xung kích": "charge", "Đâm lén": "backstab", "Liên hoàn": "flurry", "Ẩn thân": "vanish", "Tử huyệt": "execute",
-  "Chữa lành": "heal", "Thánh quang": "holyAll", "Phước lành": "bless", "Tái sinh": "revive", "Cầu lửa": "fireball", "Bão lửa": "firestorm", "Băng giá": "frost", "Thiên thạch": "meteor", "Hồi sức": "heal", "Phi tiêu": "stab", "Trừng phạt": "holy", "Tia sét": "arcane" };
+const ATKFX = { knight: "clang", swordmaster: "slash", cleric: "holy", mage: "arcane" };
+const SKFX = { "Khiêu khích": "taunt", "Đập khiên": "bash", "Tường thép": "wall", "Xung kích": "charge", "Chém ngang": "slash", "Kiếm khí": "slash", "Liên trảm": "flurry", "Ngự kiếm": "wall", "Vạn kiếm quy tông": "execute",
+  "Chữa lành": "heal", "Thánh quang": "holyAll", "Phước lành": "bless", "Tái sinh": "revive", "Cầu lửa": "fireball", "Bão lửa": "firestorm", "Băng giá": "frost", "Thiên thạch": "meteor", "Hồi sức": "heal", "Trừng phạt": "holy", "Tia sét": "arcane" };
 const FXS = { ps: [], on: false, W: 0, H: 0 };
 /* Tọa độ tâm phần tử theo hệ layout của canvas #fxc.
    Khi body.fland (mobile cầm dọc, khung bị xoay -90°): getBoundingClientRect() trả về theo màn hình
@@ -152,6 +153,7 @@ function dodgeFx(id) {   // né: nhân vật lách sang bên + vệt gió
 const VFX = {
   clang:   (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(130, () => { sl(x, y, 40, -.6, 80); bst(x, y, 35, 16, 7); rng(x, y, 40, 55, 350); }); },
   stab:    (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 240); at(90, () => { sl(x, y, 275, .5, 80, 260); sl(x, y, 300, -.5, 80, 260); bst(x, y, 280, 10, 7); }); },
+  slash:   (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 240); at(90, () => { sl(x, y, 280, .7, 110, 280); sl(x, y, 300, -.7, 110, 280); bst(x, y, 290, 12, 7); }); },   // vệt chém rộng của Kiếm sư
   backstab:(F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 240); at(90, () => { sl(x, y, 280, .6, 110); sl(x, y, 310, -.6, 110); fl(x, y, 280, 90); bst(x, y, 290, 18, 8); }); },
   flurry:  (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0], 200); at(80, () => { sl(x, y, 290, (rnd() - .5) * 2.4, 90, 240); bst(x, y, 280, 8, 6); }); },
   execute: (F, X, el) => { const [x, y] = X[0]; dash(el, F, X[0]); at(130, () => { fl(x, y, 0, 110, 500); sl(x, y, 0, .8, 120, 400); sl(x, y, 0, -.8, 120, 400); bst(x, y, 0, 28, 9); rng(x, y, 0, 85, 450, 6); shake(); }); },

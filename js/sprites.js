@@ -3,12 +3,12 @@
    SPRITE: hoạt ảnh nhân vật (idle · tấn công 1/2/3 · bị thương · chết)
    Mọi <canvas class="sp" data-c="class"> trong trang đều tự chạy hoạt ảnh. Ghi chú:
    - ms / khung nhân với TS()/2 nên tự chậm / nhanh theo nút tốc độ hiệu ứng
-   - Class nào chưa có trong SPRITE_DATA (Sát thủ) vẫn dùng emoji như cũ
+   - Mọi class đều có sprite riêng trong SPRITE_DATA (kẻo rớt về emoji)
    ===================================================== */
 const SPR_MS = { idle: 150, walk: 110, atk1: 60, atk2: 60, atk3: 52, block: 130, heal: 130, fire: 60, ice: 60, hurt: 70, death: 140 };
 const SPR_LOOP = { idle: 1, walk: 1 }, SPR_U = 14;      // 1em = 14 điểm ảnh gốc → sprite tự to nhỏ theo cỡ chữ của avatar
 // kiểu hiệu ứng → hoạt ảnh tấn công: đòn thường / kỹ năng / tối thượng
-const SPR_ATK = { clang: "atk1", stab: "atk1", holy: "atk1", arcane: "atk1",
+const SPR_ATK = { clang: "atk1", stab: "atk1", slash: "atk1", holy: "atk1", arcane: "atk1",
   bash: "atk2", backstab: "atk2", flurry: "atk2", taunt: "atk2", wall: "block", charge: "atk2", vanish: "atk2", heal: "heal", bless: "heal", fireball: "fire", frost: "ice",
   execute: "atk3", holyAll: "atk3", revive: "heal", firestorm: "fire", meteor: "fire" };
 const SPR_IMG = {};
