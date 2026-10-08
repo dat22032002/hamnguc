@@ -65,7 +65,7 @@ body.hl-on { padding: 0; display: block; }
 #game.hl #arena > #party, #game.hl #arena > #mons { position: absolute; z-index: 3; margin: 0; padding: 0; }
 
 /* --- Phase 4: nhân vật --- */
-#game.hl #arena > #party { left: 18%; bottom: calc(68 * var(--m)); translate: -50% 0; width: auto; display: block; }
+#game.hl #arena > #party { left: 18%; bottom: calc(88 * var(--m)); translate: -50% 0; width: auto; display: block; }
 #game.hl #me { position: relative; display: flex !important; justify-content: center; padding: 0; margin: 0; gap: 0; }
 #game.hl #me > .avatar { font-size: calc(78 * var(--hu)); margin: 0; }          /* hình hiệp sĩ ~150px rộng như mẫu (sprite tính theo em) */
 #game.hl #me::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-7 * var(--hu)); width: calc(110 * var(--hu)); height: calc(14 * var(--hu)); margin-left: calc(-55 * var(--hu)); border-radius: 50%; background: rgba(0,0,0,.55); }
@@ -91,7 +91,7 @@ body.hl-on { padding: 0; display: block; }
 
 /* --- Phase 5: quái — tối đa 2 hàng, hàng sau cao hơn + nhỏ hơn (chiều sâu) --- */
 #game.hl #arena > #mons { inset: 0; display: block; height: auto; min-height: 0; pointer-events: none; }
-#game.hl #mons .mon { --fsb: 96; --k: 1; --x: 70%; --feet: calc(68 * var(--m));
+#game.hl #mons .mon { --fsb: 96; --k: 1; --x: 70%; --feet: calc(88 * var(--m));
   --fs: calc(var(--fsb) * var(--k) * var(--hu)); --bw: calc((var(--fsb) * .6 + 60) * var(--k) * var(--hu));
   position: absolute; pointer-events: auto; display: flex; justify-content: center; align-items: flex-end; box-sizing: border-box;
   left: var(--x); translate: -50% 0; bottom: var(--feet); width: calc(var(--bw) + 24 * var(--hu)); height: var(--fs); max-width: none; flex: none;
