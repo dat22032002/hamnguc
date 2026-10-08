@@ -233,3 +233,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Bấm kịp: Hiệp sĩ đỡ (-70% st), class khác né (tránh hẳn). Không bấm: ăn đủ.
 - File: index.html (bỏ #qte), css/style.css (bỏ #qte, thêm .telegraph + #btn-defend.qte-glow), js/combat.js (heavyQTE mới).
 - Test: check OK, bundle 938KB, tap-test 19/19 PASS, không lỗi JS.
+
+## Cập nhật 2026-10-08 — Nút Thủ chỉ dùng ở lượt quái, Tu sĩ/Pháp sư đổi thành Né
+- Theo yêu cầu Jame: bỏ action Phòng thủ ở lượt người chơi; nút Thủ/Né chỉ sáng để bấm khi quái tung đòn mạnh (QTE).
+- Tu sĩ và Pháp sư: nút đổi thành "💨 Né tránh"/"Né"; Hiệp sĩ và Sát thủ giữ "🛡️ Phòng thủ"/"Thủ".
+- File: js/render.js (renderActions luôn khóa nút, render đổi nhãn theo class), js/combat.js (bỏ act defend, QTE phân biệt né/đỡ).
+- Test: check OK, bundle 939KB, tap-test 19/19 PASS (lần đầu 2 FAIL do flaky cửa Chiến đấu đã biết, chạy lại PASS).

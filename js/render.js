@@ -91,8 +91,8 @@ function renderHead(ms) {   // nhãn tầng + thông tin lượt
   $("floor-badge").textContent = "Tầng " + (state.monsterIndex + 1) + " · " + (state.ambush ? "⚠️ Tập kích" : zoneTxt()) + (isBoss ? " · 👑 Trùm" : isMini ? " · 💀 Boss phụ" : "");
   $("turn-info").textContent = state.over ? "" : state.busy ? (actLabel() || "⏳ Đang giao tranh…") : "Lượt của bạn";
 }
-function renderActions(lock) {   // khóa/mở nút hành động
-  $("btn-attack").disabled = lock; $("btn-defend").disabled = lock; $("btn-heal").disabled = lock;
+function renderActions(lock) {   // khóa/mở nút hành động; nút Thủ/Né chỉ dùng ở lượt quái (QTE) nên luôn khóa ở lượt mình
+  $("btn-attack").disabled = lock; $("btn-defend").disabled = true; $("btn-heal").disabled = lock;
   if (lock) $("skills").classList.remove("show");
 }
 function renderSkills(p, C, lock) {   // 4 kỹ năng + tối thượng
@@ -128,6 +128,10 @@ function renderBag(p, lock) {   // số món trong túi + thứ tự + overlay �
 function render() {
   const p = state.player, ms = state.monsters, C = CLASSES[p.cls] || CLASSES.knight;
   const lock = state.busy || state.over || p.hp <= 0;
+  // Tu sĩ/Pháp sư: nút Thủ -> Né; các class khác giữ Thủ
+  const isDodger = p.cls === "cleric" || p.cls === "mage", db = $("btn-defend");
+  db.querySelector(".al").textContent = isDodger ? "💨 Né tránh" : "🛡️ Phòng thủ";
+  db.querySelector(".as").textContent = isDodger ? "Né" : "Thủ";
   renderArena(p, ms);
   renderMons(p, ms);
   renderHead(ms);

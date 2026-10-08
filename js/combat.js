@@ -200,7 +200,7 @@ function perform(p, pi, act, ti, mons) {
   const tg = mons[ti] && mons[ti].hp > 0 ? mons[ti] : al[0];
   const cx = { cur: ATKFX[p.cls] || "clang", ls: 0, ck: null, si: null };   // ngữ cảnh dùng chung cho dealHit/castHeal
   if (act === "attack") { sprA = "atk1"; return dealHit(p, pi, mons, tg, 1, 0, cx); }
-  if (act === "defend") { sprA = "block"; p.defending = true; VF("wall", pi, [pi]); return LG(p.name + " giơ khiên lên, giảm sát thương cho tới lượt sau.", "good"); }
+  // defend: bỏ ở lượt người chơi, nút Thủ/Né chỉ dùng để đỡ/né đòn mạnh ở lượt quái (QTE)
   if (hasSt(p, "silence")) return LG("🤐 " + p.name + " bị câm lặng, không niệm được kỹ năng!", "bad");
   cx.si = +act[1]; const k = skDef(p, cx.si);
   sprA = /^(heal|revive|cleanse|buff)/.test(k.t) ? "heal" : k.tier === "ult" ? "atk3" : "atk2";   // tối thượng = đòn mạnh nhất, kỹ năng thường/nâng cao = đòn giữa
@@ -258,12 +258,12 @@ async function monsterAct(m, mi, P, mons) {
       LG("⚠️ " + m.name + " tụ lực tung đòn mạnh: " + k.n + "!", "bad");
       render();
       const tgt = k.t === "aoe" ? live : [ti];
-      const isMelee = P[tgt[0]].cls === "knight";   // Hiệp sĩ đỡ, class khác né
-      const qr = await heavyQTE(m, mi, k, isMelee); if (gid !== gameId) return;
-      const qmod = qr === "miss" ? 1 : isMelee ? 0.3 : 0;   // đỡ giảm 70%, né tránh hẳn
+      const isDodger = P[tgt[0]].cls === "cleric" || P[tgt[0]].cls === "mage";   // Tu sĩ/Pháp sư né, còn lại đỡ
+      const qr = await heavyQTE(m, mi, k, !isDodger); if (gid !== gameId) return;
+      const qmod = qr === "miss" ? 1 : isDodger ? 0 : 0.3;   // né tránh hẳn, đỡ giảm 70%
       if (qr !== "miss") {
-        LG((isMelee ? "🛡️ " : "💨 ") + P[tgt[0]].name + (isMelee ? " đỡ được đòn mạnh!" : " né được đòn mạnh!"), "good");
-        if (isMelee) { sprA = "block"; VF("wall", tgt[0], [tgt[0]]); }   // Hiệp sĩ giơ khiên đỡ
+        LG((isDodger ? "💨 " : "🛡️ ") + P[tgt[0]].name + (isDodger ? " né được đòn mạnh!" : " đỡ được đòn mạnh!"), "good");
+        if (!isDodger) { sprA = "block"; VF("wall", tgt[0], [tgt[0]]); }   // giơ khiên đỡ
       }
       sprA = "atk2"; VF(k.v || "smash", mk, tgt.map(t => t));
       if (qmod === 0) { FXX(tgt[0], "Né!", "miss"); }   // né hoàn toàn: không mất máu, không dính hiệu ứng
