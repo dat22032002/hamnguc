@@ -229,6 +229,7 @@ function heavyQTE(m, mi, k, isMelee) {
     if (monEl) monEl.classList.add("telegraph");   // quái phát sáng báo trước
     const to1 = setTimeout(() => {
       btn.classList.add("qte-glow");   // nút Thủ phát sáng
+      btn.disabled = false;   // cho bấm dù đang lượt quái
       btn.onclick = () => fin(isMelee ? "block" : "dodge");
       to2 = setTimeout(() => fin("miss"), 1200 * TS());   // không bấm kịp: ăn đủ
     }, 700 * TS());
