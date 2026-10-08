@@ -141,18 +141,20 @@ function dash(el, F, X, ms = 340) {
   const done = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
   a.onfinish = done; a.oncancel = done;
 }
-/* Cận chiến: chạy tới gần quái (85% quãng đường), đứng đó đánh, rồi chạy về. hitDelay = lúc tung hiệu ứng trúng */
+/* Cận chiến: chạy tới gần quái (85% quãng đường), tung đòn, rồi chạy về. 1 animation duy nhất */
 function runAtk(el, F, X, hitDelay = 380) {
   const h = el.closest("#mons, #party");
   if (h) { h._z = (h._z || 0) + 1; h.style.zIndex = 8; }
   const mv = el.querySelector(":scope > .sfig > canvas.sp") || el;
-  const dx = (X[0] - F[0]) * .85, dy = (X[1] - F[1]) * .85, go = hitDelay * TS(), back = 320 * TS();
-  mv.animate([{ translate: "0 0" }, { translate: dx + "px " + dy + "px" }], { duration: go, fill: "forwards", easing: "ease-out" });
-  at(hitDelay + 260, () => {
-    const b = mv.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: back, easing: "ease-in" });
-    const done = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
-    b.onfinish = done; b.oncancel = done;
-  });
+  const dx = (X[0] - F[0]) * .85, dy = (X[1] - F[1]) * .85;
+  const total = hitDelay + 260 + 320;
+  const a = mv.animate([
+    { translate: "0 0" },
+    { translate: dx + "px " + dy + "px", offset: .42 },
+    { translate: "0 0" }
+  ], { duration: total * TS() });
+  const done = () => { if (h && --h._z <= 0) { h._z = 0; h.style.zIndex = ""; } };
+  a.onfinish = done; a.oncancel = done;
 }
 const shake = () => { const A = $("arena"); A.classList.add("shake"); at(260, () => A.classList.remove("shake")); };
 const tint = h => PT(650, (c, k) => { c.fillStyle = hsl(h, .3 * Math.sin(Math.PI * k), 55); c.fillRect(0, 0, FXS.W, FXS.H); });
