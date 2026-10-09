@@ -344,3 +344,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - File: js/classes.js (chỉ dòng const TS). Mọi hiệu ứng JS/CSS (--ts)/âm thanh/anim sprite đều đi qua TS() nên tự theo.
 - AI: Claude (claude.ai). Test: check.js OK; Chromium: sleep(400) = 1000ms ở x1, 500ms ở x2 (đúng 2.0×), --ts 2.5 → 1.25, nút đổi nhãn đúng.
 - Lưu ý: x2 giờ chậm hơn trước (1 → 1.25). CHƯA test co-op (người vào phòng theo tốc độ chủ phòng, cùng hàm nên chắc đúng).
+
+## Cập nhật 2026-10-09 — Thêm harness test tap-flow (tools/tap-test.js, theo yêu cầu Jame)
+- Jame hỏi "bạn có harness ko" → tự build: `node tools/tap-test.js` chạy trên giả lập mobile (Chromium 844x390), tự bấm menu → chọn class (cả 4) → solo → map → trận → bấm skill, báo PASS/FAIL từng bước.
+- Cần `npm i -D puppeteer-core` (đã cài, nằm trong .gitignore). Cửa Chiến đấu random nên vào trận bằng startFight() cho ổn định (đã test 3 lần liên tiếp đều 14/14 PASS).
+- File: tools/tap-test.js (mới). Test: check.js OK (file tool không ảnh hưởng bundle).

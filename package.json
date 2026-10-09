@@ -1,0 +1,26 @@
+{
+  "name": "hamnguc",
+  "version": "1.0.0",
+  "description": "Game RPG theo lượt chạy trên trình duyệt: solo roguelike hoặc co-op 2 người qua mạng. Không dùng framework, không cần cài gì để chơi.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dat22032002/hamnguc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dat22032002/hamnguc/issues"
+  },
+  "homepage": "https://github.com/dat22032002/hamnguc#readme",
+  "devDependencies": {
+    "puppeteer-core": "^25.13.0"
+  }
+}
