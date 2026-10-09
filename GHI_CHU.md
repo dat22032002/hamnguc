@@ -332,3 +332,15 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Jame báo icon Kiếm sư lệch trong tab chọn class: file icon cũ vẽ nhân vật dồn trái-trên (bbox 0,6,14,20 trong ảnh 20x20). Làm lại icon từ sheet: crop thân idle, căn giữa khung 20x22 như 3 icon còn lại (bbox 1,1,19,21).
 - AI: Muse. Test: check.js OK, bundle 961KB; chụp màn hình chọn class: 4 icon đều nhau, không lỗi JS.
 - CHƯA test: điện thoại.
+
+## Cập nhật 2026-10-09 — làm lại icon Kiếm sư (lần 2): hết mờ, cùng cỡ 3 icon kia
+- Lỗi: icon cũ vẫn lệch/nhỏ: đã bị thu nhỏ có làm mịn (157 điểm ảnh bán trong suốt, mất viền pixel), cao chỉ 16px so với 18–20px của Hiệp sĩ/Nữ tu sĩ/Pháp sư (3 icon kia alpha chỉ 0/255).
+- Sửa: assets/sprites/swordmaster-icon.webp làm lại bằng crop 1:1 (không làm mịn) khung idle đầu của swordmaster.webp, alpha nhị phân, ảnh 24x22 (cao 22 như các icon khác), bbox căn giữa. Không đổi code/CSS.
+- AI: Claude (claude.ai). Test: check.js OK; chụp tab chọn class 1280×720 và 844×390: 4 icon cùng cỡ, nét pixel sắc, tâm icon trùng tâm nút.
+- CHƯA test: thanh thứ tự lượt trong trận (icon rộng hơn 20→24px nhưng CSS max-width 28·m nên không tràn), co-op.
+
+## Cập nhật 2026-10-09 — x2 nhanh đúng gấp đôi x1
+- Trước: TS() x1 = 2.5, x2 = 1 → x2 nhanh gấp 2.5 lần x1. Giờ x1 giữ 2.5, x2 = TS_X1 / 2 = 1.25 (gấp đúng 2). Muốn đổi tốc độ cả hai chế độ: sửa TS_X1.
+- File: js/classes.js (chỉ dòng const TS). Mọi hiệu ứng JS/CSS (--ts)/âm thanh/anim sprite đều đi qua TS() nên tự theo.
+- AI: Claude (claude.ai). Test: check.js OK; Chromium: sleep(400) = 1000ms ở x1, 500ms ở x2 (đúng 2.0×), --ts 2.5 → 1.25, nút đổi nhãn đúng.
+- Lưu ý: x2 giờ chậm hơn trước (1 → 1.25). CHƯA test co-op (người vào phòng theo tốc độ chủ phòng, cùng hàm nên chắc đúng).
