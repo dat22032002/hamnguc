@@ -1,5 +1,8 @@
 {
-  "name": "hamnguc-git",
+  "assets": {
+    "directory": "."
+  },
   "compatibility_date": "2025-10-01",
-  "assets": { "directory": "." }
+  "name": "hamnguc-git",
+  "previews": {}
 }

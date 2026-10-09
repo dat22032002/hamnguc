@@ -102,10 +102,8 @@ body.hl-on { padding: 0; display: block; }
 /* bóng dưới chân; quái bị nhắm: bóng viền vàng */
 #game.hl #mons .mon::before { content: ""; position: absolute; z-index: 0; left: 50%; bottom: calc(-6 * var(--hu)); width: calc(var(--fs) * 1.4); height: calc(12 * var(--hu)); margin-left: calc(var(--fs) * -.7); border-radius: 50%; background: rgba(0,0,0,.55); }
 #game.hl #mons .mon.sel::before { box-shadow: 0 0 0 2px #ffd23f, 0 0 12px rgba(255,210,63,.45); }
-/* dấu ▼ đỏ trên quái bị nhắm (thay 🎯 cũ) */
-#game.hl #mons .mon.sel::after { content: "▼"; position: absolute; z-index: 6; top: calc(-44 * var(--hu)); left: 0; right: 0; width: auto; text-align: center; font-size: calc(24 * var(--hu)); line-height: 1; color: #ff5a3c; filter: none; text-shadow: 0 2px 0 #1a0f0a, 2px 0 0 #1a0f0a, -2px 0 0 #1a0f0a; animation: hlbob2 .8s ease-in-out infinite; }
-@keyframes hlbob2 { 50% { translate: 0 calc(5 * var(--hu)); } }
-#game.hl #mons .mon.sel:has(.avatar.acting)::after { top: calc(-70 * var(--hu)); }
+/* (đã bỏ dấu ▼ đỏ trên quái bị nhắm theo yêu cầu 2026-10-09: chỉ giữ vòng vàng dưới chân) */
+#game.hl #mons .mon.sel::after { content: none; }
 #game.hl #mons .mon .avatar.acting::after { top: calc(-26 * var(--hu)); }
 #game.hl #mons .mon:has(.avatar.boss) { border: 0; }
 /* thanh máu 12px, mana mảnh, nhãn "Tên · Lv" dưới chân */
