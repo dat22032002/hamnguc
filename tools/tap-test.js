@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-/* tools/tap-test.js — Harness test tap-flow cho Hầm Ngục: node tools/tap-test.js [file-html]
-   Tự động bấm qua luồng người dùng thật trên giả lập mobile (Chromium):
-   menu → chọn class (cả 4) → solo → cửa Chiến đấu → trận đấu → bấm skill.
-   Báo PASS/FAIL từng bước, exit code 1 nếu có FAIL hoặc lỗi JS.
+/* tools/tap-test.js — Harness test tap-flow cho Hầm Ngục:
+     node tools/tap-test.js [--desktop] [file-html]
+   Tự động bấm qua luồng người dùng thật: menu → chọn class (cả 4) → solo
+   → map → trận đấu → bấm skill. Báo PASS/FAIL từng bước, exit code 1 nếu có FAIL.
+   Mặc định giả lập mobile (Chromium 844x390, như Brave trên máy Jame);
+   --desktop test trên desktop (1280x720).
    Cần: npm i -D puppeteer-core (trong thư mục dự án). Chrome lấy từ biến
    môi trường CHROME_PATH, mặc định /opt/meta-chromium/chrome (máy của AI).
    Mặc định test dist/hamnguc.html (bản đã bundle, giống bản Jame chơi). */
@@ -15,7 +17,9 @@ catch (e) {
   process.exit(2);
 }
 const CHROME = process.env.CHROME_PATH || "/opt/meta-chromium/chrome";
-const HTML = path.resolve(process.argv[2] || path.join(ROOT, "dist", "hamnguc.html"));
+const args = process.argv.slice(2);
+const DESKTOP = args.includes("--desktop");
+const HTML = path.resolve(args.find(a => !a.startsWith("--")) || path.join(ROOT, "dist", "hamnguc.html"));
 if (!fs.existsSync(HTML)) { console.error("✗ Không thấy file: " + HTML + " (chạy node tools/bundle.js trước)"); process.exit(2); }
 if (!fs.existsSync(CHROME)) { console.error("✗ Không thấy Chrome ở " + CHROME + " (đặt biến CHROME_PATH)"); process.exit(2); }
 
@@ -28,8 +32,14 @@ const step = (name, cond) => { results.push((cond ? "PASS" : "FAIL") + " | " + n
   const page = await browser.newPage();
   const jsErrs = [];
   page.on("pageerror", e => jsErrs.push(String(e).slice(0, 160)));
-  // Giả lập điện thoại Android (ngang 844x390 như Brave trên máy Jame)
-  await page.emulate({ viewport: { width: 844, height: 390, isMobile: true, hasTouch: true }, userAgent: "Mozilla/5.0 (Linux; Android 14) Chrome/152.0 Mobile Safari/537.36" });
+  if (DESKTOP) {
+    // Desktop: màn hình 1280x720, user-agent desktop, bấm bằng chuột
+    await page.setViewport({ width: 1280, height: 720 });
+    await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/152.0 Safari/537.36");
+  } else {
+    // Giả lập điện thoại Android (ngang 844x390 như Brave trên máy Jame)
+    await page.emulate({ viewport: { width: 844, height: 390, isMobile: true, hasTouch: true }, userAgent: "Mozilla/5.0 (Linux; Android 14) Chrome/152.0 Mobile Safari/537.36" });
+  }
   await page.setContent(fs.readFileSync(HTML, "utf8"), { waitUntil: "networkidle0", timeout: 60000 });
   await sleep(1500);
 
@@ -95,7 +105,11 @@ const step = (name, cond) => { results.push((cond ? "PASS" : "FAIL") + " | " + n
     const r = b.getBoundingClientRect();
     return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
   });
-  if (tapOk) { await page.touchscreen.tap(tapOk.x, tapOk.y); await sleep(2500); }
+  if (tapOk) {
+    if (DESKTOP) await page.mouse.click(tapOk.x, tapOk.y);
+    else await page.touchscreen.tap(tapOk.x, tapOk.y);
+    await sleep(2500);
+  }
   step("bấm skill không vỡ trận", tapOk && await page.evaluate(() => !!document.querySelector("#arena")));
   step("không lỗi JS", jsErrs.length === 0);
   if (jsErrs.length) console.log("  Lỗi JS:\n  - " + jsErrs.join("\n  - "));
