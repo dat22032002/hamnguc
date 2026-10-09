@@ -40,12 +40,24 @@ Sửa giao diện: xem ít nhất 1280×720 và 844×390. Sửa logic: chạy th
 ## 5. Giao kết quả
 **Giai đoạn chuyển đổi (hiện tại, chưa có kho git):** sửa nguồn → `node tools/check.js` → `node tools/bundle.js` → trả cả `hamnguc.zip` (toàn bộ dự án, có thể bỏ `dist/`) và `hamnguc.html` (= `dist/hamnguc.html` vừa build). Hai file phải khớp nhau.
 
-**Khi đã có kho GitHub + link xem thử:** làm trên nhánh riêng `ten-ai/viec-dang-lam`, không đẩy thẳng `main`; xong thì báo chủ dự án xem link nhánh rồi mới nhập. Không cần đóng zip. (Khi chủ dự án xác nhận kho đã chạy, xóa đoạn "giai đoạn chuyển đổi" này.)
+**Khi đã có kho GitHub + link xem thử:** làm trên nhánh riêng `ten-ai/viec-dang-lam`, không đẩy thẳng `main`; đợi Cloudflare deploy preview xong, tự kiểm tra dấu build (`curl -s <link-nhánh> | head -1`) đúng commit mới rồi mới báo chủ dự án xem link nhánh; chủ dự án duyệt trên máy thật rồi mới nhập. Không cần đóng zip. (Khi chủ dự án xác nhận kho đã chạy, xóa đoạn "giai đoạn chuyển đổi" này.)
 
 ## 6. Nhật ký
 Mỗi lần xong việc, thêm 1 mục ≤ 8 dòng ở CUỐI `GHI_CHU.md`: `## Cập nhật <ngày> — <việc>`, nói rõ: AI nào làm, đổi gì, file nào, đã test gì (và chưa test gì), còn dở gì. Đừng viết lại hay xóa mục cũ.
 
 ## 7. Điều chủ dự án đã chốt (đừng tự đổi)
+- Mỗi tầng = 5 khu vực + 1 phòng boss. Mỗi khu vực chọn 1 trong 3 lối đi; một số lối bị ẩn "❓ Chưa rõ"; lối "Chiến đấu" không bị ẩn; Bẫy luôn ẩn; Thương nhân và Nghỉ ngơi không bao giờ ẩn.
+- Trang bị gắn với class: sai class thì không mặc được (chỉ cất túi/bán).
+- Mobile luôn chơi ngang. Giữ khung pixel (border-image) trên nút; đã bỏ hoa văn trang trí phía trên nút đang chọn.
+- Tiến hóa kỹ năng: mới làm cho Hiệp sĩ; co-op dùng `autoEvo` (không popup).
+
+## 8. Kỷ luật của AI khi làm việc (tự nhắc mình)
+1. **Plan trước, code sau:** việc phức tạp thì trình bày cách làm cho chủ dự án (hoặc tự viết ra) TRƯỚC khi đụng code.
+2. **Diff nhỏ:** mỗi lần sửa ít file, ít dòng; xong một việc nhỏ thì test ngay, đừng dồn.
+3. **Review từng dòng mình viết** trước khi commit — đọc lại diff như người ngoài.
+4. **Không commit code mình không giải thích được** — chỗ nào không hiểu thì hỏi/học, không đoán.
+5. **Checkpoint chạy được:** commit thường xuyên ở trạng thái chạy được; mỗi commit một việc.
+6. **Minh bạch khi test:** nói rõ test ở đâu (giả lập/Chromium/thật), cái gì PASS/FAIL; chưa test thì nói CHƯA, đừng nói "đã test".
 - Mỗi tầng = 5 khu vực + 1 phòng boss. Mỗi khu vực chọn 1 trong 3 lối đi; một số lối bị ẩn "❓ Chưa rõ"; lối "Chiến đấu" không bị ẩn; Bẫy luôn ẩn; Thương nhân và Nghỉ ngơi không bao giờ ẩn.
 - Trang bị gắn với class: sai class thì không mặc được (chỉ cất túi/bán).
 - Mobile luôn chơi ngang. Giữ khung pixel (border-image) trên nút; đã bỏ hoa văn trang trí phía trên nút đang chọn.

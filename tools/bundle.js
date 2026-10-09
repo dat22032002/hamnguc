@@ -16,6 +16,15 @@ html = html.replace(/<script src="([^"]+)"><\/script>\n?/g, (m, src) => {
   return "<script>\n" + code + "\n</script>\n";
 });
 fs.mkdirSync(path.join(ROOT, "dist"), { recursive: true });
+// Đóng dấu build: commit SHA + giờ build → kiểm tra bằng `curl -s URL | head -1`
+// hoặc trong game: window.__BUILD__ (Jame thấy lỗi trên điện thoại là biết ngay bản nào)
+let sha = "dev", when = new Date().toISOString();
+try {
+  sha = require("child_process").execSync("git rev-parse --short HEAD", { cwd: ROOT }).toString().trim();
+} catch (e) { /* không phải git repo: giữ "dev" */ }
+const stamp = `build ${sha} @ ${when}`;
+html = html.replace("<!DOCTYPE html>", `<!DOCTYPE html>\n<!-- ${stamp} -->`);
+html = html.replace("</head>", `<script>window.__BUILD__=${JSON.stringify({ sha, time: when })};</script>\n</head>`);
 const out = path.join(ROOT, "dist", "hamnguc.html");
 fs.writeFileSync(out, html);
 console.log("Đã tạo " + path.relative(ROOT, out) + " (" + Math.round(html.length / 1024) + " KB)");

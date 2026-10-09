@@ -349,3 +349,10 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Jame hỏi "bạn có harness ko" → tự build: `node tools/tap-test.js` chạy trên giả lập mobile (Chromium 844x390), tự bấm menu → chọn class (cả 4) → solo → map → trận → bấm skill, báo PASS/FAIL từng bước.
 - Cần `npm i -D puppeteer-core` (đã cài, nằm trong .gitignore). Cửa Chiến đấu random nên vào trận bằng startFight() cho ổn định (đã test 3 lần liên tiếp đều 14/14 PASS).
 - File: tools/tap-test.js (mới). Test: check.js OK (file tool không ảnh hưởng bundle).
+
+## Cập nhật 2026-10-09 — Áp 4 practice chống lỗi (Jame chọn 1,2,4,6 từ research)
+- (2) Đóng dấu build: tools/bundle.js chèn commit SHA + giờ build vào dist/hamnguc.html (comment dòng 2 + window.__BUILD__); kiểm tra bằng `curl -s URL | head -1`.
+- (4) Tạo RELEASE.md: checklist 5 nhóm (build, test tự động, kiểm tra mắt, deploy preview, Jame duyệt máy thật) chạy trước mỗi deploy.
+- (6) Kỷ luật AI: thêm mục 8 vào AGENTS.md (plan-first, diff nhỏ, review từng dòng, không commit code không hiểu, checkpoint chạy được, minh bạch test).
+- (1) Luồng preview: làm trên nhánh riêng theo AGENTS.md mục 5 (có sẵn từ trước), verify dấu build trên preview URL trước khi báo Jame; Jame duyệt máy thật rồi mới merge main.
+- Test: check.js OK, bundle 961KB <1MB, tap-test mobile + desktop đều PASS.
