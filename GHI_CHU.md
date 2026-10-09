@@ -356,3 +356,8 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - (6) Kỷ luật AI: thêm mục 8 vào AGENTS.md (plan-first, diff nhỏ, review từng dòng, không commit code không hiểu, checkpoint chạy được, minh bạch test).
 - (1) Luồng preview: làm trên nhánh riêng theo AGENTS.md mục 5 (có sẵn từ trước), verify dấu build trên preview URL trước khi báo Jame; Jame duyệt máy thật rồi mới merge main.
 - Test: check.js OK, bundle 961KB <1MB, tap-test mobile + desktop đều PASS.
+
+## Cập nhật 2026-10-09 — Bỏ mũi tên đỏ khi chọn quái (Jame yêu cầu khi test preview)
+- Jame báo: mũi tên đỏ (chọn mục tiêu) trùng mũi tên vàng (báo lượt quái). Đã xóa rule `#game.hl #mons .mon.sel::after` (mũi tên ▼ đỏ) + keyframes hlbob2 + rule workaround trùng vị trí; thêm `content: none` để chặn emoji 🎯 từ stylesheet gốc lọt qua.
+- Khi chọn quái giờ chỉ còn vòng vàng dưới chân (`.mon.sel::before` giữ nguyên).
+- Test: check.js OK, bundle 961KB <1MB, tap-test mobile + desktop PASS, chụp màn hình xác nhận: slime được chọn hiện vòng vàng, không còn mũi tên đỏ, không lỗi JS.
