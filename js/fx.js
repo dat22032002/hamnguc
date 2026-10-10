@@ -133,6 +133,30 @@ function burstFire(x, y, size = 140) {
     c.drawImage(FIRE_SHEET, f * 96, 0, 96, 96, -size / 2, -size / 2, size, size);
   });
 }
+/* Vụ nổ pixel (Bão lửa - skill Pháp sư): sheet 3 khung 96x96: cháy lên → nổ lớn → tàn */
+const PXBOOM = Object.assign(new Image(), { src: "assets/sprites/fx-explosion.webp" });
+function burstPixel(x, y, size = 240) {
+  const embers = [];
+  for (let i = 0; i < 14; i++) {
+    const a = rnd() * Math.PI * 2;
+    embers.push({ a, sp: 60 + rnd() * 150, s: 3 + rnd() * 4, c: ["#ffb347", "#ff7847", "#ffd23f", "#9a9a9a"][i % 4] });
+  }
+  PT(900, (c, k) => {
+    if (!PXBOOM.complete || !PXBOOM.naturalWidth) return;
+    const f = k < .22 ? 0 : k < .62 ? 1 : 2;              // cháy lên → nổ lớn → tàn
+    const sc = f === 1 ? 1 + (k - .22) * 1.1 : 1;         // khung nổ phình to dần
+    c.globalCompositeOperation = "source-over"; c.imageSmoothingEnabled = false;   // giữ nét pixel
+    const s2 = size * sc;
+    c.drawImage(PXBOOM, f * 96, 0, 96, 96, x - s2 / 2, y - s2 / 2, s2, s2);
+    c.globalAlpha = 1 - k;                                // than lửa pixel bay ra, mờ dần
+    embers.forEach(e => {
+      const d = e.sp * k;
+      c.fillStyle = e.c;
+      c.fillRect(x + Math.cos(e.a) * d - e.s / 2, y + Math.sin(e.a) * d * .7 - e.s / 2, e.s, e.s);
+    });
+    c.globalAlpha = 1;
+  });
+}
 function dash(el, F, X, ms = 340) {
   const h = el.closest("#mons, #party");   // nâng cả khu vực của bên tấn công lên trên trong lúc lao tới, để không bị thanh máu / bảng bên kia đè
   if (h) { h._z = (h._z || 0) + 1; h.style.zIndex = 8; }
@@ -207,7 +231,7 @@ const VFX = {
   fireball:(F, X) => X.forEach(([x, y]) => proj(F, [x, y], 18, 300, 12, () => { fl(x, y, 30, 100, 400); bst(x, y, 20, 28, 8); rng(x, y, 15, 70, 420, 6); })),
   firestorm:(F, X) => { tint(15); shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
     X.forEach(([x, y]) => fall(x, y, 22, 14));
-    at(330, () => { fl(cx, cy, 30, 260, 700); bst(cx, cy, 20, 60, 14); rng(cx, cy, 15, 170, 700, 10); rng(cx, cy, 30, 120, 600, 6); });
+    at(330, () => { burstPixel(cx, cy); bst(cx, cy, 20, 60, 14); rng(cx, cy, 15, 170, 700, 10); rng(cx, cy, 30, 120, 600, 6); });
     X.forEach(([x, y]) => at(380, () => { fl(x, y, 30, 70, 350); })); },
   frost:   (F, X) => { tint(200); shake(); const cx = X.reduce((s, p) => s + p[0], 0) / X.length, cy = X.reduce((s, p) => s + p[1], 0) / X.length;
     X.forEach(([x, y]) => fall(x, y, 195, 14));

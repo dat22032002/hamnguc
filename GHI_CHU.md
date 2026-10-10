@@ -361,3 +361,9 @@ Người chơi thấy thẻ kỹ năng phẳng (1 màu tím) xấu → bỏ các
 - Jame báo: mũi tên đỏ (chọn mục tiêu) trùng mũi tên vàng (báo lượt quái). Đã xóa rule `#game.hl #mons .mon.sel::after` (mũi tên ▼ đỏ) + keyframes hlbob2 + rule workaround trùng vị trí; thêm `content: none` để chặn emoji 🎯 từ stylesheet gốc lọt qua.
 - Khi chọn quái giờ chỉ còn vòng vàng dưới chân (`.mon.sel::before` giữ nguyên).
 - Test: check.js OK, bundle 961KB <1MB, tap-test mobile + desktop PASS, chụp màn hình xác nhận: slime được chọn hiện vòng vàng, không còn mũi tên đỏ, không lỗi JS.
+
+## Cập nhật 2026-10-10 — Effect pixel cho Bão lửa (thử 1 skill, nhánh muse/pixel-fx-firestorm)
+- Muse vẽ 4 mẫu effect pixel, Jame duyệt style → làm thử skill Bão lửa (Pháp sư): sheet `assets/sprites/fx-explosion.webp` 3 khung 96x96 (cháy lên → nổ lớn → tàn), alpha nhị phân, vẽ bằng `imageSmoothingEnabled=false` nên nét cứng như sprite nhân vật; thêm than lửa pixel bay ra.
+- `firestorm` trong js/fx.js: thay flash tròn cũ bằng `burstPixel(cx, cy)` ở tâm nhóm quái, giữ nguyên tia lửa/rung/tint.
+- Ép buộc bởi luật bundle <1MB (main đã 999878 byte): đổi `wizard.png` → `wizard.webp` lossless (pixel khớp 100% đã verify), bundle còn 979544 byte.
+- Test: check.js OK, bundle OK, tap-test luồng cũ PASS; chụp Chromium mobile 844x390: vụ nổ pixel hiện đúng tâm quái, không lỗi JS.

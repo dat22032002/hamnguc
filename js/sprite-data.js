@@ -21,7 +21,7 @@ const SPR_PRIEST = {
   box: [34, 22, 66, 42], core: [37, 35, 22, 26], sc: 0.9   // thân Priest cao hơn Hiệp sĩ ~10% → thu 0.9; core canh giữa thân (x≈51), cùng cỡ khung với Hiệp sĩ
 };
 const SPR_WIZARD = {
-  src: "assets/sprites/wizard.png",
+  src: "assets/sprites/wizard.webp",
   icon: "assets/sprites/wizard-icon.png",
   rows: { idle: [0, 6], walk: [1, 8], atk1: [3, 6], atk2: [6, 9], atk3: [6, 9], fire: [6, 9], ice: [3, 6], block: [3, 6], hurt: [8, 4], death: [9, 4] },
   box: [34, 28, 50, 34], core: [37, 37, 20, 23]   // thân Wizard cao bằng Hiệp sĩ (sc = 1); core canh theo tâm đầu
