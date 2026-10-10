@@ -75,19 +75,19 @@ function showEvo() {
   if (i == null) { $("evo").classList.remove("show"); showLoot(); render(); return; }
   const base = CLASSES[p.cls].sk[i], e = base.evo, open = evoUnlocked(p, i), prog = (p.evoProg || [])[i] || {};
   $("evo-title").textContent = "🌟 " + base.n + " có thể tiến hóa!";
-  $("evo-sub").textContent = "Chọn 1 trong 2 hướng tiến hóa (vĩnh viễn trong lượt chạy này)";
+  $("evo-sub").textContent = "Chọn 1 trong 2 hướng (vĩnh viễn lượt này)";
   const list = $("evo-list"); list.innerHTML = "";
-  const mkCard = (br, tag, branch, locked) => {
+  const mkCard = (br, tag, branch, locked, rawBr) => {
     const b = document.createElement("button");
     b.className = "evocard" + (locked ? " locked" : "");
-    b.innerHTML = "<b>" + br.i + " " + esc(br.n) + "</b><span class=\"evotag\">" + tag + "</span><small>" + esc(br.d) + "</small><small class=\"evofx\">" + esc(evoCardTxt(br)) + "</small>" +
+    b.innerHTML = "<b>" + br.i + " " + esc(br.n) + "</b><span class=\"evotag\">" + tag + "</span>" + (rawBr.d ? "<small>" + esc(rawBr.d) + "</small>" : "") + "<small class=\"evofx\">" + esc(evoCardTxt(br)) + "</small>" +
       (locked ? "<small class=\"evolock\">🔒 " + esc(br.cond.txt) + " (" + (prog[br.cond.k] || 0) + "/" + br.cond.n + ")</small>" : "");
     if (!locked) b.onclick = () => chooseEvo(i, branch);
     else b.disabled = true;
     list.appendChild(b);
   };
-  mkCard(Object.assign({}, base, e.a), "Nhánh A · mặc định", 1, false);
-  mkCard(Object.assign({}, base, e.b), "Nhánh B · điều kiện", 2, !open);
+  mkCard(Object.assign({}, base, e.a), "Nhánh A", 1, false, e.a);
+  mkCard(Object.assign({}, base, e.b), "Nhánh B", 2, !open, e.b);
   sfx("evo");
   $("evo").classList.add("show");
 }

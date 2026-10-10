@@ -21,7 +21,9 @@ const STATUS = {
   shield:  { i: "🛡️", n: "Khiên phép", d: "Hấp thụ sát thương" },
   rage:    { i: "😡", n: "Cuồng nộ",  d: "Sát thương gây ra +40%" },
   haste:   { i: "⚡", n: "Tăng tốc",  d: "Tốc độ +40%" },
-  thorns:  { i: "🌵", n: "Gai nhọn",  d: "Phản 30% sát thương nhận" },
+  thorns:  { i: "🌵", n: "Gai nhọn",  d: "Phản st về kẻ đánh" },
+  evade:   { i: "💨", n: "Thân pháp", d: "Né +40%" },
+  manashield: { i: "🔷", n: "Khiên mana", d: "St trừ vào mana" },
   immune:  { i: "🔰", n: "Miễn nhiễm", d: "Không dính hiệu ứng xấu" }
 };
 const MSK = {
@@ -112,14 +114,17 @@ function afterHit(p, pi, m, mi, d, k, si) {
 /* Quái đánh 1 người (có thể kèm kỹ năng k) */
 function mHit(m, mk, P, ti, mul, k) {
   const t = P[ti];
-  if (Math.random() < dodgeChance(t, m, t.fx.hide > 0 ? .6 : 0)) { LG(t.name + " né được " + (k ? k.n : "đòn") + " của " + m.name + "!", "good"); return FXX(ti, "Né!", "miss"); }
+  if (Math.random() < dodgeChance(t, m, (t.fx.hide > 0 ? .6 : 0) + (hasSt(t, "evade") ? .4 : 0))) { LG(t.name + " né được " + (k ? k.n : "đòn") + " của " + m.name + "!", "good"); return FXX(ti, "Né!", "miss"); }
   let d = dmgOut(m, rand(m.atkMin, m.atkMax) * mul);
   if (t.defending) d *= 1 - Math.min(.9, t.defendReduce);
   if (t.fx.guard > 0) d *= .3;
   if (t.fx.taunt > 0) d *= .6;
+  if (t.fx.thornsGuard > 0) d *= .5;
+  if (hasSt(t, "manashield") && t.mp > 0) { const mcost = Math.min(t.mp, Math.round(d)); t.mp -= mcost; d -= mcost; if (mcost > 0) { LG("🔷 " + t.name + " chặn " + mcost + " st bằng mana!", "good"); FXX(ti, "-" + mcost + "🔷", "heal"); } }
   const [dd, ab] = dmgIn(t, d); t.hp = Math.max(0, t.hp - dd);
   LG(m.name + (k ? " dùng " + k.n + " lên " : " đánh ") + t.name + ", gây " + dd + " sát thương" + (ab ? " (khiên chặn " + ab + ")" : "") + (t.hp <= 0 ? ". " + t.name + " gục ngã!" : "."), "bad");
   FXX(ti, "-" + dd, "dmg", true);
+  if (hasSt(t, "thorns") && m.hp > 0 && dd > 0) { const r = Math.max(1, Math.round(dd * .5)); m.hp = Math.max(0, m.hp - r); LG("🌵 " + m.name + " bị phản " + r + " st!", "good"); FXX(mk, "-" + r, "dmg", true); }
   if (k && k.ls && m.hp > 0) { const b = m.hp; m.hp = Math.min(m.maxHp, m.hp + Math.round(dd * k.ls)); if (m.hp > b) { LG(m.name + " hút " + (m.hp - b) + " máu.", "bad"); FXX(mk, "+" + (m.hp - b), "heal"); } }
   if (k && k.st && t.hp > 0) k.st.forEach(x => rollSt(t, ti, m, x, dd, "bad"));
 }
@@ -174,6 +179,11 @@ function castSkill(p, pi, mons, al, P, tg, si, k, cx) {
     case "taunt": p.fx.taunt = k.dur || 3; break;
     case "guard": p.fx.guard = k.dur || 3; break;
     case "hide": p.fx.hide = 3; break;
+    case "debuff": al.forEach((m, i) => { if (m.hp > 0 && k.st) k.st.forEach(x => rollSt(m, mons.indexOf(m), p, x, 0, "good")); }); break;
+    case "evade": applySt(p, p, "evade", k.dur || 3, null, 1); FXX(pi, "💨+", "heal"); break;
+    case "manashield": applySt(p, p, "manashield", k.dur || 3, null, 1); FXX(pi, "🔷+", "heal"); break;
+    case "thorns": applySt(p, p, "thorns", k.dur || 4, null, 1); p.fx.thornsGuard = k.dur || 4; FXX(pi, "🌵+", "heal"); break;
+    case "shieldall": live.forEach(x => { if (x[0].hp > 0) { applySt(x[0], p, "shield", k.dur || 3, .15, 1); FXX(x[1], "🛡️+", "heal"); } }); break;
     case "buff": P.forEach((q, i) => { if (q.hp > 0) { q.fx.buff = k.dur || 3; FXX(i, "⚔️+", "heal"); } }); break;
     case "heal": heal(live[0][0], live[0][1], k.a + p.level * 3); break;
     case "healall": VF(cx.cur, pi, live.map(x => x[1])); live.forEach(x => heal(x[0], x[1], k.a + p.level * 2, 1)); break;

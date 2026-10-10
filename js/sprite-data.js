@@ -53,5 +53,5 @@ const SPR_ORC = {
   rows: { idle: [0, 6], walk: [1, 8], atk1: [2, 6], atk2: [3, 6], hurt: [4, 4], death: [5, 4] },
   box: [34, 32, 42, 36], core: [42, 38, 20, 22]   // core ôm khít thân orc (thân x 47..58 tâm 52, y 41..57): lật ngang quanh tâm thân, không trôi
 };
-// Hiệp sĩ = Knight · Kiếm sư = Swordmaster · Nữ tu sĩ = Priest · Pháp sư = Wizard
+// Hiệp sĩ = Knight · Kiếm sĩ = Swordmaster · Nữ tu sĩ = Priest · Pháp sư = Wizard
 const SPRITE_DATA = { knight: SPR_KNIGHT, swordmaster: SPR_SWORDMASTER, mage: SPR_WIZARD, cleric: SPR_PRIEST, bat: SPR_BAT, slime: SPR_SLIME, orc: SPR_ORC };   // bat/slime/orc = quái (gắn qua trường sprite trong MT)
