@@ -33,7 +33,7 @@ const CLASSES = {
       evo:{ exp:100,xp:{ use:10 },
         a:{ n:"Gầm thét uy vũ",dur:6,st:[["weak",5,1]] },
         b:{ n:"Gầm thét dồn dập",st:[["weak",3,1]],cdn:2,cond:{ k:"uses",n:8,txt:"Gầm thét 8 lần" } } } },
-    { n:"Phản đòn",tier:"ult",cdn:5,i:"🌵",c:20,t:"thorns",dur:5,d:"Phản 50% st (4 lượt)",
+    { n:"Phản đòn",tier:"ult",cdn:5,i:"🌵",c:20,t:"thorns",dur:5,d:"-50% st nhận,phản 50% (4 lượt)",
       evo:{ exp:150,xp:{ use:10 },
         a:{ n:"Phản đòn tuyệt đối",dur:7 },
         b:{ n:"Phản đòn liên tục",cdn:3,cond:{ k:"uses",n:6,txt:"Phản đòn 6 lần" } } } } ] },
