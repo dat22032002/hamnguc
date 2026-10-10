@@ -63,16 +63,28 @@ function skTip(k, tier, cd, lack, sil, evoHtml) {
     (cd > 0 ? "<div class=\"tw\">⏳ Còn " + cd + " lượt hồi chiêu</div>" : lack ? "<div class=\"tw\">💧 Thiếu mana</div>" : sil ? "<div class=\"tw\">🤐 Đang bị câm lặng</div>" : "");
 }
 (function () {
-  const tip = document.createElement("div"); tip.id = "tip"; document.body.appendChild(tip);
+  const tip = document.createElement("div"); tip.id = "tip"; $("viewport").appendChild(tip);
   let timer = 0, sx = 0, sy = 0, shown = false, mute = 0;
   const hide = () => { clearTimeout(timer); timer = 0; tip.style.display = "none"; if (shown) mute = Date.now() + 450; shown = false; };
   const show = (el, html, isText) => {
     if (isText) tip.textContent = html; else tip.innerHTML = html;
     tip.style.display = "block"; shown = true;
-    const r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, vw = window.innerWidth;
-    let x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), vw - w - 8), y = r.top - h - 10;
-    if (y < 8) y = Math.min(r.bottom + 10, window.innerHeight - h - 8);
-    tip.style.left = x + "px"; tip.style.top = y + "px";
+    tip.style.position = "absolute";
+    const fland = document.body.classList.contains("fland");
+    const r = el.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
+    if (!fland) {
+      const w = tip.offsetWidth, h = tip.offsetHeight;
+      let x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), vw - w - 8), y = r.top - h - 10;
+      if (y < 8) y = Math.min(r.bottom + 10, vh - h - 8);
+      tip.style.left = x + "px"; tip.style.top = y + "px";
+    } else {
+      // Trong viewport xoay -90°: tọa độ visual (x,y) -> local (vh - y - h_v, x)
+      // w/h đo được là local (chưa xoay), visual thì đảo ngược
+      const wL = tip.offsetWidth, hL = tip.offsetHeight, wV = hL, hV = wL;
+      let xV = Math.min(Math.max(8, r.left + r.width / 2 - wV / 2), vw - wV - 8), yV = r.top - hV - 10;
+      if (yV < 8) yV = Math.min(r.bottom + 10, vh - hV - 8);
+      tip.style.left = (vh - yV - hV) + "px"; tip.style.top = xV + "px";
+    }
     if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
   };
   const find = (box, e) => {   // tìm theo toạ độ vì nút bị khoá (disabled) không nhận sự kiện
