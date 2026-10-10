@@ -133,7 +133,7 @@ function burstFire(x, y, size = 140) {
     c.drawImage(FIRE_SHEET, f * 96, 0, 96, 96, -size / 2, -size / 2, size, size);
   });
 }
-/* Vụ nổ pixel (Bão lửa - skill Pháp sư): sheet 3 khung 96x96: cháy lên → nổ lớn → tàn */
+/* Vụ nổ pixel (Bão lửa - skill Pháp sư): sheet 5 khung 96x96: cháy lên → giữa → nổ lớn → tàn dần → tàn */
 const PXBOOM = Object.assign(new Image(), { src: "assets/sprites/fx-explosion.webp" });
 function burstPixel(x, y, size = 240) {
   const embers = [];
@@ -143,11 +143,13 @@ function burstPixel(x, y, size = 240) {
   }
   PT(900, (c, k) => {
     if (!PXBOOM.complete || !PXBOOM.naturalWidth) return;
-    const f = k < .22 ? 0 : k < .62 ? 1 : 2;              // cháy lên → nổ lớn → tàn
-    const sc = f === 1 ? 1 + (k - .22) * 1.1 : 1;         // khung nổ phình to dần
+    const p = k * 4, i = Math.min(3, Math.floor(p)), fr = p - i;   // nội suy mờ giữa 2 khung kề cho mượt
+    const s2 = size * (.85 + k * .6), dx = x - s2 / 2, dy = y - s2 / 2;   // phình to dần
     c.globalCompositeOperation = "source-over"; c.imageSmoothingEnabled = false;   // giữ nét pixel
-    const s2 = size * sc;
-    c.drawImage(PXBOOM, f * 96, 0, 96, 96, x - s2 / 2, y - s2 / 2, s2, s2);
+    c.globalAlpha = 1 - fr;
+    c.drawImage(PXBOOM, i * 96, 0, 96, 96, dx, dy, s2, s2);
+    c.globalAlpha = fr;
+    c.drawImage(PXBOOM, (i + 1) * 96, 0, 96, 96, dx, dy, s2, s2);
     c.globalAlpha = 1 - k;                                // than lửa pixel bay ra, mờ dần
     embers.forEach(e => {
       const d = e.sp * k;
